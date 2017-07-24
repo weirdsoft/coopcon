@@ -1,18 +1,21 @@
 import React from 'react'
+import Menu from './Menu'
 
 const App = () => (
-  <main>
-    <header className="hero is-primary">
-      <div className="hero-body">
-        <div className="container">
-          <h1 className="title is-1">
-            Cooperativa de Consumo
-          </h1>
+  <div className="container is-fluid">
+    <header>
+      <nav className="navbar is-primary">
+        <div className="navbar-brand">
+          Cooperativa de Consumo
         </div>
-      </div>
+      </nav>
     </header>
-		Hello World
-  </main>
+    <div className="columns">
+      <Menu />
+      <main className="column">
+      </main>
+    </div>
+  </div>
 )
 
 export default App

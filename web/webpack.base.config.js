@@ -22,14 +22,14 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
+        exclude: /node_modules/,
         use: [
           'babel-loader',
         ],
-        exclude: /node_modules/,
       },
 			{
         test: /\.s?[ca]ss$/,
-				include: '/node_modules/',
+				include: /node_modules/,
         use: [
           'style-loader',
           'css-loader',
@@ -39,7 +39,7 @@ module.exports = {
       },
       {
         test: /\.s?[ca]ss$/,
-				exclude: '/node_modules/',
+        exclude: /node_modules/,
         use: [
           'style-loader',
           {

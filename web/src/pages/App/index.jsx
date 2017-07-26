@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+import { callOnMount } from 'hocs'
+import { fetchProducers } from 'data/producer/actions'
 import Menu from './Menu'
 
 const App = () => (
@@ -18,4 +22,13 @@ const App = () => (
   </div>
 )
 
-export default App
+const mapDispatchToProps = (dispatch) => ({
+  fetchProducers: () => dispatch(fetchProducers()),
+})
+
+const enhancer = compose(
+  connect(null, mapDispatchToProps),
+  callOnMount('fetchProducers'),
+)
+
+export default enhancer(App)

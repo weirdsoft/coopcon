@@ -8,6 +8,7 @@ module.exports = {
     app: [
       'react-hot-loader/patch',
 			'bulma/bulma.sass',
+      'font-awesome/scss/font-awesome.scss',
       resolve(__dirname, 'src', 'index.jsx'),
     ],
   },
@@ -53,6 +54,14 @@ module.exports = {
           'postcss-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'url-loader',
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        use: 'file-loader',
       },
     ],
   },

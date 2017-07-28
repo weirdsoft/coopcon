@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, branch, renderNothing } from 'recompose'
 import { isLoadingProducers, getProducers } from 'data/producer/selectors'
+import AddProductor from './components/AddProductor'
 
 const Menu = ({ producers }) => (
   <aside className="menu column is-one-quarter">
@@ -12,9 +13,14 @@ const Menu = ({ producers }) => (
     <ul className="menu-list">
       {producers.map((producer) => (
         <li key={producer._id}>
-          {producer.name}
+          <a>
+            {producer.name}
+          </a>
         </li>
       ))}
+      <li>
+        <AddProductor />
+      </li>
     </ul>
   </aside>
 )

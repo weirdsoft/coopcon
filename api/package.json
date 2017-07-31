@@ -21,7 +21,7 @@
     "mongoose": "^4.x"
   },
   "devDependencies": {
-    "babel": "^6.x",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.x",
     "babel-loader": "^7.x",
     "babel-plugin-transform-object-rest-spread": "^6.x",

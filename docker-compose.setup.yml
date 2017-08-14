@@ -1,0 +1,14 @@
+version: '3'
+services:
+  api:
+    image: node:8.2.1-alpine
+    volumes:
+      - ./api:/opt/app
+    entrypoint: /opt/app/entrypoint.sh
+    command: install
+  web:
+    image: node:8.2.1-alpine
+    volumes:
+      - ./web:/opt/app
+    entrypoint: /opt/app/entrypoint.sh
+    command: install

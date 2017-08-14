@@ -47,6 +47,7 @@
     "graphql-tag": "^2.3.0",
     "history": "^4.6.2",
     "moment": "^2.18.1",
+    "postcss-cssnext": "^3.0.2",
     "prop-types": "^15.x",
     "react": "^15.x",
     "react-dom": "^15.x",

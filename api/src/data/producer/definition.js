@@ -2,6 +2,8 @@ const definition = `
   type Producer {
     _id: ID!
     name: String!
+    creationDate: Date!
+    products: [Product!]!
   }
 
   input ProducerInput {

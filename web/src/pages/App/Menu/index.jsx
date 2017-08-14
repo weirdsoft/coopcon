@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, branch, renderNothing } from 'recompose'
+import { goToProductGallery } from 'data/route/actions'
 import { isLoadingProducers, getProducers } from 'data/producer/selectors'
+import Link from 'redux-first-router-link'
 import AddProductor from './components/AddProductor'
 
 const Menu = ({ producers }) => (
@@ -13,9 +15,9 @@ const Menu = ({ producers }) => (
     <ul className="menu-list">
       {producers.map((producer) => (
         <li key={producer._id}>
-          <a>
+          <Link to={goToProductGallery(producer._id)}>
             {producer.name}
-          </a>
+          </Link>
         </li>
       ))}
       <li>

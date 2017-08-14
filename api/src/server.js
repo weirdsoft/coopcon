@@ -2,7 +2,7 @@ import 'babel-polyfill'
 import mongoose from 'mongoose'
 import express from 'express'
 import bodyParser from 'body-parser'
-import { graphqlExpress } from 'graphql-server-express'
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import { MONGO_URL, PORT } from './config'
 import { schema } from './data'
 
@@ -22,6 +22,7 @@ const app = express()
 const port = PORT
 
 app.use(bodyParser.json())
+app.use('/api/graphiql', graphiqlExpress({ endpointURL: '/api' }))
 app.use('/api', graphqlExpress({ schema }))
 
 app.listen(port)

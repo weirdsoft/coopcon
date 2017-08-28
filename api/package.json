@@ -12,24 +12,24 @@
     "build": "webpack -p"
   },
   "dependencies": {
-    "babel-polyfill": "^6.x",
-    "body-parser": "^1.x",
-    "express": "^4.x",
-    "graphql": "^0.x",
-    "graphql-server-express": "^1.x",
-    "graphql-tools": "^1.x",
-    "mongoose": "^4.x"
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "graphql": "^0.11.1",
+    "graphql-server-express": "^1.1.2",
+    "graphql-tools": "^1.2.1",
+    "mongoose": "^4.11.9"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.x",
-    "babel-loader": "^7.x",
-    "babel-plugin-transform-object-rest-spread": "^6.x",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.x",
-    "eslint": "^4.2.0",
-    "nodemon": "^1.x",
-    "webpack": "^3.x",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.5.0",
+    "nodemon": "^1.11.0",
+    "webpack": "^3.5.5",
     "webpack-node-externals": "^1.6.0"
   }
 }

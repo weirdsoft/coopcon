@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose, mapProps, renderNothing, setDisplayName } from 'recompose'
+import classNames from 'classnames'
 import { callOnMount } from 'hocs'
 import { getMainRoute } from 'data/route/selectors'
 import { PRODUCT_GALLERY } from 'data/route/actions'
 import { fetchProducers } from 'data/producer/actions'
+import styles from './styles.scss'
 import Menu from './Menu'
 import NavBar from './NavBar'
 import ProductGallery from 'pages/ProductGallery'
@@ -31,13 +33,13 @@ const enhancer = compose(
 )
 
 const App = enhancer(({ Page }) => (
-  <div>
+  <div className={styles.app}>
     <header>
       <NavBar />
     </header>
-    <div className="container-fluid">
+    <div className={classNames('container-fluid', styles.content)}>
       <div className="row">
-        <aside className="col-3">
+        <aside className="col-3 bg-light">
           <Menu />
         </aside>
         <main className="col">

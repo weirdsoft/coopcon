@@ -7,8 +7,6 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-			'bulma/bulma.sass',
-      'font-awesome/scss/font-awesome.scss',
       resolve(__dirname, 'src', 'index.jsx'),
     ],
   },
@@ -28,9 +26,9 @@ module.exports = {
           'babel-loader',
         ],
       },
-			{
-        test: /\.s?[ca]ss$/,
-				include: /node_modules/,
+      {
+        test: /.s?[ca]ss$/,
+        include: /-global/,
         use: [
           'style-loader',
           'css-loader',
@@ -39,8 +37,8 @@ module.exports = {
         ],
       },
       {
-        test: /\.s?[ca]ss$/,
-        exclude: /node_modules/,
+        test: /.s?[ca]ss$/,
+        exclude: /-global/,
         use: [
           'style-loader',
           {

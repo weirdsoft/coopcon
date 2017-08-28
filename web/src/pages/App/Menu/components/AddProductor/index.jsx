@@ -1,14 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { compose, branch, renderComponent, withHandlers, flattenProp } from 'recompose'
+import {
+  compose, branch, renderComponent, mapProps, withProps, withHandlers, flattenProp,
+} from 'recompose'
 import {
   showAddNewProducer, hideAddNewProducer, changeNewProducerName, createNewProducer,
 } from 'data/producer/actions'
 import { isAddingNewProducer, getNewProducer } from 'data/producer/selectors'
 
 const AddProducerLink = ({ onShow }) => (
-  <a onClick={onShow}>
+  <a
+    onClick={onShow}
+    className="nav-link"
+  >
     Agregar Productor
   </a>
 )
@@ -17,23 +22,44 @@ AddProducerLink.propTypes = {
   onShow: PropTypes.func.isRequired,
 }
 
-const AddProducer = ({ name, onKeyDown, onChange }) => (
-  <a className="control" >
+const AddProducer = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel }) => (
+  <a className="nav-link input-group d-flex">
     <input
-      className="input"
+      className="form-control"
       type="text"
+      placeholder="Nombre..."
       value={name}
       onKeyDown={onKeyDown}
       onChange={onChange}
       autoFocus
     />
+    <span className="input-group-btn">
+      <button
+        onClick={onCreate}
+        type="button"
+        className="btn btn-secondary"
+        disabled={!isValid}
+      >
+        <i className="fa fa-check" />
+      </button>
+      <button
+        onClick={onCancel}
+        type="button"
+        className="btn btn-secondary"
+      >
+        <i className="fa fa-times" />
+      </button>
+    </span>
   </a>
 )
 
 AddProducer.propTypes = {
   name: PropTypes.string.isRequired,
+  isValid: PropTypes.bool.isRequired,
   onKeyDown: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -54,16 +80,26 @@ const enhancer = compose(
     ({ show }) => !show,
     renderComponent(AddProducerLink),
   ),
+  mapProps(({ onCreate, onHide, onChange, ...props }) => ({
+    ...props,
+    onCancel: onHide,
+    onCreate: () => {
+      onHide()
+      onCreate()
+    },
+    onChange: (event) => onChange(event.target.value),
+  })),
+  withProps(({ producer: { name } }) => ({
+    isValid: name.trim() !== '',
+  })),
   withHandlers({
-    onKeyDown: ({ onCreate, onHide, producer }) => (event) => {
-      if (event.key === 'Enter' && producer.name.trim() !== '') {
+    onKeyDown: ({ onCreate, onCancel, isValid }) => (event) => {
+      if (event.key === 'Enter' && isValid) {
         onCreate()
-        onHide()
       } else if (event.key === 'Escape') {
-        onHide()
+        onCancel()
       }
     },
-    onChange: ({ onChange }) => (event) => onChange(event.target.value),
   }),
   flattenProp('producer'),
 )

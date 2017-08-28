@@ -1,5 +1,6 @@
 /* globals module */
 import 'babel-polyfill'
+import './styles-global.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'

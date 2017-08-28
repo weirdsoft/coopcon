@@ -8,23 +8,24 @@ import Link from 'redux-first-router-link'
 import AddProductor from './components/AddProductor'
 
 const Menu = ({ producers }) => (
-  <aside className="menu column is-one-quarter">
-    <p className="menu-label">
-      Productores
-    </p>
-    <ul className="menu-list">
-      {producers.map((producer) => (
-        <li key={producer._id}>
-          <Link to={goToProductGallery(producer._id)}>
-            {producer.name}
-          </Link>
-        </li>
-      ))}
-      <li>
-        <AddProductor />
+  <ul className="nav flex-column">
+    {producers.map((producer) => (
+      <li
+        key={producer._id}
+        className="nav-item"
+      >
+        <Link
+          to={goToProductGallery(producer._id)}
+          className="nav-link"
+        >
+          {producer.name}
+        </Link>
       </li>
-    </ul>
-  </aside>
+    ))}
+    <li>
+      <AddProductor />
+    </li>
+  </ul>
 )
 
 Menu.propTypes = {

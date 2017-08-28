@@ -6,6 +6,7 @@ import { getMainRoute } from 'data/route/selectors'
 import { PRODUCT_GALLERY } from 'data/route/actions'
 import { fetchProducers } from 'data/producer/actions'
 import Menu from './Menu'
+import NavBar from './NavBar'
 import ProductGallery from 'pages/ProductGallery'
 
 const pageToComponent = {
@@ -30,19 +31,19 @@ const enhancer = compose(
 )
 
 const App = enhancer(({ Page }) => (
-  <div className="container is-fluid">
+  <div>
     <header>
-      <nav className="navbar is-primary">
-        <div className="navbar-brand">
-          Cooperativa de Consumo
-        </div>
-      </nav>
+      <NavBar />
     </header>
-    <div className="columns">
-      <Menu />
-      <main className="column">
-        <Page />
-      </main>
+    <div className="container-fluid">
+      <div className="row">
+        <aside className="col-3">
+          <Menu />
+        </aside>
+        <main className="col">
+          <Page />
+        </main>
+      </div>
     </div>
   </div>
 ))

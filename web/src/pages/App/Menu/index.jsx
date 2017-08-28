@@ -4,22 +4,24 @@ import { connect } from 'react-redux'
 import { compose, branch, renderNothing } from 'recompose'
 import { goToProductGallery } from 'data/route/actions'
 import { isLoadingProducers, getProducers } from 'data/producer/selectors'
-import Link from 'redux-first-router-link'
+import { NavLink } from 'redux-first-router-link'
 import AddProductor from './components/AddProductor'
 
 const Menu = ({ producers }) => (
-  <ul className="nav flex-column">
-    {producers.map((producer) => (
+  <ul className="nav nav-pills flex-column">
+    {producers.map(({ _id, name }) => (
       <li
-        key={producer._id}
+        key={_id}
         className="nav-item"
       >
-        <Link
-          to={goToProductGallery(producer._id)}
+        <NavLink
+          to={goToProductGallery(_id)}
           className="nav-link"
+          activeClassName='active'
+          isActive={(match, location) => location.payload.producerId === _id}
         >
-          {producer.name}
-        </Link>
+          {name}
+        </NavLink>
       </li>
     ))}
     <li>

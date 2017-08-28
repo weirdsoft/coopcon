@@ -37,7 +37,7 @@ const AddProducer = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel })
       <button
         onClick={onCreate}
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-primary"
         disabled={!isValid}
       >
         <i className="fa fa-check" />

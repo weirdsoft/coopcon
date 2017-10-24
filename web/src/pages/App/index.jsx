@@ -2,10 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, mapProps, renderNothing, setDisplayName } from 'recompose'
 import classNames from 'classnames'
-import { callOnMount } from 'hocs'
 import { getMainRoute } from 'data/route/selectors'
 import { PRODUCT_GALLERY } from 'data/route/actions'
-import { fetchProducers } from 'data/producer/actions'
 import styles from './styles.scss'
 import Menu from './Menu'
 import NavBar from './NavBar'
@@ -19,13 +17,8 @@ const mapStateToProps = (state) => ({
   mainRoute: getMainRoute(state),
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchProducers: () => dispatch(fetchProducers()),
-})
-
 const enhancer = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  callOnMount('fetchProducers'),
+  connect(mapStateToProps),
   mapProps(({ mainRoute }) => ({
     Page: pageToComponent[mainRoute] || renderNothing(),
   })),

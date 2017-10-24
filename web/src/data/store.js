@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 import { connectRoutes } from 'redux-first-router'
 import routes from './routes'
 import appReducers from './reducers'
+import initSagas from './init-sagas'
 import appSagas from './sagas'
 
 function generateReducer(routerReducer) {
@@ -11,10 +12,6 @@ function generateReducer(routerReducer) {
     ...appReducers,
     location: routerReducer,
   })
-}
-
-const runSagas = (middleware) => {
-  return middleware.run(appSagas)
 }
 
 export function configureStore(history, initialState = {}) {
@@ -36,8 +33,12 @@ export function configureStore(history, initialState = {}) {
     ),
   )
 
-  // apply sagas
-  let currentSagas = runSagas(sagaMiddleware)
+  // run sagas
+  let currentSagas = sagaMiddleware.run(appSagas)
+
+  // run init sagas
+  sagaMiddleware.run(initSagas)
+
 
   // hot reload
   if (module.hot) {
@@ -48,7 +49,7 @@ export function configureStore(history, initialState = {}) {
     module.hot.accept('./sagas', async() => {
       currentSagas.cancel()
       await currentSagas.done
-      currentSagas = runSagas(sagaMiddleware)
+      currentSagas = sagaMiddleware.run(appSagas)
     })
   }
 

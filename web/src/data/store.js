@@ -1,10 +1,10 @@
 /* globals module, window */
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import { createLogicMiddleware } from 'redux-logic'
+import createSagaMiddleware from 'redux-saga'
 import { connectRoutes } from 'redux-first-router'
 import routes from './routes'
 import appReducers from './reducers'
-import appLogics from './logics'
+import appSagas from './sagas'
 
 function generateReducer(routerReducer) {
   return combineReducers({
@@ -13,10 +13,14 @@ function generateReducer(routerReducer) {
   })
 }
 
+const runSagas = (middleware) => {
+  return middleware.run(appSagas)
+}
+
 export function configureStore(history, initialState = {}) {
   // initialize middlewares
   const router = connectRoutes(history, routes)
-  const logicMiddleware = createLogicMiddleware(appLogics)
+  const sagaMiddleware = createSagaMiddleware()
 
   // create store
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -26,11 +30,14 @@ export function configureStore(history, initialState = {}) {
     composeEnhancers(
       router.enhancer,
       applyMiddleware(
-        logicMiddleware,
+        sagaMiddleware,
         router.middleware,
       ),
     ),
   )
+
+  // apply sagas
+  let currentSagas = runSagas(sagaMiddleware)
 
   // hot reload
   if (module.hot) {
@@ -38,8 +45,10 @@ export function configureStore(history, initialState = {}) {
       store.replaceReducer(generateReducer(router.reducer))
     })
 
-    module.hot.accept('./logics', () => {
-      logicMiddleware.replaceLogic(appLogics)
+    module.hot.accept('./sagas', async() => {
+      currentSagas.cancel()
+      await currentSagas.done
+      currentSagas = runSagas(sagaMiddleware)
     })
   }
 

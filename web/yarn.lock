@@ -3111,12 +3111,6 @@ is-number@^3.0.0:
   dependencies:
     kind-of "^3.0.2"
 
-is-observable@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/is-observable/-/is-observable-0.2.0.tgz#b361311d83c6e5d726cabf5e250b0237106f5ae2"
-  dependencies:
-    symbol-observable "^0.2.2"
-
 is-path-cwd@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-path-cwd/-/is-path-cwd-1.0.0.tgz#d225ec23132e89edd38fda767472e62e65f1106d"
@@ -5313,14 +5307,9 @@ redux-first-router@^1.9.19:
   dependencies:
     path-to-regexp "^1.7.0"
 
-redux-logic@^0.12.3:
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/redux-logic/-/redux-logic-0.12.3.tgz#e2dff6dd4a70760c829e35100f1ae04461cf08ee"
-  dependencies:
-    is-observable "^0.2.0"
-    is-promise "^2.1.0"
-    loose-envify "^1.2.0"
-    rxjs "^5.0.3"
+redux-saga@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
 
 redux@^3.4.0, redux@^3.7.2:
   version "3.7.2"
@@ -5534,7 +5523,7 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rxjs@^5.0.3, rxjs@^5.5.0:
+rxjs@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.0.tgz#26d8f3866eb700e247e0728a147c3d628993d812"
   dependencies:
@@ -5978,10 +5967,6 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
-
-symbol-observable@^0.2.2:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-0.2.4.tgz#95a83db26186d6af7e7a18dbd9760a2f86d08f40"
 
 symbol-observable@^1.0.1, symbol-observable@^1.0.2, symbol-observable@^1.0.3, symbol-observable@^1.0.4:
   version "1.0.4"

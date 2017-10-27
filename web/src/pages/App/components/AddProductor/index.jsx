@@ -4,15 +4,17 @@ import { connect } from 'react-redux'
 import {
   compose, branch, renderComponent, mapProps, withProps, withHandlers, flattenProp,
 } from 'recompose'
+import classNames from 'classnames'
 import {
   showAddNewProducer, hideAddNewProducer, changeNewProducerName, createNewProducer,
 } from 'data/producer/actions'
 import { isAddingNewProducer, getNewProducer } from 'data/producer/selectors'
+import styles from './styles.scss'
 
 const AddProducerLink = ({ onShow }) => (
   <a
     onClick={onShow}
-    className="nav-link"
+    className={classNames('nav-link', styles.addProducer)}
   >
     Agregar Productor
   </a>

@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { compose, mapProps, renderNothing, setDisplayName } from 'recompose'
 import classNames from 'classnames'
 import { getCurrentRoute } from 'data/route/selectors'
-import { ORDERS, PRODUCT_GALLERY } from 'data/route/actions'
+import { OPERATIVES, PRODUCT_GALLERY } from 'data/route/actions'
 import styles from './styles.scss'
 import Menu from './components/Menu'
 import NavBar from './components/NavBar'
 import ProducerAdmin from 'pages/ProducerAdmin'
 
 const pageToComponent = {
-  [ORDERS]: ProducerAdmin,
+  [OPERATIVES]: ProducerAdmin,
   [PRODUCT_GALLERY]: ProducerAdmin,
 }
 

@@ -13,7 +13,7 @@ const store = configureStore(history)
 
 const startUpApp = () => {
   render(
-    <AppContainer>
+    <AppContainer warnings={false}>
       <Bootstrap store={store} />
     </AppContainer>,
     document.getElementById('root'),

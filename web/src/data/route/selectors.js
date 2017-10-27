@@ -1,1 +1,1 @@
-export const getMainRoute = (state) => state.route.mainRoute
+export const getCurrentRoute = (state) => state.route.currentRoute

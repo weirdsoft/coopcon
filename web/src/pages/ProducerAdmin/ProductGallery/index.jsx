@@ -13,8 +13,8 @@ const enhancer = compose(
 )
 
 const ProductGallery = enhancer(({ name }) => (
-  <div>
-    <h2>
+  <div className="card-body">
+    <h2 className="card-title">
       Productos de <em>{name}</em>
     </h2>
   </div>

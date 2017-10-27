@@ -1,6 +1,7 @@
-import { INDEX, PRODUCT_GALLERY } from './route/actions'
+import { INDEX, OPERATIVES, PRODUCT_GALLERY } from './route/actions'
 
 export default {
   [INDEX]: '/',
-  [PRODUCT_GALLERY]: '/:producerId/',
+  [OPERATIVES]: '/:producerId/operatives',
+  [PRODUCT_GALLERY]: '/:producerId/products',
 }

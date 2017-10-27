@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { allRoutes, PRODUCT_GALLERY } from 'data/route/actions'
+import { allRoutes, OPERATIVES, PRODUCT_GALLERY } from 'data/route/actions'
 import {
   FETCH_PRODUCERS_REQUEST, FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCERS_FAILURE,
   SHOW_ADD_NEW_PRODUCER, HIDE_ADD_NEW_PRODUCER, CHANGE_NEW_PRODUCER_NAME,
@@ -67,6 +67,7 @@ const add = (state = null, action) => {
 
 const currentId = (state = null, action) => {
   switch(action.type) {
+    case OPERATIVES:
     case PRODUCT_GALLERY:
       return action.payload.producerId
     default:

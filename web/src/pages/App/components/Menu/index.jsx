@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, branch, renderNothing } from 'recompose'
-import { goToProductGallery } from 'data/route/actions'
+import { goToOrders } from 'data/route/actions'
 import { isLoadingProducers, getProducers } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
-import AddProductor from './components/AddProductor'
+import AddProductor from '../AddProductor'
 
 const Menu = ({ producers }) => (
   <ul className="nav nav-pills flex-column">
@@ -15,7 +15,7 @@ const Menu = ({ producers }) => (
         className="nav-item"
       >
         <NavLink
-          to={goToProductGallery(_id)}
+          to={goToOrders(_id)}
           className="nav-link"
           activeClassName='active'
           isActive={(match, location) => location.payload.producerId === _id}

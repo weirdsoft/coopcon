@@ -86,8 +86,8 @@ const enhancer = compose(
     ...props,
     onCancel: onHide,
     onCreate: () => {
-      onHide()
       onCreate()
+      onHide()
     },
     onChange: (event) => onChange(event.target.value),
   })),

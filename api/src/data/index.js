@@ -33,9 +33,7 @@ const resolvers = {
   Mutation: {
     ...producerResolver.Mutation,
   },
-  Producer: {
-    ...productResolver.Producer,
-  },
+  ...producerResolver.Nested,
 }
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })

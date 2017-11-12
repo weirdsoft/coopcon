@@ -14,6 +14,14 @@ const resolver = {
       return Producer.create(producer)
     },
   },
+  Nested: {
+    Producer: {
+      async products(producer) {
+        await producer.populate('products').execPopulate()
+        return producer.products
+      },
+    },
+  },
 }
 
 export default resolver

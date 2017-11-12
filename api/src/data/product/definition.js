@@ -4,15 +4,16 @@ const definition = `
     name: String!
     quantity: Int!
     unit: String!
-    price: Int!
+    price: Float!
     creationDate: Date!
   }
 
   input ProductInput {
+    producer: ID!
     name: String!
     quantity: Int!
     unit: String!
-    price: Int!
+    price: Float!
   }
 `
 

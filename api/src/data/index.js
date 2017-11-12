@@ -11,6 +11,7 @@ const queryDefinition = `
 
   type Mutation {
     createProducer(producer: ProducerInput!): Producer
+    createProduct(product: ProductInput!): Product
   }
 `
 
@@ -32,6 +33,7 @@ const resolvers = {
   },
   Mutation: {
     ...producerResolver.Mutation,
+    ...productResolver.Mutation,
   },
   ...producerResolver.Nested,
 }

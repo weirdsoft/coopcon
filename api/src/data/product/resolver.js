@@ -1,9 +1,9 @@
 import Product from './model'
 
 const resolver = {
-  Producer: {
-    products(producer) {
-      return Product.find({ producer: producer._id }).exec()
+  Mutation: {
+    createProduct(_, { product }) {
+      return Product.create(product)
     },
   },
 }

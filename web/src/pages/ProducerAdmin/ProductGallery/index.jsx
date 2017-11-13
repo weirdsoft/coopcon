@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose, flattenProp } from 'recompose'
+import { compose, flattenProp, setDisplayName } from 'recompose'
 import { getCurrentProducer } from 'data/producer/selectors'
+import Product from './components/Product'
 
 const mapStateToProps = (state) => ({
   producer: getCurrentProducer(state),
@@ -10,13 +11,16 @@ const mapStateToProps = (state) => ({
 const enhancer = compose(
   connect(mapStateToProps),
   flattenProp('producer'),
+  setDisplayName('ProductGallery'),
 )
 
-const ProductGallery = enhancer(({ name }) => (
+const ProductGallery = enhancer(({ products }) => (
   <div className="card-body">
-    <h2 className="card-title">
-      Productos de <em>{name}</em>
-    </h2>
+    <div className="card-deck">
+      {products == null ? null : products.map((productId) => (
+        <Product key={productId} productId={productId}/>
+      ))}
+    </div>
   </div>
 ))
 

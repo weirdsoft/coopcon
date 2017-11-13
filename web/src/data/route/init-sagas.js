@@ -11,7 +11,10 @@ function* routeInitSaga() {
 
   if (result.type === FETCH_PRODUCERS_SUCCESS) {
     const route = yield select(getCurrentRoute)
-    yield call(mapRouteToSaga[route])
+
+    if (mapRouteToSaga[route] != null) {
+      yield call(mapRouteToSaga[route])
+    }
   }
 }
 

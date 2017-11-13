@@ -50,7 +50,12 @@ module.exports = {
             },
           },
           'postcss-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [ resolve(__dirname, "src") ],
+            },
+          },
         ],
       },
       {
@@ -69,7 +74,7 @@ module.exports = {
       resolve(__dirname, 'src'),
       'node_modules',
     ],
-    extensions: [ '.js', '.jsx' ],
+    extensions: [ '.js', '.jsx', '.scss' ],
   },
 
   plugins: [

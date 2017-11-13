@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { allRoutes, OPERATIVES, PRODUCT_GALLERY } from 'data/route/actions'
+import { FETCH_PRODUCER_PRODUCTS_SUCCESS } from 'data/product/actions'
 import {
   FETCH_PRODUCERS_REQUEST, FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCERS_FAILURE,
   SHOW_ADD_NEW_PRODUCER, HIDE_ADD_NEW_PRODUCER, CHANGE_NEW_PRODUCER_NAME,
@@ -18,6 +19,14 @@ const list = (state = listDefault, action) => {
         ...state,
         {
           ...action.producer,
+        },
+      ]
+    case FETCH_PRODUCER_PRODUCTS_SUCCESS:
+      return [
+        ...state.filter((producer) => producer._id !== action.producerId),
+        {
+          ...state.find((producer) => producer._id === action.producerId),
+          products: action.products.map((product) => product._id),
         },
       ]
     default:

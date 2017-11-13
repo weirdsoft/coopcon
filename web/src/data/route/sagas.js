@@ -1,17 +1,36 @@
-import { select, put, takeLatest } from 'redux-saga/effects'
-import { PRODUCT_GALLERY } from 'data/route/actions'
+import { select, put, call, takeLatest } from 'redux-saga/effects'
+import { INDEX, PRODUCT_GALLERY, goToOperatives } from 'data/route/actions'
 import { fetchProducerProducts } from 'data/product/actions'
-import { getCurrentId } from 'data/producer/selectors'
+import { getCurrentId, getProducers } from 'data/producer/selectors'
+
+function* onIndex() {
+  const producers = yield select(getProducers)
+  const first = producers[0]
+
+  if (first !== null) {
+    yield put(goToOperatives(first._id))
+  }
+}
 
 function* onProductGallery() {
   const producerId = yield select(getCurrentId)
   yield put(fetchProducerProducts(producerId))
 }
 
+const mapRouteToSaga = {
+  [INDEX]: onIndex,
+  [PRODUCT_GALLERY]: onProductGallery,
+}
+
+function* handleRouteChange({ type }) {
+  yield call(mapRouteToSaga[type])
+}
+
 function* routeSaga() {
   yield [
-    takeLatest(PRODUCT_GALLERY, onProductGallery),
+    takeLatest(Object.keys(mapRouteToSaga), handleRouteChange),
   ]
 }
 
+export { mapRouteToSaga }
 export default routeSaga

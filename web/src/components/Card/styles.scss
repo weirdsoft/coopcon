@@ -1,0 +1,15 @@
+.card {
+  &:hover {
+    .actions {
+      visibility: visible;
+    }
+  }
+}
+
+.actions {
+  flex-grow: 0;
+
+  &.is-hidden {
+    visibility: hidden;
+  }
+}

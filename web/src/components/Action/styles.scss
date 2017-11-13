@@ -1,0 +1,15 @@
+@import 'variables';
+
+:global(.button) {
+  &.action {
+    &:active {
+      background-color: inherit;
+      box-shadow: inherit;
+    }
+
+    &:hover, &:focus {
+      background-color: inherit;
+      color: $link-color;
+    }
+  }
+}

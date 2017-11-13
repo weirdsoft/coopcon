@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, branch, renderNothing } from 'recompose'
 import { goToOperatives } from 'data/route/actions'
-import { isLoadingProducers, getProducers } from 'data/producer/selectors'
+import { isLoadingProducers, getSortedProducers } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
 import AddProductor from '../AddProductor'
 
@@ -39,7 +39,7 @@ Menu.propTypes = {
 
 const mapStateToProps = (state) => ({
   isLoading: isLoadingProducers(state),
-  producers: getProducers(state),
+  producers: getSortedProducers(state),
 })
 
 const enhancer = compose(

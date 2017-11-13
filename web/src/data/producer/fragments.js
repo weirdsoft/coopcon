@@ -4,5 +4,6 @@ export const producerFieldsFragment = gql`
   fragment producerFields on Producer {
     _id
     name
+    creationDate
   }
 `

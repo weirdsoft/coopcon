@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
 import { getCurrentProducer } from 'data/producer/selectors'
 import Product from './components/Product'
+import ProductAdd from './components/ProductAdd'
 
 const mapStateToProps = (state) => ({
   producer: getCurrentProducer(state),
@@ -20,6 +21,7 @@ const ProductGallery = enhancer(({ products }) => (
       {products == null ? null : products.map((productId) => (
         <Product key={productId} productId={productId}/>
       ))}
+      <ProductAdd />
     </div>
   </div>
 ))

@@ -1,5 +1,5 @@
 import { select, put, call, takeLatest } from 'redux-saga/effects'
-import { INDEX, PRODUCT_GALLERY, goToOperatives } from 'data/route/actions'
+import { INDEX, PRODUCT_GALLERY, PRODUCT_ADD, goToOperatives } from 'data/route/actions'
 import { fetchProducerProducts } from 'data/product/actions'
 import { getCurrentId, getProducers } from 'data/producer/selectors'
 
@@ -20,6 +20,7 @@ function* onProductGallery() {
 const mapRouteToSaga = {
   [INDEX]: onIndex,
   [PRODUCT_GALLERY]: onProductGallery,
+  [PRODUCT_ADD]: onProductGallery,
 }
 
 function* handleRouteChange({ type }) {

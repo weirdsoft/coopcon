@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 import { PRODUCT_ADD, allRoutes } from 'data/route/actions'
-import { FETCH_PRODUCER_PRODUCTS_SUCCESS, CHANGE_NEW_PRODUCT } from './actions'
+import {
+  FETCH_PRODUCER_PRODUCTS_SUCCESS, CHANGE_NEW_PRODUCT, ADD_NEW_PRODUCT_SUCCESS,
+} from './actions'
 
 const byId = (state = {}, action) => {
   switch(action.type) {
@@ -14,6 +16,13 @@ const byId = (state = {}, action) => {
           }
           return result
         }, {}),
+      }
+    case ADD_NEW_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        [action.product._id]: {
+          ...action.product,
+        },
       }
     default:
       return state

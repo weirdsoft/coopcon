@@ -1,10 +1,10 @@
 import { select, put, call, takeLatest } from 'redux-saga/effects'
 import { INDEX, PRODUCT_GALLERY, PRODUCT_ADD, goToOperatives } from 'data/route/actions'
 import { fetchProducerProducts } from 'data/product/actions'
-import { getCurrentId, getProducers } from 'data/producer/selectors'
+import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
 
 function* onIndex() {
-  const producers = yield select(getProducers)
+  const producers = yield select(getSortedProducers)
   const first = producers[0]
 
   if (first !== null) {

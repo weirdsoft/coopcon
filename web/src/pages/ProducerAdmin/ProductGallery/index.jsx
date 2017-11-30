@@ -17,11 +17,15 @@ const enhancer = compose(
 
 const ProductGallery = enhancer(({ products }) => (
   <div className="card-body">
-    <div className="card-deck">
+    <div className="row">
       {products == null ? null : products.map((productId) => (
-        <Product key={productId} productId={productId}/>
+        <div key={productId} className="col-12 col-md-6 col-lg-4 mb-4">
+          <Product productId={productId} />
+        </div>
       ))}
-      <ProductAdd />
+      <div className="col-12 col-md-6 col-lg-4 mb-4">
+        <ProductAdd />
+      </div>
     </div>
   </div>
 ))

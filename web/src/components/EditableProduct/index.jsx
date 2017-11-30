@@ -36,7 +36,7 @@ const enhancer = compose(
 const EditableProduct = enhancer(({
   name, quantity, unit, price, onUpdate, onSubmit, onCancel,
 }) => (
-  <Card className="text-center">
+  <Card className="text-center h-100">
     <form onSubmit={onSubmit}>
       <div className="form-group">
         <input

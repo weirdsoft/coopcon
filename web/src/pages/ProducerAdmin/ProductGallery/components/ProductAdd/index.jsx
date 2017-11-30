@@ -21,7 +21,7 @@ const placeholderEnhancer = compose(
 )
 
 const ProductAddPlaceholder = placeholderEnhancer(({ producerId }) => (
-  <Card className="text-center">
+  <Card className="text-center h-100">
     <Link to={goToProductAdd(producerId)}>
       <div>
         <i className="fa fa-plus-circle fa-4x" />

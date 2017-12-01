@@ -4,6 +4,7 @@ const definition = `
     name: String!
     creationDate: Date!
     products: [Product!]!
+    operations: [Operation!]!
   }
 
   input ProducerInput {

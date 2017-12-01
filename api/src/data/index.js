@@ -2,6 +2,7 @@ import { makeExecutableSchema } from 'graphql-tools'
 import scalarResolvers from './scalars'
 import { producerDefinition, producerResolver } from './producer'
 import { productDefinition, productResolver } from './product'
+import { operationDefinition, operationResolver } from './operation'
 
 const queryDefinition = `
   type Query {
@@ -12,6 +13,7 @@ const queryDefinition = `
   type Mutation {
     createProducer(producer: ProducerInput!): Producer
     createProduct(product: ProductInput!): Product
+    createOperation(operation: OperationInput!): Operation
   }
 `
 
@@ -24,6 +26,7 @@ const typeDefs = [
   queryDefinition,
   producerDefinition,
   productDefinition,
+  operationDefinition,
 ]
 
 const resolvers = {
@@ -34,8 +37,10 @@ const resolvers = {
   Mutation: {
     ...producerResolver.Mutation,
     ...productResolver.Mutation,
+    ...operationResolver.Mutation,
   },
   ...producerResolver.Nested,
+  ...operationResolver.Nested,
 }
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })

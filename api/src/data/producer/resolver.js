@@ -20,6 +20,10 @@ const resolver = {
         await producer.populate('products').execPopulate()
         return producer.products
       },
+      async operations(producer) {
+        await producer.populate('operations').execPopulate()
+        return producer.operations
+      },
     },
   },
 }

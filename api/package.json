@@ -17,8 +17,8 @@
     "express": "^4.16.2",
     "graphql": "^0.11.7",
     "graphql-server-express": "^1.2.0",
-    "graphql-tools": "^2.7.2",
-    "mongoose": "^4.13.1"
+    "graphql-tools": "^2.10.0",
+    "mongoose": "^4.13.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -26,9 +26,9 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
-    "eslint": "^4.11.0",
+    "eslint": "^4.12.1",
     "nodemon": "^1.12.1",
-    "webpack": "^3.8.1",
+    "webpack": "^3.9.1",
     "webpack-node-externals": "^1.6.0"
   }
 }

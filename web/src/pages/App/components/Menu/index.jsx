@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, branch, renderNothing } from 'recompose'
-import { goToOperatives } from 'data/route/actions'
+import { goToOperations } from 'data/route/actions'
 import { isLoadingProducers, getSortedProducers } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
 import AddProductor from '../AddProductor'
@@ -15,7 +15,7 @@ const Menu = ({ producers }) => (
         className="nav-item"
       >
         <NavLink
-          to={goToOperatives(_id)}
+          to={goToOperations(_id)}
           className="nav-link"
           activeClassName='active'
           isActive={(match, location) => location.payload.producerId === _id}

@@ -2,16 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import {
-  goToOperatives, goToProductGallery, OPERATIVES, PRODUCT_GALLERY, PRODUCT_ADD,
+  goToOperations, goToProductGallery, OPERATIONS, PRODUCT_GALLERY, PRODUCT_ADD,
 } from 'data/route/actions'
 import { getCurrentRoute } from 'data/route/selectors'
 import { getCurrentId } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
 import ProductGallery from './ProductGallery'
-import Operatives from './Operatives'
+import Operations from './Operations'
 
 const pageToComponent = {
-  [OPERATIVES]: Operatives,
+  [OPERATIONS]: Operations,
   [PRODUCT_GALLERY]: ProductGallery,
   [PRODUCT_ADD]: ProductGallery,
 }
@@ -36,10 +36,10 @@ const ProducerAdmin = enhancer(({ producerId, Page }) => (
       <ul className="nav nav-tabs card-header-tabs">
         <li className="nav-item">
           <NavLink
-            to={goToOperatives(producerId)}
+            to={goToOperations(producerId)}
             className="nav-link"
             activeClassName='active'
-            isActive={(match, location) => location.type === OPERATIVES}
+            isActive={(match, location) => location.type === OPERATIONS}
           >
             Operativos
           </NavLink>

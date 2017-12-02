@@ -1,6 +1,9 @@
 import { select, put, call, takeLatest } from 'redux-saga/effects'
 import { NOT_FOUND } from 'redux-first-router'
-import { INDEX, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex, goToOperations } from 'data/route/actions'
+import {
+  INDEX, OPERATIONS, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex, goToOperations,
+} from 'data/route/actions'
+import { fetchProducerOperations } from 'data/operation/actions'
 import { fetchProducerProducts } from 'data/product/actions'
 import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
 
@@ -17,6 +20,11 @@ function* onIndex() {
   }
 }
 
+function* onOperations() {
+  const producerId = yield select(getCurrentId)
+  yield put(fetchProducerOperations(producerId))
+}
+
 function* onProductGallery() {
   const producerId = yield select(getCurrentId)
   yield put(fetchProducerProducts(producerId))
@@ -25,6 +33,7 @@ function* onProductGallery() {
 const mapRouteToSaga = {
   [NOT_FOUND]: onNotFound,
   [INDEX]: onIndex,
+  [OPERATIONS]: onOperations,
   [PRODUCT_GALLERY]: onProductGallery,
   [PRODUCT_ADD]: onProductGallery,
 }

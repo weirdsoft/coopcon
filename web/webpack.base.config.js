@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-      resolve(__dirname, 'src', 'index.jsx'),
+      'patches/moment-locale-patch',
+      'index',
     ],
   },
 

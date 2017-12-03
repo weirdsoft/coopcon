@@ -5,6 +5,11 @@ const resolver = {
     createOperation(_, { operation }) {
       return Operation.create(operation)
     },
+    setOperationProducts(_, { operation }) {
+      return Operation
+        .findByIdAndUpdate(operation.id, { $set: { products: operation.products } }, { new: true })
+        .exec()
+    },
   },
   Nested: {
     Operation: {

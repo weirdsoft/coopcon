@@ -14,6 +14,7 @@ const queryDefinition = `
     createProducer(producer: ProducerInput!): Producer
     createProduct(product: ProductInput!): Product
     createOperation(operation: OperationInput!): Operation
+    setOperationProducts(operation: OperationProductsInput): Operation
   }
 `
 

@@ -16,6 +16,10 @@ const definition = `
     closeDate: Date!
     deliveryDate: Date!
     producer: ID!
+  }
+
+  input OperationProductsInput {
+    id: ID!
     products: [ID!]!
   }
 `

@@ -37,7 +37,7 @@ const App = enhancer(({ Page }) => (
         <aside className="col-3 bg-light">
           <Menu />
         </aside>
-        <main className="col">
+        <main className="col-9">
           <Page />
         </main>
       </div>

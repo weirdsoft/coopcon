@@ -1,7 +1,13 @@
 @import './variables';
 @import '~bootstrap/scss/bootstrap';
 @import '~font-awesome/scss/font-awesome';
+@import '~react-datepicker/dist/react-datepicker';
 
 html, body, #root {
   height: 100%;
+}
+
+// fix for the react datepicker time list
+.react-datepicker__time-list {
+  padding: 0 !important;
 }

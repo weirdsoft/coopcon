@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose, mapProps, renderNothing, setDisplayName } from 'recompose'
 import classNames from 'classnames'
 import { getCurrentRoute } from 'data/route/selectors'
-import { OPERATIONS, PRODUCT_GALLERY, PRODUCT_ADD } from 'data/route/actions'
+import { OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD } from 'data/route/actions'
 import styles from './styles.scss'
 import Menu from './components/Menu'
 import NavBar from './components/NavBar'
@@ -11,6 +11,7 @@ import ProducerAdmin from 'pages/ProducerAdmin'
 
 const pageToComponent = {
   [OPERATIONS]: ProducerAdmin,
+  [OPERATION_ADD]: ProducerAdmin,
   [PRODUCT_GALLERY]: ProducerAdmin,
   [PRODUCT_ADD]: ProducerAdmin,
 }

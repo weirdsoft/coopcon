@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import {
-  goToOperations, goToProductGallery, OPERATIONS, PRODUCT_GALLERY, PRODUCT_ADD,
+  goToOperations, goToProductGallery, OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD,
 } from 'data/route/actions'
 import { getCurrentRoute } from 'data/route/selectors'
 import { getCurrentId } from 'data/producer/selectors'
@@ -12,6 +12,7 @@ import Operations from './Operations'
 
 const pageToComponent = {
   [OPERATIONS]: Operations,
+  [OPERATION_ADD]: Operations,
   [PRODUCT_GALLERY]: ProductGallery,
   [PRODUCT_ADD]: ProductGallery,
 }
@@ -39,7 +40,7 @@ const ProducerAdmin = enhancer(({ producerId, Page }) => (
             to={goToOperations(producerId)}
             className="nav-link"
             activeClassName='active'
-            isActive={(match, location) => location.type === OPERATIONS}
+            isActive={(match, location) => [ OPERATIONS, OPERATION_ADD ].includes(location.type)}
           >
             Operativos
           </NavLink>

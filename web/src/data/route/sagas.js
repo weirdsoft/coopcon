@@ -1,7 +1,7 @@
 import { select, put, call, takeLatest } from 'redux-saga/effects'
 import { NOT_FOUND } from 'redux-first-router'
 import {
-  INDEX, OPERATIONS, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex, goToOperations,
+  INDEX, OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex, goToOperations,
 } from 'data/route/actions'
 import { fetchProducerOperations } from 'data/operation/actions'
 import { fetchProducerProducts } from 'data/product/actions'
@@ -34,6 +34,7 @@ const mapRouteToSaga = {
   [NOT_FOUND]: onNotFound,
   [INDEX]: onIndex,
   [OPERATIONS]: onOperations,
+  [OPERATION_ADD]: onOperations,
   [PRODUCT_GALLERY]: onProductGallery,
   [PRODUCT_ADD]: onProductGallery,
 }

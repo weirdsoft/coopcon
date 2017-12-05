@@ -5,7 +5,9 @@ import {
   compose, branch, renderNothing, flattenProp, mapProps, withHandlers, setDisplayName,
 } from 'recompose'
 import { coalesce, validations } from 'utils'
-import { changeNewOperation } from 'data/operation/actions'
+import { goToOperations } from 'data/route/actions'
+import { getCurrentId } from 'data/producer/selectors'
+import { changeNewOperation, addNewOperation } from 'data/operation/actions'
 import { isAddingOperation, getNewOperation } from 'data/operation/selectors'
 import DatePicker from 'react-datepicker'
 
@@ -17,12 +19,15 @@ const operationValidations = {
 }
 
 const mapStateToProps = (state) => ({
+  producerId: getCurrentId(state),
   isAdding: isAddingOperation(state),
   operation: getNewOperation(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
   onUpdate: (changes) => dispatch(changeNewOperation(changes)),
+  onSubmit: () => dispatch(addNewOperation()),
+  onCancel: (producerId) => dispatch(goToOperations(producerId)),
 })
 
 const enhancer = compose(
@@ -45,11 +50,14 @@ const enhancer = compose(
         [field]: operationValidations[field](value),
       })
     },
+    onCancel: ({ onCancel, producerId }) => () => onCancel(producerId),
   }),
   setDisplayName('OperationAdd'),
 )
 
-const OperationAdd = enhancer(({ name, publishDate, closeDate, deliveryDate, onUpdate }) => (
+const OperationAdd = enhancer(({
+  name, publishDate, closeDate, deliveryDate, onUpdate, onSubmit, onCancel,
+}) => (
   <tr>
     <td>
       <input
@@ -112,6 +120,26 @@ const OperationAdd = enhancer(({ name, publishDate, closeDate, deliveryDate, onU
         }}
         onChange={(date) => onUpdate('deliveryDate', date)}
       />
+    </td>
+    <td>
+      <span className="btn-group">
+        <button
+          type="button"
+          title="Crear Operativo"
+          className="btn btn-small btn-primary"
+          onClick={onSubmit}
+        >
+          <i className="fa fa-check" />
+        </button>
+        <button
+          type="button"
+          title="Cancelar"
+          className="btn btn-small btn-secondary"
+          onClick={onCancel}
+        >
+          <i className="fa fa-times" />
+        </button>
+      </span>
     </td>
   </tr>
 ))

@@ -35,6 +35,9 @@ const Operations = enhancer(({ producerId, operations }) => (
           <th>
             Fecha de entrega
           </th>
+          <th>
+            Acciones
+          </th>
         </tr>
       </thead>
       <tbody>

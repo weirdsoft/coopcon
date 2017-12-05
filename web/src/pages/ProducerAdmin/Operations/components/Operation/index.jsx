@@ -29,6 +29,7 @@ const Operation = enhancer(({ name, publishDate, closeDate, deliveryDate }) => (
     <td>
       {moment(deliveryDate).calendar()}
     </td>
+    <td></td>
   </tr>
 ))
 

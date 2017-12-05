@@ -1,21 +1,81 @@
-import { put, take, select, call } from 'redux-saga/effects'
+import { all, call, select, put, actionChannel, take } from 'redux-saga/effects'
+import { NOT_FOUND } from 'redux-first-router'
 import {
-  fetchProducers, FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCERS_FAILURE,
-} from 'data/producer/actions'
-import { getCurrentRoute } from 'data/route/selectors'
-import { mapRouteToSaga } from './sagas'
+  INDEX, OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex, goToOperations,
+} from 'data/route/actions'
+import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
+import { FETCH_PRODUCERS_SUCCESS, fetchProducers } from 'data/producer/actions'
+import { fetchProducerOperations } from 'data/operation/actions'
+import { fetchProducerProducts } from 'data/product/actions'
+import { getCurrentRoute } from './selectors'
 
-function* routeInitSaga() {
-  yield put(fetchProducers())
-  const result = yield take([ FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCERS_FAILURE ])
+function sagaWithParameters(saga, ...parameterEffects) {
+  let previousParameters = []
 
-  if (result.type === FETCH_PRODUCERS_SUCCESS) {
-    const route = yield select(getCurrentRoute)
+  return function* () {
+    const parameters = yield all(parameterEffects)
+    const differentParameters = parameters.some((current, i) => (
+      current !== previousParameters[i]
+    ))
 
-    if (mapRouteToSaga[route] != null) {
-      yield call(mapRouteToSaga[route])
+    if (differentParameters) {
+      previousParameters = parameters
+      yield call(saga, ...parameters)
     }
   }
 }
 
-export default routeInitSaga
+function* onNotFound() {
+    yield put(goToIndex())
+}
+
+function* onIndex() {
+  const producers = yield select(getSortedProducers)
+  const first = producers[0]
+
+  if (first !== null) {
+    yield put(goToOperations(first._id))
+  }
+}
+
+const onOperations = sagaWithParameters(
+  function* (producerId) {
+    yield put(fetchProducerOperations(producerId))
+  },
+  select(getCurrentId),
+)
+
+const onProductGallery = sagaWithParameters(
+  function* (producerId) {
+    yield put(fetchProducerProducts(producerId))
+  },
+  select(getCurrentId),
+)
+
+const mapRouteToSaga = {
+  [NOT_FOUND]: onNotFound,
+  [INDEX]: onIndex,
+  [OPERATIONS]: onOperations,
+  [OPERATION_ADD]: onOperations,
+  [PRODUCT_GALLERY]: onProductGallery,
+  [PRODUCT_ADD]: onProductGallery,
+}
+
+function* routeSaga() {
+  // fetch producers on init
+  yield put(fetchProducers())
+  yield take(FETCH_PRODUCERS_SUCCESS)
+  const channel = yield actionChannel(Object.keys(mapRouteToSaga))
+
+  do {
+    // take the current route
+    let route = yield select(getCurrentRoute)
+
+    yield call(mapRouteToSaga[route])
+
+    // wait for the next route change
+    yield take(channel)
+  } while(true)
+}
+
+export default routeSaga

@@ -1,11 +1,9 @@
 import { fork } from 'redux-saga/effects'
-import routeSaga from './route/sagas'
 import producerSaga from './producer/sagas'
 import operationSaga from './operation/sagas'
 import productSaga from './product/sagas'
 
 const sagas = [
-  routeSaga,
   producerSaga,
   operationSaga,
   productSaga,

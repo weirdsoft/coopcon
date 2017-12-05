@@ -36,9 +36,8 @@ export function configureStore(history, initialState = {}) {
   // run sagas
   let currentSagas = sagaMiddleware.run(appSagas)
 
-  // run init sagas
+  // run init sagas (doesn't get hot-reloaded)
   sagaMiddleware.run(initSagas)
-
 
   // hot reload
   if (module.hot) {

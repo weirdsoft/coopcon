@@ -21,13 +21,13 @@ const Operation = enhancer(({ name, publishDate, closeDate, deliveryDate }) => (
       {name}
     </td>
     <td>
-      {moment(publishDate).calendar()}
+      {moment(publishDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
     </td>
     <td>
-      {moment(closeDate).calendar()}
+      {moment(closeDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
     </td>
     <td>
-      {moment(deliveryDate).calendar()}
+      {moment(deliveryDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
     </td>
     <td></td>
   </tr>

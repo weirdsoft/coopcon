@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { getOperations } from 'data/operation/selectors'
 
 export const getProducers = (state) => state.producer.list
 export const getSortedProducers = createSelector(
@@ -12,4 +13,12 @@ export const getCurrentId = (state) => state.producer.currentId
 export const getCurrentProducer = createSelector(
   [ getProducers, getCurrentId ],
   (producers, id) => producers.find((producer) => producer._id === id),
+)
+export const getCurrentProducerSortedOperations = createSelector(
+  [ getCurrentProducer, getOperations ],
+  (producer, operations) => producer == null || producer.operations == null ?
+    [] :
+    producer.operations.slice().sort((a, b) => (
+      operations[b].publishDate - operations[a].publishDate
+    )),
 )

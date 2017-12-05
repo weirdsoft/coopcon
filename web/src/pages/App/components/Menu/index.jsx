@@ -5,7 +5,7 @@ import { compose, branch, renderNothing } from 'recompose'
 import { goToOperations } from 'data/route/actions'
 import { isLoadingProducers, getSortedProducers } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
-import AddProductor from '../AddProductor'
+import ProducerAdd from '../ProducerAdd'
 
 const Menu = ({ producers }) => (
   <ul className="nav nav-pills flex-column">
@@ -25,7 +25,7 @@ const Menu = ({ producers }) => (
       </li>
     ))}
     <li>
-      <AddProductor />
+      <ProducerAdd />
     </li>
   </ul>
 )

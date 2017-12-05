@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-  compose, branch, renderComponent, mapProps, withProps, withHandlers, flattenProp,
+  compose, branch, renderComponent, mapProps, withProps, withHandlers, flattenProp, setDisplayName,
 } from 'recompose'
 import classNames from 'classnames'
 import {
@@ -11,7 +11,7 @@ import {
 import { isAddingNewProducer, getNewProducer } from 'data/producer/selectors'
 import styles from './styles.scss'
 
-const AddProducerLink = ({ onShow }) => (
+const ProducerAddLink = ({ onShow }) => (
   <a
     onClick={onShow}
     className={classNames('nav-link', styles.addProducer)}
@@ -20,11 +20,11 @@ const AddProducerLink = ({ onShow }) => (
   </a>
 )
 
-AddProducerLink.propTypes = {
+ProducerAddLink.propTypes = {
   onShow: PropTypes.func.isRequired,
 }
 
-const AddProducer = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel }) => (
+const ProducerAdd = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel }) => (
   <a className="nav-link input-group d-flex">
     <input
       className="form-control"
@@ -55,7 +55,7 @@ const AddProducer = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel })
   </a>
 )
 
-AddProducer.propTypes = {
+ProducerAdd.propTypes = {
   name: PropTypes.string.isRequired,
   isValid: PropTypes.bool.isRequired,
   onKeyDown: PropTypes.func.isRequired,
@@ -80,7 +80,7 @@ const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
   branch(
     ({ show }) => !show,
-    renderComponent(AddProducerLink),
+    renderComponent(ProducerAddLink),
   ),
   mapProps(({ onCreate, onHide, onChange, ...props }) => ({
     ...props,
@@ -104,6 +104,7 @@ const enhancer = compose(
     },
   }),
   flattenProp('producer'),
+  setDisplayName('ProducerAdd'),
 )
 
-export default enhancer(AddProducer)
+export default enhancer(ProducerAdd)

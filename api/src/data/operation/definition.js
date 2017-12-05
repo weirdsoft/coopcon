@@ -11,11 +11,11 @@ const definition = `
   }
 
   input OperationInput {
+    producer: ID!
     name: String!
     publishDate: Date
     closeDate: Date!
     deliveryDate: Date!
-    producer: ID!
   }
 
   input OperationProductsInput {

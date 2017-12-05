@@ -7,10 +7,7 @@ const OperationSchema = mongoose.Schema({
   closeDate: { type: Date, required: true },
   deliveryDate: { type: Date, required: true },
   producer: { type: mongoose.Schema.Types.ObjectId, ref: 'Producer' },
-  products: {
-    type: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
-    required: true,
-  },
+  products: { type: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ] },
 })
 
 const Operation = mongoose.model('Operation', OperationSchema)

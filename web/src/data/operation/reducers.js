@@ -1,7 +1,9 @@
 import moment from 'moment'
 import { combineReducers } from 'redux'
 import { OPERATION_ADD, allRoutes } from 'data/route/actions'
-import { FETCH_PRODUCER_OPERATIONS_SUCCESS, CHANGE_NEW_OPERATION } from './actions'
+import {
+  FETCH_PRODUCER_OPERATIONS_SUCCESS, CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS,
+} from './actions'
 
 const byId = (state = {}, action) => {
   switch(action.type) {
@@ -15,6 +17,13 @@ const byId = (state = {}, action) => {
           }
           return result
         }, {}),
+      }
+    case ADD_NEW_OPERATION_SUCCESS:
+      return {
+        ...state,
+        [action.operation._id]: {
+          ...action.operation,
+        },
       }
     default:
       return state

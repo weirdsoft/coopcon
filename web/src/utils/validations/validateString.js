@@ -1,7 +1,5 @@
 const validateString = (value, defaultValue = null) => {
-  value = value.trim()
-
-  if (value !== '') {
+  if (value.trim() !== '') {
     return value
   } else {
     return defaultValue

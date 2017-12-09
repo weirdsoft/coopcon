@@ -52,11 +52,20 @@ const enhancer = compose(
     },
     onCancel: ({ onCancel, producerId }) => () => onCancel(producerId),
   }),
+  withHandlers({
+    onKeyDown: ({ onSubmit, onCancel }) => (event) => {
+      if (event.key === 'Enter') {
+        onSubmit()
+      } else if (event.key === 'Escape') {
+        onCancel()
+      }
+    },
+  }),
   setDisplayName('OperationAdd'),
 )
 
 const OperationAdd = enhancer(({
-  name, publishDate, closeDate, deliveryDate, onUpdate, onSubmit, onCancel,
+  name, publishDate, closeDate, deliveryDate, onKeyDown, onUpdate, onSubmit, onCancel,
 }) => (
   <tr>
     <td>
@@ -64,7 +73,9 @@ const OperationAdd = enhancer(({
         type="text"
         className="form-control"
         value={name}
+        onKeyDown={onKeyDown}
         onChange={(event) => onUpdate('name', event.target.value)}
+        autoFocus
       />
     </td>
     <td>
@@ -82,6 +93,7 @@ const OperationAdd = enhancer(({
             boundariesElement: 'viewport',
           },
         }}
+        onKeyDown={onKeyDown}
         onChange={(date) => onUpdate('publishDate', date)}
       />
     </td>
@@ -100,6 +112,7 @@ const OperationAdd = enhancer(({
             boundariesElement: 'viewport',
           },
         }}
+        onKeyDown={onKeyDown}
         onChange={(date) => onUpdate('closeDate', date)}
       />
     </td>
@@ -118,6 +131,7 @@ const OperationAdd = enhancer(({
             boundariesElement: 'viewport',
           },
         }}
+        onKeyDown={onKeyDown}
         onChange={(date) => onUpdate('deliveryDate', date)}
       />
     </td>

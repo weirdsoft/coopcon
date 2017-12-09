@@ -29,12 +29,17 @@ const enhancer = compose(
       event.preventDefault()
       onSubmit()
     },
+    onKeyDown: ({ onCancel }) => (event) => {
+      if (event.key === 'Escape') {
+        onCancel()
+      }
+    },
   }),
   setDisplayName('EditableProduct'),
 )
 
 const EditableProduct = enhancer(({
-  name, quantity, unit, price, onUpdate, onSubmit, onCancel,
+  name, quantity, unit, price, onKeyDown, onUpdate, onSubmit, onCancel,
 }) => (
   <Card className="text-center h-100">
     <form onSubmit={onSubmit}>
@@ -42,15 +47,18 @@ const EditableProduct = enhancer(({
         <input
           type="text"
           value={name}
+          onKeyDown={onKeyDown}
           onChange={(event) => onUpdate('name', event)}
           className="form-control"
           placeholder="Nombre"
+          autoFocus
         />
       </div>
       <div className="form-group">
         <input
           type="number"
           value={quantity}
+          onKeyDown={onKeyDown}
           onChange={(event) => onUpdate('quantity', event)}
           className="form-control"
           placeholder="Cantidad"
@@ -60,6 +68,7 @@ const EditableProduct = enhancer(({
         <input
           type="text"
           value={unit}
+          onKeyDown={onKeyDown}
           onChange={(event) => onUpdate('unit', event)}
           className="form-control"
           placeholder="Unidad"
@@ -71,6 +80,7 @@ const EditableProduct = enhancer(({
           <input
             type="text"
             value={price}
+            onKeyDown={onKeyDown}
             onChange={(event) => onUpdate('price', event)}
             className="form-control"
             placeholder="Precio"

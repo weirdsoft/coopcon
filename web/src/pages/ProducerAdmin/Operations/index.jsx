@@ -1,15 +1,16 @@
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { compose, setDisplayName } from 'recompose'
-import { getCurrentId, getCurrentProducerSortedOperations } from 'data/producer/selectors'
+import { getCurrentId } from 'data/producer/selectors'
 import { goToOperationAdd } from 'data/route/actions'
 import Link from 'redux-first-router-link'
-import Operation from './components/Operation'
-import OperationAdd from './components/OperationAdd'
+import OperationsTable from './components/OperationsTable'
+import OperationProducts from './components/OperationProducts'
+import styles from './styles.scss'
 
 const mapStateToProps = (state) => ({
   producerId: getCurrentId(state),
-  operations: getCurrentProducerSortedOperations(state),
 })
 
 const enhancer = compose(
@@ -17,36 +18,13 @@ const enhancer = compose(
   setDisplayName('Operations'),
 )
 
-const Operations = enhancer(({ producerId, operations }) => (
-  <div className="card-body">
-    <table className="table table-responsive-md table-striped">
-      <thead>
-        <tr>
-          <th>
-            Nombre
-          </th>
-          <th>
-            Fecha de publicación
-          </th>
-          <th>
-            Fecha de cierre
-          </th>
-          <th>
-            Fecha de entrega
-          </th>
-          <th>
-            Acciones
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <OperationAdd />
-        {operations.map((id) => (
-          <Operation key={id} operationId={id} />
-        ))}
-      </tbody>
-    </table>
-    <div className="d-flex flex-row-reverse">
+const Operations = enhancer(({ producerId }) => (
+  <div className={classNames('card-body', styles.operations)}>
+    <div className={classNames('row', styles.tableWrapper)}>
+      <OperationsTable />
+      <OperationProducts />
+    </div>
+    <div className={styles.buttonsWrapper}>
       <Link to={goToOperationAdd(producerId)} className="btn btn-primary">
         Crear Operativo
       </Link>

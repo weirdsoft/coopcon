@@ -1,7 +1,8 @@
 import { all, call, select, put, actionChannel, take } from 'redux-saga/effects'
 import { NOT_FOUND } from 'redux-first-router'
 import {
-  INDEX, OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex, goToOperations,
+  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex,
+  goToOperations,
 } from 'data/route/actions'
 import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
 import { FETCH_PRODUCERS_SUCCESS, fetchProducers } from 'data/producer/actions'
@@ -57,6 +58,7 @@ const mapRouteToSaga = {
   [INDEX]: onIndex,
   [OPERATIONS]: onOperations,
   [OPERATION_ADD]: onOperations,
+  [OPERATION_PRODUCTS]: onOperations,
   [PRODUCT_GALLERY]: onProductGallery,
   [PRODUCT_ADD]: onProductGallery,
 }

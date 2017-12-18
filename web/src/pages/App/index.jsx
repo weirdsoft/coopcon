@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { compose, mapProps, renderNothing, setDisplayName } from 'recompose'
 import classNames from 'classnames'
 import { getCurrentRoute } from 'data/route/selectors'
-import { OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD } from 'data/route/actions'
+import {
+  OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, PRODUCT_GALLERY, PRODUCT_ADD,
+} from 'data/route/actions'
 import styles from './styles.scss'
 import Menu from './components/Menu'
 import NavBar from './components/NavBar'
@@ -12,6 +14,7 @@ import ProducerAdmin from 'pages/ProducerAdmin'
 const pageToComponent = {
   [OPERATIONS]: ProducerAdmin,
   [OPERATION_ADD]: ProducerAdmin,
+  [OPERATION_PRODUCTS]: ProducerAdmin,
   [PRODUCT_GALLERY]: ProducerAdmin,
   [PRODUCT_ADD]: ProducerAdmin,
 }
@@ -38,7 +41,7 @@ const App = enhancer(({ Page }) => (
         <aside className="col-3 bg-light">
           <Menu />
         </aside>
-        <main className="col-9">
+        <main className="col-9 d-flex align-items-stretch pb-3">
           <Page />
         </main>
       </div>

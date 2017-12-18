@@ -1,18 +1,22 @@
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import {
-  goToOperations, goToProductGallery, OPERATIONS, OPERATION_ADD, PRODUCT_GALLERY, PRODUCT_ADD,
+  goToOperations, goToProductGallery, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS,
+  PRODUCT_GALLERY, PRODUCT_ADD,
 } from 'data/route/actions'
 import { getCurrentRoute } from 'data/route/selectors'
 import { getCurrentId } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
 import ProductGallery from './ProductGallery'
 import Operations from './Operations'
+import styles from './styles.scss'
 
 const pageToComponent = {
   [OPERATIONS]: Operations,
   [OPERATION_ADD]: Operations,
+  [OPERATION_PRODUCTS]: Operations,
   [PRODUCT_GALLERY]: ProductGallery,
   [PRODUCT_ADD]: ProductGallery,
 }
@@ -32,7 +36,7 @@ const enhancer = compose(
 )
 
 const ProducerAdmin = enhancer(({ producerId, Page }) => (
-  <div className="card">
+  <div className={classNames('card', styles.producerAdmin)}>
     <div className="card-header">
       <ul className="nav nav-tabs card-header-tabs">
         <li className="nav-item">
@@ -40,7 +44,9 @@ const ProducerAdmin = enhancer(({ producerId, Page }) => (
             to={goToOperations(producerId)}
             className="nav-link"
             activeClassName='active'
-            isActive={(match, location) => [ OPERATIONS, OPERATION_ADD ].includes(location.type)}
+            isActive={(match, location) => (
+              [ OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS ].includes(location.type)
+            )}
           >
             Operativos
           </NavLink>

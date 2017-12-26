@@ -1,6 +1,9 @@
 export const FETCH_PRODUCERS_REQUEST = 'FETCH_PRODUCERS_REQUEST'
 export const FETCH_PRODUCERS_SUCCESS = 'FETCH_PRODUCERS_SUCCESS'
 export const FETCH_PRODUCERS_FAILURE = 'FETCH_PRODUCERS_FAILURE'
+export const FETCH_PRODUCER_REQUEST = 'FETCH_PRODUCER_REQUEST'
+export const FETCH_PRODUCER_SUCCESS = 'FETCH_PRODUCER_SUCCESS'
+export const FETCH_PRODUCER_FAILURE = 'FETCH_PRODUCER_FAILURE'
 export const SHOW_ADD_NEW_PRODUCER = 'SHOW_ADD_NEW_PRODUCER'
 export const HIDE_ADD_NEW_PRODUCER = 'HIDE_ADD_NEW_PRODUCER'
 export const CHANGE_NEW_PRODUCER_NAME = 'CHANGE_NEW_PRODUCER_NAME'
@@ -19,6 +22,21 @@ export const receiveProducers = (producers) => ({
 
 export const failReceiveProducers = (reason) => ({
   type: FETCH_PRODUCERS_FAILURE,
+  reason,
+})
+
+export const fetchProducer = (id) =>({
+  type: FETCH_PRODUCER_REQUEST,
+  id,
+})
+
+export const receiveProducer = (producer) => ({
+  type: FETCH_PRODUCER_SUCCESS,
+  producer,
+})
+
+export const failReceiveProducer = (reason) => ({
+  type: FETCH_PRODUCER_FAILURE,
   reason,
 })
 

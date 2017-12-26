@@ -2,12 +2,10 @@ import { combineReducers } from 'redux'
 import {
   allRoutes, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, PRODUCT_GALLERY, PRODUCT_ADD,
 } from 'data/route/actions'
+import { ADD_NEW_OPERATION_SUCCESS } from 'data/operation/actions'
+import { ADD_NEW_PRODUCT_SUCCESS } from 'data/product/actions'
 import {
-  FETCH_PRODUCER_OPERATIONS_SUCCESS, ADD_NEW_OPERATION_SUCCESS,
-} from 'data/operation/actions'
-import { FETCH_PRODUCER_PRODUCTS_SUCCESS, ADD_NEW_PRODUCT_SUCCESS } from 'data/product/actions'
-import {
-  FETCH_PRODUCERS_REQUEST, FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCERS_FAILURE,
+  FETCH_PRODUCERS_REQUEST, FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCERS_FAILURE, FETCH_PRODUCER_SUCCESS,
   SHOW_ADD_NEW_PRODUCER, HIDE_ADD_NEW_PRODUCER, CHANGE_NEW_PRODUCER_NAME,
   ADD_PRODUCER_SUCCESS,
 } from './actions'
@@ -19,27 +17,20 @@ const list = (state = listDefault, action) => {
       return [
         ...action.producers,
       ]
+    case FETCH_PRODUCER_SUCCESS:
+      return [
+        ...state.filter((producer) => producer._id !== action.producer._id),
+        {
+          ...state.find((producer) => producer._id === action.producer._id),
+          operations: action.producer.operations.map((operation) => operation._id),
+          products: action.producer.products.map((product) => product._id),
+        },
+      ]
     case ADD_PRODUCER_SUCCESS:
       return [
         ...state,
         {
           ...action.producer,
-        },
-      ]
-    case FETCH_PRODUCER_OPERATIONS_SUCCESS:
-      return [
-        ...state.filter((producer) => producer._id !== action.producerId),
-        {
-          ...state.find((producer) => producer._id === action.producerId),
-          operations: action.operations.map((operation) => operation._id),
-        },
-      ]
-    case FETCH_PRODUCER_PRODUCTS_SUCCESS:
-      return [
-        ...state.filter((producer) => producer._id !== action.producerId),
-        {
-          ...state.find((producer) => producer._id === action.producerId),
-          products: action.products.map((product) => product._id),
         },
       ]
     case ADD_NEW_PRODUCT_SUCCESS: {

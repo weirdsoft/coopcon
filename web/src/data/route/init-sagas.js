@@ -5,9 +5,7 @@ import {
   goToOperations,
 } from 'data/route/actions'
 import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
-import { FETCH_PRODUCERS_SUCCESS, fetchProducers } from 'data/producer/actions'
-import { fetchProducerOperations } from 'data/operation/actions'
-import { fetchProducerProducts } from 'data/product/actions'
+import { FETCH_PRODUCERS_SUCCESS, fetchProducers, fetchProducer } from 'data/producer/actions'
 import { getCurrentRoute } from './selectors'
 
 function sagaWithParameters(saga, ...parameterEffects) {
@@ -39,16 +37,9 @@ function* onIndex() {
   }
 }
 
-const onOperations = sagaWithParameters(
+const onProducerAdmin = sagaWithParameters(
   function* (producerId) {
-    yield put(fetchProducerOperations(producerId))
-  },
-  select(getCurrentId),
-)
-
-const onProductGallery = sagaWithParameters(
-  function* (producerId) {
-    yield put(fetchProducerProducts(producerId))
+    yield put(fetchProducer(producerId))
   },
   select(getCurrentId),
 )
@@ -56,11 +47,11 @@ const onProductGallery = sagaWithParameters(
 const mapRouteToSaga = {
   [NOT_FOUND]: onNotFound,
   [INDEX]: onIndex,
-  [OPERATIONS]: onOperations,
-  [OPERATION_ADD]: onOperations,
-  [OPERATION_PRODUCTS]: onOperations,
-  [PRODUCT_GALLERY]: onProductGallery,
-  [PRODUCT_ADD]: onProductGallery,
+  [OPERATIONS]: onProducerAdmin,
+  [OPERATION_ADD]: onProducerAdmin,
+  [OPERATION_PRODUCTS]: onProducerAdmin,
+  [PRODUCT_GALLERY]: onProducerAdmin,
+  [PRODUCT_ADD]: onProducerAdmin,
 }
 
 function* routeSaga() {

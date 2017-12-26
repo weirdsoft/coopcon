@@ -1,16 +1,15 @@
 import moment from 'moment'
 import { combineReducers } from 'redux'
 import { OPERATION_ADD, OPERATION_PRODUCTS, allRoutes } from 'data/route/actions'
-import {
-  FETCH_PRODUCER_OPERATIONS_SUCCESS, CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS,
-} from './actions'
+import { FETCH_PRODUCER_SUCCESS } from 'data/producer/actions'
+import { CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS } from './actions'
 
 const byId = (state = {}, action) => {
   switch(action.type) {
-    case FETCH_PRODUCER_OPERATIONS_SUCCESS:
+    case FETCH_PRODUCER_SUCCESS:
       return {
         ...state,
-        ...action.operations.reduce((result, operation) => {
+        ...action.producer.operations.reduce((result, operation) => {
           result[operation._id] = {
             ...state[operation._id],
             ...operation,

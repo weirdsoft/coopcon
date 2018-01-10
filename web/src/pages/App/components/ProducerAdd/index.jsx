@@ -35,7 +35,7 @@ const ProducerAdd = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel })
       onChange={onChange}
       autoFocus
     />
-    <span className="input-group-btn">
+    <div className="input-group-append">
       <button
         onClick={onCreate}
         type="button"
@@ -51,7 +51,7 @@ const ProducerAdd = ({ name, isValid, onKeyDown, onChange, onCreate, onCancel })
       >
         <i className="fa fa-times" />
       </button>
-    </span>
+    </div>
   </a>
 )
 

@@ -14,9 +14,12 @@ const enhancer = compose(
   setDisplayName('OperationProduct'),
 )
 
-const OperationProduct = enhancer(({ name }) => (
+const OperationProduct = enhancer(({ name, price, quantity, unit }) => (
   <li className="list-group-item">
     {name}
+    <span className="text-secondary">
+      &nbsp;-&nbsp;${price} x {quantity} {unit}
+    </span>
   </li>
 ))
 

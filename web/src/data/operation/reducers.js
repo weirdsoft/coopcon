@@ -2,7 +2,9 @@ import moment from 'moment'
 import { combineReducers } from 'redux'
 import { OPERATION_ADD, OPERATION_PRODUCTS, allRoutes } from 'data/route/actions'
 import { FETCH_PRODUCER_SUCCESS } from 'data/producer/actions'
-import { CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS } from './actions'
+import {
+  CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS, FETCH_OPERATION_PRODUCTS_SUCCESS,
+} from './actions'
 
 const byId = (state = {}, action) => {
   switch(action.type) {
@@ -22,6 +24,14 @@ const byId = (state = {}, action) => {
         ...state,
         [action.operation._id]: {
           ...action.operation,
+        },
+      }
+    case FETCH_OPERATION_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          products: action.products.map((product) => product._id),
         },
       }
     default:
@@ -126,13 +136,13 @@ const newOperation = combineReducers({
   deliveryDate: newOperationDeliveryDate,
 })
 
-const isShowingProducts = (state = false, action) => {
+const currentId = (state = null, action) => {
   switch(action.type) {
     case OPERATION_PRODUCTS:
-      return true
+      return action.payload.id
     default:
       if (allRoutes.includes(action.type)) {
-        return false
+        return null
       } else {
         return state
       }
@@ -143,5 +153,5 @@ export default combineReducers({
   byId,
   isAdding,
   newOperation,
-  isShowingProducts,
+  currentId,
 })

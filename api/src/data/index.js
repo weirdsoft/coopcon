@@ -8,6 +8,7 @@ const queryDefinition = `
   type Query {
     producers: [Producer]
     producer(id: ID!): Producer
+    operation(id: ID!): Operation
   }
 
   type Mutation {
@@ -34,6 +35,7 @@ const resolvers = {
   ...scalarResolvers,
   Query: {
     ...producerResolver.Query,
+    ...operationResolver.Query,
   },
   Mutation: {
     ...producerResolver.Mutation,

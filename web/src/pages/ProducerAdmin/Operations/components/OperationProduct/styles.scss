@@ -1,0 +1,9 @@
+@import 'variables';
+
+.operation-product {
+  &.selected {
+    :global(.text-secondary) {
+      color: $gray-500 !important;
+    }
+  }
+}

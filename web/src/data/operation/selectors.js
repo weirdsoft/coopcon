@@ -5,7 +5,15 @@ export const getOperation = (state, id) => state.operation.byId[id]
 export const isAddingOperation = (state) => state.operation.isAdding
 export const getNewOperation = (state) => state.operation.newOperation
 export const getCurrentOperationId = (state) => state.operation.currentId
+export const getCurrentOperation = createSelector(
+  [ getOperations, getCurrentOperationId ],
+  (operations, currentId) => operations[currentId],
+)
 export const isShowingOperationProducts = createSelector(
   [ getCurrentOperationId ],
   (currentId) => currentId != null,
+)
+export const makeIsProductInOperation = () => createSelector(
+  [ getCurrentOperation , (_, productId) => productId ],
+  (operation, productId) => operation.products != null && operation.products.includes(productId),
 )

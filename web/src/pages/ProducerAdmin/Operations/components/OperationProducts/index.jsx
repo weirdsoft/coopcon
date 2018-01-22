@@ -1,17 +1,18 @@
 import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { compose, branch, renderNothing, flattenProp, setDisplayName } from 'recompose'
+import { compose, branch, renderNothing, mapProps, setDisplayName } from 'recompose'
 import { goToOperations } from 'data/route/actions'
 import { getCurrentProducer } from 'data/producer/selectors'
-import { isShowingOperationProducts } from 'data/operation/selectors'
+import { getCurrentOperation, isShowingOperationProducts } from 'data/operation/selectors'
 import styles from './styles.scss'
 import Link from 'redux-first-router-link'
 import OperationProduct from '../OperationProduct'
 
 const mapStateToProps = (state) => ({
-  producer: getCurrentProducer(state),
+  operation: getCurrentOperation(state),
   isShowingProducts: isShowingOperationProducts(state),
+  producer: getCurrentProducer(state),
 })
 
 const enhancer = compose(
@@ -20,21 +21,25 @@ const enhancer = compose(
     ({ isShowingProducts }) => !isShowingProducts,
     renderNothing,
   ),
-  flattenProp('producer'),
+  mapProps(({ producer, operation }) => ({
+    producerId: producer._id,
+    products: producer.products,
+    name: operation.name,
+  })),
   setDisplayName('OperationProducts'),
 )
 
-const OperationProducts = enhancer(({ _id, products }) => (
+const OperationProducts = enhancer(({ name, producerId, products }) => (
   <div className={classNames('col-8', styles.operationProducts)}>
     <div className={classNames('card', styles.card)}>
       <div className={classNames('card-body', styles.body)}>
-        <Link to={goToOperations(_id)} className="close">
+        <Link to={goToOperations(producerId)} className="close">
           <span aria-hidden="true">
             ×
           </span>
         </Link>
         <h4 className="card-title">
-          Productos
+          Productos de <i>{name}</i>
         </h4>
         <p className="card-text">
           Los productos seleccionados serán incluidos en el operativo.

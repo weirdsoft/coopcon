@@ -7,7 +7,8 @@ import { goToOperationProducts } from 'data/route/actions'
 import { isShowingOperationProducts } from 'data/operation/selectors'
 import { getCurrentId } from 'data/producer/selectors'
 import { getOperation } from 'data/operation/selectors'
-import Link from 'redux-first-router-link'
+import { NavLink } from 'redux-first-router-link'
+import styles from './styles.scss'
 
 const mapStateToProps = (state, { operationId }) => ({
   producerId: getCurrentId(state),
@@ -24,7 +25,7 @@ const enhancer = compose(
 const Operation = enhancer(({
   operationId, name, publishDate, closeDate, deliveryDate, producerId, isCompact,
 }) => (
-  <tr>
+  <tr className={styles.operation}>
     <td>
       {name}
     </td>
@@ -44,9 +45,13 @@ const Operation = enhancer(({
     </td>
     }
     <td>
-      <Link to={goToOperationProducts(producerId, operationId)}>
+      <NavLink
+        className={styles.productsLink}
+        to={goToOperationProducts(producerId, operationId)}
+        activeClassName={styles.active}
+      >
         <i className="fa fa-list-alt" title="Modificar Productos"></i>
-      </Link>
+      </NavLink>
     </td>
   </tr>
 ))

@@ -5,6 +5,7 @@ export const ADD_NEW_OPERATION_FAILURE = 'ADD_NEW_OPERATION_FAILURE'
 export const FETCH_OPERATION_PRODUCTS_REQUEST = 'FETCH_OPERATION_PRODUCTS_REQUEST'
 export const FETCH_OPERATION_PRODUCTS_SUCCESS = 'FETCH_OPERATION_PRODUCTS_SUCCESS'
 export const FETCH_OPERATION_PRODUCTS_FAILURE = 'FETCH_OPERATION_PRODUCTS_FAILURE'
+export const TOGGLE_OPERATION_PRODUCT_STATE = 'TOGGLE_OPERATION_PRODUCT_STATE'
 
 export const changeNewOperation = (change) => ({
   type: CHANGE_NEW_OPERATION,
@@ -40,4 +41,9 @@ export const receiveOperationProducts = (id, products) => ({
 export const failReceiveOperationProducts = (reason) => ({
   type: FETCH_OPERATION_PRODUCTS_FAILURE,
   reason,
+})
+
+export const toggleOperationProductState = (productId) => ({
+  type: TOGGLE_OPERATION_PRODUCT_STATE,
+  productId,
 })

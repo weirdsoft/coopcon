@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import { createSelector } from 'reselect'
 
 export const getOperations = (state) => state.operation.byId
@@ -13,7 +14,14 @@ export const isShowingOperationProducts = createSelector(
   [ getCurrentOperationId ],
   (currentId) => currentId != null,
 )
+export const getChangedProducts = (state) => state.operation.changedProducts
+export const getSelectedProducts = createSelector(
+  [ getCurrentOperation, getChangedProducts ],
+  ({ products }, changedProducts) => R.symmetricDifference(
+    R.defaultTo([], products), changedProducts,
+  ),
+)
 export const makeIsProductInOperation = () => createSelector(
-  [ getCurrentOperation , (_, productId) => productId ],
-  (operation, productId) => operation.products != null && operation.products.includes(productId),
+  [ getSelectedProducts , (_, productId) => productId ],
+  (products, productId) => R.contains(productId, products),
 )

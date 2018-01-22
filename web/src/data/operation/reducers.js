@@ -1,9 +1,11 @@
+import * as R from 'ramda'
 import moment from 'moment'
 import { combineReducers } from 'redux'
 import { OPERATION_ADD, OPERATION_PRODUCTS, allRoutes } from 'data/route/actions'
 import { FETCH_PRODUCER_SUCCESS } from 'data/producer/actions'
 import {
   CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS, FETCH_OPERATION_PRODUCTS_SUCCESS,
+  TOGGLE_OPERATION_PRODUCT_STATE,
 } from './actions'
 
 const byId = (state = {}, action) => {
@@ -149,9 +151,25 @@ const currentId = (state = null, action) => {
   }
 }
 
+const changedProducts = (state = null, action) => {
+  switch(action.type) {
+    case OPERATION_PRODUCTS:
+      return []
+    case TOGGLE_OPERATION_PRODUCT_STATE:
+      return R.symmetricDifference(state, [ action.productId ])
+    default:
+      if (allRoutes.includes(action.type)) {
+        return null
+      } else {
+        return state
+      }
+  }
+}
+
 export default combineReducers({
   byId,
   isAdding,
   newOperation,
   currentId,
+  changedProducts,
 })

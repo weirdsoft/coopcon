@@ -1,7 +1,14 @@
 @import 'variables';
 
 .operation-product {
+  cursor: pointer;
+
+  &:hover,
   &.selected {
+    background: $primary;
+    color: $light;
+    border-color: $light;
+
     :global(.text-secondary) {
       color: $gray-500 !important;
     }

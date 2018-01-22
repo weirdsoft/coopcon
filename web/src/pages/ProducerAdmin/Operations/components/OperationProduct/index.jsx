@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
 import { getProduct } from 'data/product/selectors'
+import { toggleOperationProductState } from 'data/operation/actions'
 import { makeIsProductInOperation } from 'data/operation/selectors'
 import styles from './styles.scss'
 
@@ -16,16 +17,23 @@ const makeMapStateToProps = () => {
   })
 }
 
+const mapDispatchToProps = (dispatch, { productId }) => ({
+  toggleProduct: () => dispatch(toggleOperationProductState(productId)),
+})
+
 const enhancer = compose(
-  connect(makeMapStateToProps),
+  connect(makeMapStateToProps, mapDispatchToProps),
   flattenProp('product'),
   setDisplayName('OperationProduct'),
 )
 
-const OperationProduct = enhancer(({ name, price, quantity, unit, isSelected }) => (
-  <li className={classNames('list-group-item', styles.operationProduct, {
-    'bg-primary': isSelected, 'text-light': isSelected, [styles.selected]: isSelected,
-  })}>
+const OperationProduct = enhancer(({ name, price, quantity, unit, isSelected, toggleProduct }) => (
+  <li
+    className={classNames('list-group-item', styles.operationProduct, {
+      [styles.selected]: isSelected,
+    })}
+    onClick={toggleProduct}
+  >
     {name}
     <span className='text-secondary'>
       &nbsp;-&nbsp;${price} x {quantity} {unit}

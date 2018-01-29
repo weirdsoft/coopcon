@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
@@ -10,15 +11,19 @@ import Link from 'redux-first-router-link'
 import OperationProduct from '../OperationProduct'
 
 const mapStateToProps = (state) => ({
+  producer: getCurrentProducer(state),
   operation: getCurrentOperation(state),
   isShowingProducts: isShowingOperationProducts(state),
-  producer: getCurrentProducer(state),
 })
 
 const enhancer = compose(
   connect(mapStateToProps),
   branch(
-    ({ isShowingProducts }) => !isShowingProducts,
+    R.anyPass([
+      R.propSatisfies(R.isNil, 'producer'),
+      R.propSatisfies(R.isNil, 'operation'),
+      R.propSatisfies(R.not, 'isShowingProducts'),
+    ]),
     renderNothing,
   ),
   mapProps(({ producer, operation }) => ({

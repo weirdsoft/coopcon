@@ -1,10 +1,15 @@
 @import 'variables';
 
 .operation-product {
+  display: flex;
+  align-items: center;
   cursor: pointer;
 
-  &:hover,
-  &.selected {
+  .info {
+    flex-grow: 1;
+  }
+
+  &:hover {
     background: $primary;
     color: $light;
     border-color: $light;

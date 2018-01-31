@@ -10,9 +10,14 @@ const resolver = {
     createOperation(_, { operation }) {
       return Operation.create(operation)
     },
-    setOperationProducts(_, { operation }) {
+    addOperationProduct(_, { id, productId }) {
       return Operation
-        .findByIdAndUpdate(operation.id, { $set: { products: operation.products } }, { new: true })
+        .findByIdAndUpdate(id, { $addToSet: { products: productId } })
+        .exec()
+    },
+    removeOperationProduct(_, { id, productId }) {
+      return Operation
+        .findByIdAndUpdate(id, { $pull: { products: productId } })
         .exec()
     },
   },

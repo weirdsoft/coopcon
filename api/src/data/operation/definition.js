@@ -17,11 +17,6 @@ const definition = `
     closeDate: Date!
     deliveryDate: Date!
   }
-
-  input OperationProductsInput {
-    id: ID!
-    products: [ID!]!
-  }
 `
 
 export default definition

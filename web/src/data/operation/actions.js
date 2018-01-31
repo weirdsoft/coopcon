@@ -5,7 +5,9 @@ export const ADD_NEW_OPERATION_FAILURE = 'ADD_NEW_OPERATION_FAILURE'
 export const FETCH_OPERATION_PRODUCTS_REQUEST = 'FETCH_OPERATION_PRODUCTS_REQUEST'
 export const FETCH_OPERATION_PRODUCTS_SUCCESS = 'FETCH_OPERATION_PRODUCTS_SUCCESS'
 export const FETCH_OPERATION_PRODUCTS_FAILURE = 'FETCH_OPERATION_PRODUCTS_FAILURE'
-export const TOGGLE_OPERATION_PRODUCT_STATE = 'TOGGLE_OPERATION_PRODUCT_STATE'
+export const TOGGLE_OPERATION_PRODUCT_STATE_REQUEST = 'TOGGLE_OPERATION_PRODUCT_STATE_REQUEST'
+export const TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS = 'TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS'
+export const TOGGLE_OPERATION_PRODUCT_STATE_FAILURE = 'TOGGLE_OPERATION_PRODUCT_STATE_FAILURE'
 
 export const changeNewOperation = (change) => ({
   type: CHANGE_NEW_OPERATION,
@@ -44,6 +46,18 @@ export const failReceiveOperationProducts = (reason) => ({
 })
 
 export const toggleOperationProductState = (productId) => ({
-  type: TOGGLE_OPERATION_PRODUCT_STATE,
+  type: TOGGLE_OPERATION_PRODUCT_STATE_REQUEST,
   productId,
+})
+
+export const succeedToggleOperationProductState = (id, productId) => ({
+  type: TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS,
+  id,
+  productId,
+})
+
+export const failToggleOperationProductState = (productId, reason) => ({
+  type: TOGGLE_OPERATION_PRODUCT_STATE_FAILURE,
+  productId,
+  reason,
 })

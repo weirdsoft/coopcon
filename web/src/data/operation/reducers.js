@@ -5,7 +5,8 @@ import { OPERATION_ADD, OPERATION_PRODUCTS, allRoutes } from 'data/route/actions
 import { FETCH_PRODUCER_SUCCESS } from 'data/producer/actions'
 import {
   CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS, FETCH_OPERATION_PRODUCTS_SUCCESS,
-  TOGGLE_OPERATION_PRODUCT_STATE,
+  TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS,
+  TOGGLE_OPERATION_PRODUCT_STATE_FAILURE,
 } from './actions'
 
 const byId = (state = {}, action) => {
@@ -36,6 +37,12 @@ const byId = (state = {}, action) => {
           products: action.products.map((product) => product._id),
         },
       }
+    case TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS:
+      return R.evolve({
+        [action.id]: {
+          products: R.symmetricDifference([ action.productId ]),
+        },
+      }, state)
     default:
       return state
   }
@@ -94,7 +101,7 @@ const newOperationCloseDate = (state = null, action) => {
       if (action.change.hasOwnProperty('closeDate')) {
         return action.change.closeDate
       } else if (action.change.hasOwnProperty('publishDate') &&
-                 moment(action.change.publishDate).isAfter(state)) {
+        moment(action.change.publishDate).isAfter(state)) {
         return action.change.publishDate
       } else {
         return state
@@ -114,10 +121,10 @@ const newOperationDeliveryDate = (state = null, action) => {
       if (action.change.hasOwnProperty('deliveryDate')) {
         return action.change.deliveryDate
       } else if (action.change.hasOwnProperty('closeDate') &&
-                 moment(action.change.closeDate).isAfter(state)) {
+        moment(action.change.closeDate).isAfter(state)) {
         return action.change.closeDate
       } else if (action.change.hasOwnProperty('publishDate') &&
-                 moment(action.change.publishDate).isAfter(state)) {
+        moment(action.change.publishDate).isAfter(state)) {
         return action.change.publishDate
       } else {
         return state
@@ -155,7 +162,9 @@ const changedProducts = (state = null, action) => {
   switch(action.type) {
     case OPERATION_PRODUCTS:
       return []
-    case TOGGLE_OPERATION_PRODUCT_STATE:
+    case TOGGLE_OPERATION_PRODUCT_STATE_REQUEST:
+    case TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS:
+    case TOGGLE_OPERATION_PRODUCT_STATE_FAILURE:
       return R.symmetricDifference(state, [ action.productId ])
     default:
       if (allRoutes.includes(action.type)) {

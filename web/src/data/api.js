@@ -1,13 +1,12 @@
-import apollo from './apollo'
+import { execute, makePromise } from 'apollo-link'
+import { HttpLink } from 'apollo-link-http'
 
-export const query = async(query, variables, fetchPolicy = 'network-only') => {
-  const response = await apollo.query({ query, variables, fetchPolicy })
+const link = new HttpLink({ uri: '/api' })
 
-  return response.data
-}
-
-export const mutate = async(mutation, variables) => {
-  const response = await apollo.mutate({ mutation, variables })
+export const query = async(query, variables) => {
+  const response = await makePromise(execute(link, { query, variables }))
 
   return response.data
 }
+
+export const mutate = query

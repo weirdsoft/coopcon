@@ -8,6 +8,7 @@ const queryDefinition = `
   type Query {
     producers: [Producer]
     producer(id: ID!): Producer
+    operations: [Operation]
     operation(id: ID!): Operation
   }
 

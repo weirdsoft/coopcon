@@ -2,6 +2,9 @@ import Operation from './model'
 
 const resolver = {
   Query: {
+    operations() {
+      return Operation.find().exec()
+    },
     operation(_, { id }) {
       return Operation.findById(id).exec()
     },

@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { compose, setDisplayName, setStatic } from 'recompose'
 import { prop } from 'ramda'
 import { getOperations } from 'Coopcon/data/operation/selectors'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
+import Operation from './components/Operation'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,9 +29,7 @@ const Home = enhancer(({ operations }) => (
     <FlatList
       data={operations}
       keyExtractor={prop('_id')}
-      renderItem={({ item: { name } }) => (
-        <Text>{name}</Text>
-      )}
+      renderItem={Operation}
     />
   </View>
 ))

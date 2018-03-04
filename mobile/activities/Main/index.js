@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation'
-import Home from './Home'
+import Home from 'Coopcon/activities/Home'
 
 export default StackNavigator(
   {

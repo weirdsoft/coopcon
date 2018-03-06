@@ -1,6 +1,7 @@
 /* globals module, window */
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import appReducers from './reducers'
 import initSagas from './init-sagas'
 import appSagas from './sagas'
@@ -11,9 +12,13 @@ function generateReducer() {
   })
 }
 
-export function configureStore(initialState = {}) {
+export function configureStore(history, initialState = {}) {
   // initialize middlewares
   const sagaMiddleware = createSagaMiddleware()
+  const navMiddleware = createReactNavigationReduxMiddleware(
+    'mainStack',
+    (state) => state.navigation,
+  )
 
   // create store
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -23,6 +28,7 @@ export function configureStore(initialState = {}) {
     composeEnhancers(
       applyMiddleware(
         sagaMiddleware,
+        navMiddleware,
       ),
     ),
   )

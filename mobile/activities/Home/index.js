@@ -1,8 +1,8 @@
 import React from 'react'
+import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, setDisplayName, setStatic } from 'recompose'
-import { prop } from 'ramda'
-import { getOperations } from 'Coopcon/data/operation/selectors'
+import { getOperationIds } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
 import Operation from './components/Operation'
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  operations: getOperations(state),
+  operations: R.map((id) => ({ id }), getOperationIds(state)),
 })
 
 const enhancer = compose(
@@ -28,8 +28,8 @@ const Home = enhancer(({ operations }) => (
   <View style={styles.container}>
     <FlatList
       data={operations}
-      keyExtractor={prop('_id')}
-      renderItem={Operation}
+      keyExtractor={R.prop('id')}
+      renderItem={({ item: { id } }) => (<Operation id={id} />)}
     />
   </View>
 ))

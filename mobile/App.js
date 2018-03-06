@@ -1,9 +1,11 @@
-import React from 'react';
+import React from 'react'
 import { configureStore } from './data/store'
 import Bootstrap from './Bootstrap'
 
 const store = configureStore()
 
-export default App = () => (
+const App = () => (
   <Bootstrap store={store} />
 )
+
+export default App

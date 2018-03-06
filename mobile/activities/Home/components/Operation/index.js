@@ -1,7 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
+import { goToOperation } from 'Coopcon/data/navigation/actions'
+import { getOperation } from 'Coopcon/data/operation/selectors'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,15 +22,29 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = (state, { id }) => ({
+  operation: getOperation(state, id),
+})
+
+const mapDispatchToProps = (dispatch, { id }) => ({
+  goToOperation: () => dispatch(goToOperation(id)),
+})
+
 const enhancer = compose(
-  flattenProp('item'),
+  connect(mapStateToProps, mapDispatchToProps),
+  flattenProp('operation'),
   setDisplayName('Operation'),
 )
 
-const Operation = enhancer(({ name }) => (
-  <View style={styles.container}>
-    <Text style={styles.name}>{name}</Text>
-    <SimpleLineIcons name="arrow-right" size={20}/>
+const Operation = enhancer(({ name, goToOperation }) => (
+  <View>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={goToOperation}
+    >
+      <Text style={styles.name}>{name}</Text>
+      <SimpleLineIcons name="arrow-right" size={20}/>
+    </TouchableOpacity>
   </View>
 ))
 

@@ -1,1 +1,2 @@
-export const getOperations = (state) => state.operation.list
+export const getOperationIds = (state) => state.operation.ids
+export const getOperation = (state, id) => state.operation.byId[id]

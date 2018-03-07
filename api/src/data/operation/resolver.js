@@ -30,6 +30,15 @@ const resolver = {
         await operation.populate('products').execPopulate()
         return operation.products
       },
+      async orders(operation) {
+        await operation.populate({
+          path: 'orders',
+          populate: {
+            path: 'products.product',
+          },
+        }).execPopulate()
+        return operation.orders
+      },
     },
   },
 }

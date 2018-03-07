@@ -3,21 +3,25 @@ import scalarResolvers from './scalars'
 import { producerDefinition, producerResolver } from './producer'
 import { productDefinition, productResolver } from './product'
 import { operationDefinition, operationResolver } from './operation'
+import { orderDefinition, orderResolver } from './order'
 
 const queryDefinition = `
   type Query {
-    producers: [Producer]
+    producers: [Producer]!
     producer(id: ID!): Producer
-    operations: [Operation]
+    operations: [Operation]!
     operation(id: ID!): Operation
   }
 
   type Mutation {
-    createProducer(producer: ProducerInput!): Producer
-    createProduct(product: ProductInput!): Product
-    createOperation(operation: OperationInput!): Operation
-    addOperationProduct(id: ID!, productId: ID!): Boolean
-    removeOperationProduct(id: ID!, productId: ID!): Boolean
+    createProducer(producer: ProducerInput!): Producer!
+    createProduct(product: ProductInput!): Product!
+    createOperation(operation: OperationInput!): Operation!
+    addOperationProduct(id: ID!, productId: ID!): Boolean!
+    removeOperationProduct(id: ID!, productId: ID!): Boolean!
+    createOrder(order: OrderInput!): Order!
+    addOrderProduct(id: ID!, productId: ID!, quantity: Int!): OrderProduct!
+    removeOrderProduct(id: ID!, productId: ID!, quantity: Int!): OrderProduct
   }
 `
 
@@ -31,6 +35,7 @@ const typeDefs = [
   producerDefinition,
   productDefinition,
   operationDefinition,
+  orderDefinition,
 ]
 
 const resolvers = {
@@ -43,9 +48,11 @@ const resolvers = {
     ...producerResolver.Mutation,
     ...productResolver.Mutation,
     ...operationResolver.Mutation,
+    ...orderResolver.Mutation,
   },
   ...producerResolver.Nested,
   ...operationResolver.Nested,
+  ...orderResolver.Nested,
 }
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })

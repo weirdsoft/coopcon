@@ -8,6 +8,7 @@ const definition = `
     deliveryDate: Date!
     producer: Producer!,
     products: [Product!]!
+    orders: [Order!]!
   }
 
   input OperationInput {

@@ -10,6 +10,13 @@ const OperationSchema = mongoose.Schema({
   products: { type: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ] },
 })
 
+OperationSchema.virtual('orders', {
+  ref: 'Order',
+  localField: '_id',
+  foreignField: 'operation',
+  justOne: false,
+})
+
 const Operation = mongoose.model('Operation', OperationSchema)
 
 export default Operation

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, setDisplayName, setStatic } from 'recompose'
+import { compose, setDisplayName } from 'recompose'
 import { getOperationIds } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
 import Operation from './components/Operation'
@@ -18,9 +18,6 @@ const mapStateToProps = (state) => ({
 
 const enhancer = compose(
   connect(mapStateToProps),
-  setStatic('navigationOptions', {
-    title: 'Cooperativa de Consumo',
-  }),
   setDisplayName('Home'),
 )
 
@@ -34,4 +31,12 @@ const Home = enhancer(({ operations }) => (
   </View>
 ))
 
-export default Home
+export default class HomeWrapper extends Component {
+  render() {
+    return <Home/>
+  }
+}
+
+HomeWrapper.navigationOptions = {
+  title: 'Cooperativa de Consumo',
+}

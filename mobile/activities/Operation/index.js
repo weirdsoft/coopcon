@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 
 const Operation = () => (
@@ -9,4 +9,8 @@ const Operation = () => (
   </View>
 )
 
-export default Operation
+export default class OperationWrapper extends Component {
+  render() {
+    return <Operation/>
+  }
+}

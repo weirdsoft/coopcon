@@ -6,13 +6,13 @@ import appReducers from './reducers'
 import initSagas from './init-sagas'
 import appSagas from './sagas'
 
-function generateReducer() {
+function generateReducer(reducers) {
   return combineReducers({
-    ...appReducers,
+    ...reducers,
   })
 }
 
-export function configureStore(history, initialState = {}) {
+export function configureStore(initialState = {}) {
   // initialize middlewares
   const sagaMiddleware = createSagaMiddleware()
   const navMiddleware = createReactNavigationReduxMiddleware(
@@ -23,7 +23,7 @@ export function configureStore(history, initialState = {}) {
   // create store
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   const store = createStore(
-    generateReducer(),
+    generateReducer(appReducers),
     initialState,
     composeEnhancers(
       applyMiddleware(
@@ -43,7 +43,7 @@ export function configureStore(history, initialState = {}) {
   if (module.hot) {
     module.hot.accept(async() => {
       // replace reducer
-      store.replaceReducer(generateReducer())
+      store.replaceReducer(generateReducer(require('./reducers').default))
 
       // restart sagas
       currentSagas.cancel()

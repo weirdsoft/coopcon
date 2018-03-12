@@ -8,3 +8,15 @@ export const operationsQuery = gql`
     }
   }
 `
+
+export const operationOrdersQuery = gql`
+  query operationOrdersQuery($id: ID!) {
+    operation(id: $id) {
+      orders {
+        _id
+        user
+        creationDate
+      }
+    }
+  }
+`

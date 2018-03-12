@@ -1,9 +1,9 @@
 /* eslint-env node */
 const webpack = require('webpack')
 const { resolve } = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
+const config = {
   entry: {
     app: [
       'react-hot-loader/patch',
@@ -13,7 +13,6 @@ module.exports = {
   },
 
   output: {
-    filename: 'bundle.js',
     path: resolve(__dirname, 'dist'),
     publicPath: '/',
   },
@@ -78,17 +77,31 @@ module.exports = {
     extensions: [ '.js', '.jsx', '.scss' ],
   },
 
+  optimization: {
+    namedChunks: true,
+    splitChunks: {
+      cacheGroups: {
+				commons: {
+					chunks: 'initial',
+					minChunks: 2,
+				},
+				vendor: {
+					test: /node_modules/,
+					chunks: 'initial',
+					name: 'vendor',
+					priority: 10,
+					enforce: true,
+				},
+			},
+    },
+  },
+
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.js',
-      minChunks(module) {
-       return module.context && module.context.indexOf('node_modules') !== -1
-      },
+    new HtmlWebpackPlugin({
+      template: resolve(__dirname, 'src', 'index.html'),
     }),
-    new CopyWebpackPlugin([
-      { from: resolve(__dirname, 'src', 'index.html') },
-    ]),
   ],
 }
+
+module.exports = config

@@ -1,12 +1,13 @@
 /* eslint-env node */
 const webpack = require('webpack')
-const path = require('path')
+const { resolve } = require('path')
 const config = require('./webpack.base.config')
 
-config.devtool = 'inline-source-map'
+config.mode = 'development'
+config.devtool = 'eval-source-map'
 config.devServer = {
   hotOnly: true,
-  contentBase: path.resolve(__dirname, 'src'),
+  contentBase: resolve(__dirname, 'src'),
   historyApiFallback: true,
   host: '0.0.0.0',
   disableHostCheck: true,

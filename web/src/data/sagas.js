@@ -1,4 +1,4 @@
-import { fork } from 'redux-saga/effects'
+import { all, fork } from 'redux-saga/effects'
 import producerSaga from './producer/sagas'
 import operationSaga from './operation/sagas'
 import productSaga from './product/sagas'
@@ -10,5 +10,5 @@ const sagas = [
 ]
 
 export default function* rootSaga() {
-  yield sagas.map(saga => fork(saga))
+  yield all(sagas.map(saga => fork(saga)))
 }

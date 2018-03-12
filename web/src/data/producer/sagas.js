@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { call, put, select, all, takeLatest } from 'redux-saga/effects'
 import * as api from 'data/api'
 import {
   FETCH_PRODUCERS_REQUEST, receiveProducers, failReceiveProducers,
@@ -43,11 +43,11 @@ function* createProducer() {
 }
 
 function* producerSaga() {
-  yield [
+  yield all([
     takeLatest(FETCH_PRODUCERS_REQUEST, fetchProducers),
     takeLatest(FETCH_PRODUCER_REQUEST, fetchProducer),
     takeLatest(CREATE_NEW_PRODUCER, createProducer),
-  ]
+  ])
 }
 
 export default producerSaga

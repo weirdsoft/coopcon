@@ -1,4 +1,4 @@
-import { fork } from 'redux-saga/effects'
+import { all, fork } from 'redux-saga/effects'
 import routeInitSaga from './route/init-sagas'
 
 const sagas = [
@@ -6,5 +6,5 @@ const sagas = [
 ]
 
 export default function* rootSaga() {
-  yield sagas.map(saga => fork(saga))
+  yield all(sagas.map(saga => fork(saga)))
 }

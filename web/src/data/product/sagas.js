@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { call, put, select, all, takeLatest } from 'redux-saga/effects'
 import * as api from 'data/api'
 import { goToProductGallery } from 'data/route/actions'
 import { getCurrentId } from 'data/producer/selectors'
@@ -27,9 +27,9 @@ function* addNewProduct() {
 }
 
 function* productSaga() {
-  yield [
+  yield all([
     takeLatest(ADD_NEW_PRODUCT_REQUEST, addNewProduct),
-  ]
+  ])
 }
 
 export default productSaga

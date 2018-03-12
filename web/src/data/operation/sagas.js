@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { call, put, select, all, takeLatest } from 'redux-saga/effects'
 import * as api from 'data/api'
 import * as R from 'ramda'
 import { goToOperations } from 'data/route/actions'
@@ -73,11 +73,11 @@ function* toggleOperationProductState({ productId }) {
 }
 
 function* operationSaga() {
-  yield [
+  yield all([
     takeLatest(ADD_NEW_OPERATION_REQUEST, addNewOperation),
     takeLatest(FETCH_OPERATION_PRODUCTS_REQUEST, fetchOperationProducts),
     takeLatest(TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, toggleOperationProductState),
-  ]
+  ])
 }
 
 export default operationSaga

@@ -80,18 +80,18 @@ const config = {
     namedChunks: true,
     splitChunks: {
       cacheGroups: {
-				commons: {
-					chunks: 'initial',
-					minChunks: 2,
-				},
-				vendor: {
-					test: /node_modules/,
-					chunks: 'initial',
-					name: 'vendor',
-					priority: 10,
-					enforce: true,
-				},
-			},
+        commons: {
+          chunks: 'initial',
+          minChunks: 2,
+        },
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'vendor',
+          priority: 10,
+          enforce: true,
+        },
+      },
     },
   },
 

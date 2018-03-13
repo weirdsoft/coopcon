@@ -27,7 +27,7 @@ function sagaWithParameters(saga, ...parameterEffects) {
 }
 
 function* onNotFound() {
-    yield put(goToIndex())
+  yield put(goToIndex())
 }
 
 function* onIndex() {

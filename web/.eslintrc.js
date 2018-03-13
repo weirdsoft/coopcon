@@ -45,5 +45,6 @@ module.exports = {
     }],
     'max-len': ['error', 100],
     'no-unused-vars': [ 'error', { ignoreRestSiblings: true } ],
+    'indent': ['error', 2, { SwitchCase: 1 }],
   },
 }

@@ -24,9 +24,9 @@ const byId = (state = byIdDefault, action) => {
     case FETCH_OPERATION_ORDERS_SUCCESS:
       return R.evolve({
         [action.id]: R.assoc(
-            'orders',
-            R.pluck('_id', action.orders),
-          ),
+          'orders',
+          R.pluck('_id', action.orders),
+        ),
       })(state)
     default:
       return state

@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const config = {
   entry: {
     app: [
-      'react-hot-loader/patch',
       'patches/moment-locale-patch',
       'index',
     ],

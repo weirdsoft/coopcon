@@ -1,6 +1,8 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
+import { NavigationActions } from 'react-navigation'
 import { FETCH_OPERATION_ORDERS_SUCCESS } from 'Coopcon/data/operation/actions'
+import { TOGGLE_ORDER } from './actions'
 
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
@@ -35,7 +37,19 @@ const byId = (state = byIdDefault, action) => {
   }
 }
 
+const current = (state = null, action) => {
+  switch(action.type) {
+    case TOGGLE_ORDER:
+      return R.equals(action.id, state) ? null : action.id
+    case NavigationActions.NAVIGATE:
+      return null
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   ids,
   byId,
+  current,
 })

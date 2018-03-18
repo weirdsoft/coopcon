@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose, withState, flattenProp, setDisplayName } from 'recompose'
+import { compose, flattenProp, setDisplayName } from 'recompose'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
 import Collapsible from 'react-native-collapsible'
 import Product from 'Coopcon/activities/Operation/components/Product'
-import { getOrderWithTotal } from 'Coopcon/data/order/selectors'
+import { toggleOrder } from 'Coopcon/data/order/actions'
+import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
 
 const styles = StyleSheet.create({
   container: {
@@ -39,19 +40,23 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, { id }) => ({
   order: getOrderWithTotal(state, id),
+  isCurrentOrder: isCurrentOrder(state, id),
+})
+
+const mapDispatchToprops = (dispatch, { id }) => ({
+  toggleOrder: () => dispatch(toggleOrder(id)),
 })
 
 const enhancer = compose(
-  connect(mapStateToProps),
-  withState('collapsed', 'setCollapsed', true),
+  connect(mapStateToProps, mapDispatchToprops),
   flattenProp('order'),
   setDisplayName('Order'),
 )
 
-const Order = enhancer(({ user, products, total, collapsed, setCollapsed }) => (
+const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) => (
   <TouchableOpacity
     style={styles.container}
-    onPress={() => setCollapsed(!collapsed)}
+    onPress={toggleOrder}
   >
     <View style={styles.header}>
       <Text
@@ -59,10 +64,10 @@ const Order = enhancer(({ user, products, total, collapsed, setCollapsed }) => (
       >
         {user}
       </Text>
-      <SimpleLineIcons name={collapsed ? 'arrow-down' : 'arrow-up'} size={10}/>
+      <SimpleLineIcons name={isCurrentOrder ? 'arrow-up' : 'arrow-down'} size={10}/>
     </View>
     <Collapsible
-      collapsed={collapsed}
+      collapsed={!isCurrentOrder}
     >
       <View style={styles.separator}/>
       {products.map(({ product, quantity }) => (

@@ -5,7 +5,7 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
 import Collapsible from 'react-native-collapsible'
 import Product from 'Coopcon/activities/Operation/components/Product'
-import { getOrder } from 'Coopcon/data/order/selectors'
+import { getOrderWithTotal } from 'Coopcon/data/order/selectors'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,10 +28,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#000',
   },
+  totalContainer: {
+    flexDirection: 'row',
+  },
+  total: {
+    flex: 1,
+    fontWeight: 'bold',
+  },
 })
 
 const mapStateToProps = (state, { id }) => ({
-  order: getOrder(state, id),
+  order: getOrderWithTotal(state, id),
 })
 
 const enhancer = compose(
@@ -41,7 +48,7 @@ const enhancer = compose(
   setDisplayName('Order'),
 )
 
-const Order = enhancer(({ user, products, collapsed, setCollapsed }) => (
+const Order = enhancer(({ user, products, total, collapsed, setCollapsed }) => (
   <TouchableOpacity
     style={styles.container}
     onPress={() => setCollapsed(!collapsed)}
@@ -56,12 +63,20 @@ const Order = enhancer(({ user, products, collapsed, setCollapsed }) => (
     </View>
     <Collapsible
       collapsed={collapsed}
-      duration={100}
     >
       <View style={styles.separator}/>
       {products.map(({ product, quantity }) => (
         <Product key={product} id={product} quantity={quantity}/>
       ))}
+      <View style={styles.separator}/>
+      <View style={styles.totalContainer}>
+        <Text style={styles.total}>
+          TOTAL
+        </Text>
+        <Text>
+          ${total}
+        </Text>
+      </View>
     </Collapsible>
   </TouchableOpacity>
 ))

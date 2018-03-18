@@ -41,7 +41,7 @@ const Product = enhancer(({ quantity, name, unit, price }) => (
       &nbsp;x {quantity} {unit}
     </Text>
     <Text style={styles.price}>
-      {price * quantity}
+      ${price * quantity}
     </Text>
   </View>
 ))

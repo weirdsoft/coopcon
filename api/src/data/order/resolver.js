@@ -1,4 +1,5 @@
 import * as R from 'ramda'
+import mongoose from 'mongoose'
 import Order from './model'
 
 const resolver = {
@@ -7,11 +8,22 @@ const resolver = {
       return Order.create(order)
     },
     async addOrderProduct(_, { id, productId, quantity }) {
+      productId = mongoose.Types.ObjectId(productId)
       const order = await Order.findById(id).exec()
-      order.products.push({ product: productId, quantity })
-      const product = R.last(order.products)
+      let product = R.find(R.propEq('product', productId), order.products)
+
+      if (R.isNil(product)) {
+        order.products.push({ product: productId, quantity })
+        product = R.last(order.products)
+      } else {
+        product.quantity = quantity
+      }
 
       await order.save()
+      await order.populate({
+        path: 'products.product',
+        match: { _id: productId },
+      }).execPopulate()
       return product
     },
     async removeOrderProduct(_, { id, productId, quantity }) {

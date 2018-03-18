@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 import mongoose from 'mongoose'
 import Order from './model'
+import Product from '../product/model'
 
 const resolver = {
   Mutation: {
@@ -8,6 +9,12 @@ const resolver = {
       return Order.create(order)
     },
     async addOrderProduct(_, { id, productId, quantity }) {
+      const count = await Product.find({ _id: productId }).count().exec()
+
+      if (count === 0) {
+        throw 'The product does not exist'
+      }
+
       productId = mongoose.Types.ObjectId(productId)
       const order = await Order.findById(id).exec()
       let product = R.find(R.propEq('product', productId), order.products)

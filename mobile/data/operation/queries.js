@@ -16,6 +16,15 @@ export const operationOrdersQuery = gql`
         _id
         user
         creationDate
+        products {
+          quantity
+          product {
+            _id
+            name
+            unit
+            price
+          }
+        }
       }
     }
   }

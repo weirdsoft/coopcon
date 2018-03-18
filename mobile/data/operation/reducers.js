@@ -19,7 +19,7 @@ const byId = (state = byIdDefault, action) => {
   switch(action.type) {
     case FETCH_OPERATIONS_SUCCESS:
       return R.merge(
-        R.zipObj(R.pluck('_id', action.operations), action.operations),
+        R.indexBy(R.prop('_id'), action.operations),
       )(state)
     case FETCH_OPERATION_ORDERS_SUCCESS:
       return R.evolve({

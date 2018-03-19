@@ -5,13 +5,22 @@ import { compose, setDisplayName } from 'recompose'
 import { goToOrder } from 'Coopcon/data/navigation/actions'
 import { getOrderIds } from 'Coopcon/data/order/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { FloatingAction } from 'react-native-floating-action'
+import { FAB } from 'react-native-paper'
 import Order from './components/Order'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  buttonContainer: {
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    margin: 10,
+  },
+  button: {
+    backgroundColor: '#007bff',
   },
 })
 
@@ -35,15 +44,14 @@ const Operation = enhancer(({ orders, goToOrder }) => (
       keyExtractor={R.prop('id')}
       renderItem={({ item: { id } }) => (<Order id={id} />)}
     />
-    <FloatingAction
-      actions={[ {
-        position: 1,
-        name: 'add',
-        icon: (<MaterialIcons name="add" size={25} color="white"/>),
-      } ]}
-      overrideWithAction={true}
-      onPressItem={goToOrder}
-    />
+    <View style={styles.buttonContainer}>
+      <FAB
+        icon="add"
+        onPress={goToOrder}
+        style={styles.button}
+        dark={true}
+      />
+    </View>
   </View>
 ))
 

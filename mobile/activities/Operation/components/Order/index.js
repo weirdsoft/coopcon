@@ -4,19 +4,12 @@ import { compose, flattenProp, setDisplayName } from 'recompose'
 import { View, StyleSheet, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
 import Collapsible from 'react-native-collapsible'
-import Ripple from 'react-native-material-ripple'
+import { Card, CardContent, Divider } from 'react-native-paper'
 import Product from 'Coopcon/activities/Operation/components/Product'
 import { toggleOrder } from 'Coopcon/data/order/actions'
 import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    padding: 15,
-    margin: 5,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#000',
-  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -24,11 +17,9 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
   },
-  separator: {
+  divider: {
     marginTop: 10,
     marginBottom: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#000',
   },
   totalContainer: {
     flexDirection: 'row',
@@ -55,36 +46,37 @@ const enhancer = compose(
 )
 
 const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) => (
-  <Ripple
-    style={styles.container}
+  <Card
     onPress={toggleOrder}
   >
-    <View style={styles.header}>
-      <Text
-        style={styles.name}
-      >
-        {user}
-      </Text>
-      <SimpleLineIcons name={isCurrentOrder ? 'arrow-up' : 'arrow-down'} size={10}/>
-    </View>
-    <Collapsible
-      collapsed={!isCurrentOrder}
-    >
-      <View style={styles.separator}/>
-      {products.map(({ product, quantity }) => (
-        <Product key={product} id={product} quantity={quantity}/>
-      ))}
-      <View style={styles.separator}/>
-      <View style={styles.totalContainer}>
-        <Text style={styles.total}>
-          TOTAL
+    <CardContent>
+      <View style={styles.header}>
+        <Text
+          style={styles.name}
+        >
+          {user}
         </Text>
-        <Text>
-          ${total}
-        </Text>
+        <SimpleLineIcons name={isCurrentOrder ? 'arrow-up' : 'arrow-down'} size={10}/>
       </View>
-    </Collapsible>
-  </Ripple>
+      <Collapsible
+        collapsed={!isCurrentOrder}
+      >
+        <Divider style={styles.divider}/>
+        {products.map(({ product, quantity }) => (
+          <Product key={product} id={product} quantity={quantity}/>
+        ))}
+        <Divider style={styles.divider}/>
+        <View style={styles.totalContainer}>
+          <Text style={styles.total}>
+            TOTAL
+          </Text>
+          <Text>
+            ${total}
+          </Text>
+        </View>
+      </Collapsible>
+    </CardContent>
+  </Card>
 ))
 
 export default Order

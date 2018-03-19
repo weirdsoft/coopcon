@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
-import Ripple from 'react-native-material-ripple'
+import { Divider, TouchableRipple } from 'react-native-paper'
 import { goToOperation } from 'Coopcon/data/navigation/actions'
 import { getOperation } from 'Coopcon/data/operation/selectors'
 
@@ -15,8 +15,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingLeft: 15,
     paddingRight: 5,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#000',
+    backgroundColor: 'white',
   },
   name: {
     flex: 1,
@@ -38,13 +37,19 @@ const enhancer = compose(
 )
 
 const Operation = enhancer(({ name, goToOperation }) => (
-  <Ripple
-    style={styles.container}
-    onPress={goToOperation}
-  >
-    <Text style={styles.name}>{name}</Text>
-    <SimpleLineIcons name="arrow-right" size={20}/>
-  </Ripple>
+  <View>
+    <TouchableRipple
+      onPress={goToOperation}
+    >
+      <View
+        style={styles.container}
+      >
+        <Text style={styles.name}>{name}</Text>
+        <SimpleLineIcons name="arrow-right" size={20}/>
+      </View>
+    </TouchableRipple>
+    <Divider/>
+  </View>
 ))
 
 export default Operation

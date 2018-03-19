@@ -1,7 +1,8 @@
 import { StackNavigator } from 'react-navigation'
 import Home from 'Coopcon/activities/Home'
 import Operation from 'Coopcon/activities/Operation'
-import { HOME, OPERATION } from './actions'
+import Order from 'Coopcon/activities/Order'
+import { HOME, OPERATION, ORDER } from './actions'
 
 export const MainStack = StackNavigator(
   {
@@ -10,6 +11,9 @@ export const MainStack = StackNavigator(
     },
     [OPERATION]: {
       screen: Operation,
+    },
+    [ORDER]: {
+      screen: Order,
     },
   },
   {

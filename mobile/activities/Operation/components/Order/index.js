@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
 import Collapsible from 'react-native-collapsible'
+import Ripple from 'react-native-material-ripple'
 import Product from 'Coopcon/activities/Operation/components/Product'
 import { toggleOrder } from 'Coopcon/data/order/actions'
 import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
@@ -54,7 +55,7 @@ const enhancer = compose(
 )
 
 const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) => (
-  <TouchableOpacity
+  <Ripple
     style={styles.container}
     onPress={toggleOrder}
   >
@@ -83,7 +84,7 @@ const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) 
         </Text>
       </View>
     </Collapsible>
-  </TouchableOpacity>
+  </Ripple>
 ))
 
 export default Order

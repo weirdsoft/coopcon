@@ -33,7 +33,7 @@ const byId = (state = byIdDefault, action) => {
   }
 }
 
-const currentOperation = (state = null, action) => {
+const current = (state = null, action) => {
   switch(action.type) {
     case NavigationActions.NAVIGATE:
       if (action.routeName === OPERATION) {
@@ -49,5 +49,5 @@ const currentOperation = (state = null, action) => {
 export default combineReducers({
   ids,
   byId,
-  currentOperation,
+  current,
 })

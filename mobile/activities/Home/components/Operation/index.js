@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
+import Ripple from 'react-native-material-ripple'
 import { goToOperation } from 'Coopcon/data/navigation/actions'
 import { getOperation } from 'Coopcon/data/operation/selectors'
 
@@ -37,13 +38,13 @@ const enhancer = compose(
 )
 
 const Operation = enhancer(({ name, goToOperation }) => (
-  <TouchableOpacity
+  <Ripple
     style={styles.container}
     onPress={goToOperation}
   >
     <Text style={styles.name}>{name}</Text>
     <SimpleLineIcons name="arrow-right" size={20}/>
-  </TouchableOpacity>
+  </Ripple>
 ))
 
 export default Operation

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, setDisplayName } from 'recompose'
+import { compose, flattenProp, mapProps, setDisplayName } from 'recompose'
 import { goToOrder } from 'Coopcon/data/navigation/actions'
-import { getOrderIds } from 'Coopcon/data/order/selectors'
+import { getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { FAB } from 'react-native-paper'
 import Order from './components/Order'
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  orders: R.map((id) => ({ id }), getOrderIds(state)),
+  operation: getCurrentOperation(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -34,6 +34,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
+  flattenProp('operation'),
+  mapProps(R.evolve({
+    orders: R.map((id) => ({ id })),
+  })),
   setDisplayName('Home'),
 )
 

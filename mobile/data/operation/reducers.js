@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
-import { OPERATION } from 'Coopcon/data/navigation/actions'
+import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATIONS_SUCCESS, FETCH_OPERATION_ORDERS_SUCCESS } from './actions'
 
 const idsDefault = []
@@ -36,10 +36,13 @@ const byId = (state = byIdDefault, action) => {
 const current = (state = null, action) => {
   switch(action.type) {
     case NavigationActions.NAVIGATE:
-      if (action.routeName === OPERATION) {
-        return action.params.id
-      } else {
-        return null
+      switch(action.routeName) {
+        case OPERATION:
+          return action.params.id
+        case ORDER:
+          return state
+        default:
+          return null
       }
     default:
       return state

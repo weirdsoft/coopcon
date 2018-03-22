@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   buttonContainer: {
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    margin: 10,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: 10,
   },
   button: {
     backgroundColor: '#007bff',

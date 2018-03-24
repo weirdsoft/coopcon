@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
+import { ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_ORDERS_SUCCESS } from 'Coopcon/data/operation/actions'
 import { TOGGLE_ORDER } from './actions'
 
@@ -48,8 +49,27 @@ const current = (state = null, action) => {
   }
 }
 
+const creatingProducts = (state = null, action) => {
+  switch(action.type) {
+    case NavigationActions.NAVIGATE:
+      if (action.routeName === ORDER) {
+        return [
+          {
+            product: '5a08e4cf427574039613ba35',
+            quantity: 1,
+          },
+        ]
+      } else {
+        return state
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   ids,
   byId,
   current,
+  creatingProducts,
 })

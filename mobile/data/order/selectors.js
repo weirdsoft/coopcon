@@ -20,3 +20,4 @@ export const getOrderWithTotal = createSelector(
   )(order),
 )
 export const isCurrentOrder = (state, id) => R.equals(state.order.current, id)
+export const getCreatingProducts = (state) => state.order.creatingProducts

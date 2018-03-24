@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
-import { Divider, TouchableRipple } from 'react-native-paper'
+import { Text, Divider, TouchableRipple } from 'react-native-paper'
 import { goToOperation } from 'Coopcon/data/navigation/actions'
 import { getOperation } from 'Coopcon/data/operation/selectors'
 

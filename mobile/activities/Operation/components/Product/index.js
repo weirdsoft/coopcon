@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName, setPropTypes } from 'recompose'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { Text } from 'react-native-paper'
 import { getProduct } from 'Coopcon/data/product/selectors'
 
 const styles = StyleSheet.create({

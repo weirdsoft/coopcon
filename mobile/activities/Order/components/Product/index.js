@@ -3,12 +3,18 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName, setPropTypes } from 'recompose'
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, Divider } from 'react-native-paper'
 import { getProduct } from 'Coopcon/data/product/selectors'
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 15,
+    paddingRight: 5,
+    backgroundColor: 'white',
   },
   name: {
     flex: 1,
@@ -30,16 +36,16 @@ const enhancer = compose(
 )
 
 const Product = enhancer(({ quantity, name, unit }) => (
-  <View style={styles.container}>
-    <Text style={styles.name}>
-      {name}
-    </Text>
-    <Text>
-      {quantity}
-    </Text>
-    <Text>
-      {unit}
-    </Text>
+  <View>
+    <View style={styles.container}>
+      <Text style={styles.name}>
+        {name}
+      </Text>
+      <Text>
+        {quantity} {unit}
+      </Text>
+    </View>
+    <Divider/>
   </View>
 ))
 

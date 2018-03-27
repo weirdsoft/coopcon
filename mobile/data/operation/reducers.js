@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
-import { FETCH_OPERATIONS_SUCCESS, FETCH_OPERATION_ORDERS_SUCCESS } from './actions'
+import { FETCH_OPERATIONS_SUCCESS, FETCH_OPERATION_SUCCESS } from './actions'
 
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
@@ -21,11 +21,17 @@ const byId = (state = byIdDefault, action) => {
       return R.merge(
         R.indexBy(R.prop('_id'), action.operations),
       )(state)
-    case FETCH_OPERATION_ORDERS_SUCCESS:
+    case FETCH_OPERATION_SUCCESS:
       return R.evolve({
-        [action.id]: R.assoc(
-          'orders',
-          R.pluck('_id', action.orders),
+        [action.id]: R.compose(
+          R.assoc(
+            'orders',
+            R.pluck('_id', action.orders),
+          ),
+          R.assoc(
+            'products',
+            R.pluck('_id', action.products),
+          ),
         ),
       })(state)
     default:

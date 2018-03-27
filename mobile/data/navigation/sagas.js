@@ -1,11 +1,11 @@
 import { put, all, takeLatest } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
-import { fetchOperationOrders } from 'Coopcon/data/operation/actions'
+import { fetchOperation } from 'Coopcon/data/operation/actions'
 import { OPERATION } from './actions'
 
 function* onOrder({ routeName, params }) {
   if (routeName === OPERATION) {
-    yield put(fetchOperationOrders(params.id))
+    yield put(fetchOperation(params.id))
   }
 }
 

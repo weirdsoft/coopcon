@@ -1,22 +1,13 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
-import { FETCH_OPERATION_ORDERS_SUCCESS } from 'Coopcon/data/operation/actions'
+import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 
-const getOrderProducts = R.compose(
-  R.flatten(),
-  R.pluck('product'),
-  R.flatten(),
-  R.pluck('products'),
-)
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
   switch(action.type) {
-    case FETCH_OPERATION_ORDERS_SUCCESS:
+    case FETCH_OPERATION_SUCCESS:
       return R.union(
-        R.compose(
-          R.pluck('_id'),
-          getOrderProducts,
-        )(action.orders),
+        R.pluck('_id', action.products),
       )(state)
     default:
       return state
@@ -26,13 +17,9 @@ const ids = (state = idsDefault, action) => {
 const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
   switch(action.type) {
-    case FETCH_OPERATION_ORDERS_SUCCESS:
+    case FETCH_OPERATION_SUCCESS:
       return R.merge(
-        R.compose(
-          R.indexBy(R.prop('_id')),
-          getOrderProducts,
-        )(action.orders)
-        ,
+        R.indexBy(R.prop('_id'), action.products),
       )(state)
     default:
       return state

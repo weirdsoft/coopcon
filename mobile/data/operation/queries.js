@@ -12,6 +12,12 @@ export const operationsQuery = gql`
 export const operationOrdersQuery = gql`
   query operationOrdersQuery($id: ID!) {
     operation(id: $id) {
+      products {
+        _id
+        name
+        unit
+        price
+      }
       orders {
         _id
         user
@@ -20,9 +26,6 @@ export const operationOrdersQuery = gql`
           quantity
           product {
             _id
-            name
-            unit
-            price
           }
         }
       }

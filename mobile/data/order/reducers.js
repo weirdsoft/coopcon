@@ -3,7 +3,9 @@ import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
-import { TOGGLE_ORDER } from './actions'
+import {
+  TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG,
+} from './actions'
 
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
@@ -67,9 +69,23 @@ const creatingProducts = (state = null, action) => {
   }
 }
 
+const addingProduct = (state = false, action) => {
+  switch(action.type) {
+    case SHOW_ADD_ORDER_PRODUCT_DIALOG:
+      return true
+    case HIDE_ADD_ORDER_PRODUCT_DIALOG:
+      return false
+    case NavigationActions.NAVIGATE:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   ids,
   byId,
   current,
   creatingProducts,
+  addingProduct,
 })

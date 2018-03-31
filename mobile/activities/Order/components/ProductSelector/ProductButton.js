@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName, setPropTypes } from 'recompose'
 import { View, StyleSheet } from 'react-native'
-import { Text, Divider } from 'react-native-paper'
+import { TouchableRipple, Text, Divider } from 'react-native-paper'
+import { addProductToOrder } from 'Coopcon/data/order/actions'
 import { getProduct } from 'Coopcon/data/product/selectors'
 
 const styles = StyleSheet.create({
@@ -25,8 +26,12 @@ const mapStateToProps = (state, { id }) => ({
   product: getProduct(state, id),
 })
 
+const mapDispatchToProps = (dispatch, { id }) => ({
+  addProductToOrder: () => dispatch(addProductToOrder(id)),
+})
+
 const enhancer = compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   flattenProp('product'),
   setDisplayName('ProductButton'),
   setPropTypes({
@@ -34,13 +39,16 @@ const enhancer = compose(
   }),
 )
 
-const ProductButton = enhancer(({ name }) => (
+const ProductButton = enhancer(({ name, addProductToOrder }) => (
   <View>
-    <View style={styles.container}>
+    <TouchableRipple
+      style={styles.container}
+      onPress={addProductToOrder}
+    >
       <Text style={styles.name}>
         {name}
       </Text>
-    </View>
+    </TouchableRipple>
     <Divider/>
   </View>
 ))

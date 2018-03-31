@@ -14,9 +14,6 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 10,
   },
-  button: {
-    backgroundColor: '#007bff',
-  },
 })
 
 const mapStateToProps = (state) => ({
@@ -41,8 +38,6 @@ const AddProductButton = enhancer(({ showAddOrderProductDialog }) => (
     <FAB
       onPress={showAddOrderProductDialog}
       icon="add"
-      style={styles.button}
-      dark={true}
     />
   </View>
 ))

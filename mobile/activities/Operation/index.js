@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 10,
   },
-  button: {
-    backgroundColor: '#007bff',
-  },
 })
 
 const mapStateToProps = (state) => ({
@@ -52,8 +49,6 @@ const Operation = enhancer(({ orders, goToOrder }) => (
       <FAB
         icon="add"
         onPress={goToOrder}
-        style={styles.button}
-        dark={true}
       />
     </View>
   </View>

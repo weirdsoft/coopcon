@@ -34,3 +34,10 @@ export const getOrderAvailableProducts = createSelector(
     ),
   )(operation.products),
 )
+export const hasOrderAvailableProducts = createSelector(
+  [ getOrderAvailableProducts ],
+  (products) => R.compose(
+    R.not,
+    R.isEmpty,
+  )(products),
+)

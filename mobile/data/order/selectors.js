@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import { createSelector } from 'reselect'
+import { getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { getProductsById } from 'Coopcon/data/product/selectors'
 
 export const getOrderIds = (state) => state.order.ids
@@ -22,3 +23,14 @@ export const getOrderWithTotal = createSelector(
 export const isCurrentOrder = (state, id) => R.equals(state.order.current, id)
 export const getCreatingProducts = (state) => state.order.creatingProducts
 export const isAddingProduct = (state) => state.order.addingProduct
+export const getOrderAvailableProducts = createSelector(
+  [ getCurrentOperation, getCreatingProducts ],
+  (operation, orderProducts) => R.compose(
+    R.map((id) => ({ id })),
+    R.reject(
+      R.flip(R.contains)(
+        R.pluck('product', orderProducts),
+      ),
+    ),
+  )(operation.products),
+)

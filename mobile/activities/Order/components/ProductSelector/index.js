@@ -1,12 +1,11 @@
 import React from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, branch, renderNothing, mapProps, setDisplayName } from 'recompose'
+import { compose, branch, renderNothing, setDisplayName } from 'recompose'
 import { StyleSheet, FlatList } from 'react-native'
 import { Dialog, DialogTitle, DialogScrollArea } from 'react-native-paper'
-import { getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { hideAddOrderProductDialog } from 'Coopcon/data/order/actions'
-import { getCreatingProducts, isAddingProduct } from 'Coopcon/data/order/selectors'
+import { isAddingProduct, getOrderAvailableProducts } from 'Coopcon/data/order/selectors'
 import ProductButton from './ProductButton'
 
 const styles = StyleSheet.create({
@@ -16,9 +15,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  orderProducts: getCreatingProducts(state),
-  operation: getCurrentOperation(state),
   isAddingProduct: isAddingProduct(state),
+  products: getOrderAvailableProducts(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -31,17 +29,6 @@ const enhancer = compose(
     ({ isAddingProduct }) => !isAddingProduct,
     renderNothing,
   ),
-  mapProps(({ orderProducts, operation, ...props }) => ({
-    ...props,
-    products: R.compose(
-      R.map((id) => ({ id })),
-      R.reject(
-        R.flip(R.contains)(
-          R.pluck('product', orderProducts),
-        ),
-      ),
-    )(operation.products),
-  })),
   setDisplayName('ProductSelector'),
 )
 

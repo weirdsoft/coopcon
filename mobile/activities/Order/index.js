@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, setDisplayName } from 'recompose'
+import { compose, mapProps, setDisplayName } from 'recompose'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { getCreatingProducts } from 'Coopcon/data/order/selectors'
+import { getCreatingProductsIds } from 'Coopcon/data/order/selectors'
 import Product from './components/Product'
 import AddProductButton from './components/AddProductButton'
 import ProductSelector from './components/ProductSelector'
@@ -16,11 +16,14 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  products: getCreatingProducts(state),
+  products: getCreatingProductsIds(state),
 })
 
 const enhancer = compose(
   connect(mapStateToProps),
+  mapProps(R.evolve({
+    products: R.map((id) => ({ id })),
+  })),
   setDisplayName('Order'),
 )
 
@@ -28,9 +31,9 @@ const Order = enhancer(({ products }) => (
   <View style={styles.container}>
     <FlatList
       data={products}
-      keyExtractor={R.prop('product')}
-      renderItem={({ item: { product, quantity } }) => (
-        <Product id={product} quantity={quantity} />
+      keyExtractor={R.prop('id')}
+      renderItem={({ item: { id } }) => (
+        <Product id={id} />
       )}
     />
     <AddProductButton />

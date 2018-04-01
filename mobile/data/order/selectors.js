@@ -21,16 +21,15 @@ export const getOrderWithTotal = createSelector(
   )(order),
 )
 export const isCurrentOrder = (state, id) => R.equals(state.order.current, id)
-export const getCreatingProducts = (state) => state.order.creatingProducts
+export const getCreatingProductsIds = (state) => state.order.creatingProductsIds
+export const getOrderProductQuantity = (state, id) => state.order.creatingProductsById[id]
 export const isAddingProduct = (state) => state.order.addingProduct
 export const getOrderAvailableProducts = createSelector(
-  [ getCurrentOperation, getCreatingProducts ],
+  [ getCurrentOperation, getCreatingProductsIds ],
   (operation, orderProducts) => R.compose(
     R.map((id) => ({ id })),
     R.reject(
-      R.flip(R.contains)(
-        R.pluck('product', orderProducts),
-      ),
+      R.flip(R.contains)(orderProducts),
     ),
   )(operation.products),
 )

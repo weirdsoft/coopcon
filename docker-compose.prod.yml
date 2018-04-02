@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    image: asermax/coopcon-web:latest
+    build: .
+    ports:
+      - 80:80
+  api:
+    image: asermax/coopcon-api:latest
+    build: api/
+    volumes:
+      - api-deps:/opt/app/node_modules
+
+volumes:
+  api-deps:

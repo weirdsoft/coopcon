@@ -23,7 +23,10 @@ export const getOrderWithTotal = createSelector(
 export const isCurrentOrder = (state, id) => R.equals(state.order.current, id)
 export const getCreatingProductsIds = (state) => state.order.creatingProductsIds
 export const getOrderProductQuantity = (state, id) => state.order.creatingProductsById[id]
-export const isAddingProduct = (state) => state.order.addingProduct
+export const hasCreatingProducts = createSelector(
+  [ getCreatingProductsIds ],
+  (products) => R.not(R.isEmpty(products)),
+)
 export const getOrderAvailableProducts = createSelector(
   [ getCurrentOperation, getCreatingProductsIds ],
   (operation, orderProducts) => R.compose(
@@ -40,3 +43,6 @@ export const hasOrderAvailableProducts = createSelector(
     R.isEmpty,
   )(products),
 )
+export const getCreatingUser = (state) => state.order.creatingUser
+export const isAddingProduct = (state) => state.order.addingProduct
+export const isSaving = (state) => state.order.saving

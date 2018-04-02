@@ -5,7 +5,8 @@ import { ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 import {
   TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG, ADD_PRODUCT_TO_ORDER,
-  ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY,
+  ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY, SHOW_SAVE_ORDER_DIALOG,
+  HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER,
 } from './actions'
 
 const idsDefault = []
@@ -58,7 +59,7 @@ const creatingProductsIds = (state = null, action) => {
       if (action.routeName === ORDER) {
         return []
       } else {
-        return state
+        return null
       }
     case ADD_PRODUCT_TO_ORDER:
       return R.append(action.id)(state)
@@ -73,7 +74,7 @@ const creatingProductsById = (state = null, action) => {
       if (action.routeName === ORDER) {
         return {}
       } else {
-        return state
+        return null
       }
     case ADD_PRODUCT_TO_ORDER:
       return R.assoc(action.id, 1)(state)
@@ -93,11 +94,38 @@ const creatingProductsById = (state = null, action) => {
   }
 }
 
+const creatingUser = (state = null, action) => {
+  switch(action.type) {
+    case SHOW_SAVE_ORDER_DIALOG:
+      return ''
+    case CHANGE_ORDER_USER:
+      return action.user
+    case HIDE_SAVE_ORDER_DIALOG:
+    case NavigationActions.NAVIGATE:
+      return null
+    default:
+      return state
+  }
+}
+
 const addingProduct = (state = false, action) => {
   switch(action.type) {
     case SHOW_ADD_ORDER_PRODUCT_DIALOG:
       return true
     case HIDE_ADD_ORDER_PRODUCT_DIALOG:
+      return false
+    case NavigationActions.NAVIGATE:
+      return false
+    default:
+      return state
+  }
+}
+
+const saving = (state = false, action) => {
+  switch(action.type) {
+    case SHOW_SAVE_ORDER_DIALOG:
+      return true
+    case HIDE_SAVE_ORDER_DIALOG:
       return false
     case NavigationActions.NAVIGATE:
       return false
@@ -112,5 +140,7 @@ export default combineReducers({
   current,
   creatingProductsIds,
   creatingProductsById,
+  creatingUser,
   addingProduct,
+  saving,
 })

@@ -7,6 +7,8 @@ import { getCreatingProductsIds } from 'Coopcon/data/order/selectors'
 import Product from './components/Product'
 import AddProductButton from './components/AddProductButton'
 import ProductSelector from './components/ProductSelector'
+import SaveDialog from './components/SaveDialog'
+import SaveButton from './components/SaveButton'
 
 const styles = StyleSheet.create({
   container: {
@@ -38,6 +40,7 @@ const Order = enhancer(({ products }) => (
     />
     <AddProductButton />
     <ProductSelector />
+    <SaveDialog />
   </View>
 ))
 
@@ -49,4 +52,5 @@ export default class OrderWrapper extends Component {
 
 OrderWrapper.navigationOptions = {
   title: 'Orden',
+  headerRight: <SaveButton />,
 }

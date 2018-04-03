@@ -34,7 +34,7 @@ function* onIndex() {
   const producers = yield select(getSortedProducers)
   const first = producers[0]
 
-  if (first !== null) {
+  if (first != null) {
     yield put(goToOperations(first._id))
   }
 }

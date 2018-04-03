@@ -1,7 +1,7 @@
 {
   "name": "@coopcon/web",
-  "version": "0.0.1",
-  "description": "API de Cooperativa de Consumo",
+  "version": "0.1.0",
+  "description": "Cooperativa de Consumo Web App",
   "repository": "git@github.com:weirdsoft/coopcon.git/web",
   "author": "Agustin Carrasco <asermax@gmail.com>",
   "license": "MIT",

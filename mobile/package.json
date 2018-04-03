@@ -1,7 +1,7 @@
 {
-  "name": "Coopcon",
+  "name": "@coopcon/mobile",
   "version": "0.1.0",
-  "private": true,
+  "description": "Cooperativa de Consumo Mobile App",
   "devDependencies": {
     "eslint": "^4.18.1",
     "eslint-plugin-graphql": "^1.5.0",

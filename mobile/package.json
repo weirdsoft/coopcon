@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "apollo-link": "^1.2.1",
-    "apollo-link-http": "^1.5.1",
+    "apollo-link-batch-http": "^1.2.1",
     "expo": "^26.0.0",
     "graphql-tag": "^2.8.0",
     "ramda": "^0.25.0",

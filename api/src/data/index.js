@@ -20,8 +20,8 @@ const queryDefinition = `
     addOperationProduct(id: ID!, productId: ID!): Boolean!
     removeOperationProduct(id: ID!, productId: ID!): Boolean!
     createOrder(order: OrderInput!): Order!
-    addOrderProduct(id: ID!, productId: ID!, quantity: Int!): OrderProduct!
-    removeOrderProduct(id: ID!, productId: ID!, quantity: Int!): OrderProduct
+    addOrderProduct(id: ID!, orderProduct: OrderProductInput): OrderProduct!
+    removeOrderProduct(id: ID!, orderProduct: OrderProductInput): OrderProduct
   }
 `
 

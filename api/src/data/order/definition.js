@@ -16,6 +16,11 @@ const definition = `
     user: String!
     operation: ID!
   }
+
+  input OrderProductInput {
+    product: ID!
+    quantity: Int!
+  }
 `
 
 export default definition

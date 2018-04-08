@@ -16,6 +16,7 @@ const queryDefinition = `
   type Mutation {
     createProducer(producer: ProducerInput!): Producer!
     createProduct(product: ProductInput!): Product!
+    editProduct(id: ID!, product: ProductInput!): Product!
     createOperation(operation: OperationInput!): Operation!
     addOperationProduct(id: ID!, productId: ID!): Boolean!
     removeOperationProduct(id: ID!, productId: ID!): Boolean!

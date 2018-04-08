@@ -57,7 +57,9 @@ const ProducerAdmin = enhancer(({ producerId, Page }) => (
             to={goToProductGallery(producerId)}
             className="nav-link"
             activeClassName='active'
-            isActive={(match, location) => [ PRODUCT_GALLERY, PRODUCT_ADD ].includes(location.type)}
+            isActive={(match, location) => [
+              PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
+            ].includes(location.type)}
           >
             Productos
           </NavLink>

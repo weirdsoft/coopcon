@@ -9,3 +9,12 @@ export const createProductMutation = gql`
   }
   ${productFieldsFragment}
 `
+
+export const editProductMutation = gql`
+  mutation editProduct($id: ID!, $product: ProductInput!) {
+    product: editProduct(id: $id, product: $product) {
+      ...productFields
+    }
+  }
+  ${productFieldsFragment}
+`

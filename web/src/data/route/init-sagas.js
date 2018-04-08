@@ -5,8 +5,8 @@ import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
 import { fetchOperationProducts } from 'data/operation/actions'
 import { getCurrentOperationId } from 'data/operation/selectors'
 import {
-  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, PRODUCT_GALLERY, PRODUCT_ADD, goToIndex,
-  goToOperations,
+  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
+  goToIndex, goToOperations,
 } from './actions'
 import { getCurrentRoute } from './selectors'
 
@@ -62,6 +62,7 @@ const mapRouteToSaga = {
   [OPERATION_PRODUCTS]: onOperationsProducts,
   [PRODUCT_GALLERY]: onProducerAdmin,
   [PRODUCT_ADD]: onProducerAdmin,
+  [PRODUCT_EDIT]: onProducerAdmin,
 }
 
 function* routeSaga() {

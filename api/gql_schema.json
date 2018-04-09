@@ -303,22 +303,6 @@
                             "deprecationReason": null
                         },
                         {
-                            "name": "minimalFraction",
-                            "description": "",
-                            "args": [],
-                            "type": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "Float",
-                                    "ofType": null
-                                }
-                            },
-                            "isDeprecated": false,
-                            "deprecationReason": null
-                        },
-                        {
                             "name": "unit",
                             "description": "",
                             "args": [],
@@ -328,6 +312,22 @@
                                 "ofType": {
                                     "kind": "SCALAR",
                                     "name": "String",
+                                    "ofType": null
+                                }
+                            },
+                            "isDeprecated": false,
+                            "deprecationReason": null
+                        },
+                        {
+                            "name": "minimalFraction",
+                            "description": "",
+                            "args": [],
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
                                     "ofType": null
                                 }
                             },
@@ -689,7 +689,7 @@
                                 "name": null,
                                 "ofType": {
                                     "kind": "SCALAR",
-                                    "name": "Int",
+                                    "name": "Float",
                                     "ofType": null
                                 }
                             },
@@ -1138,6 +1138,20 @@
                             "defaultValue": null
                         },
                         {
+                            "name": "minimalFraction",
+                            "description": "",
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
+                                    "ofType": null
+                                }
+                            },
+                            "defaultValue": null
+                        },
+                        {
                             "name": "price",
                             "description": "",
                             "type": {
@@ -1310,7 +1324,7 @@
                                 "name": null,
                                 "ofType": {
                                     "kind": "SCALAR",
-                                    "name": "Int",
+                                    "name": "Float",
                                     "ofType": null
                                 }
                             },

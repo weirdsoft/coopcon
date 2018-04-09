@@ -16,6 +16,7 @@ export const operationOrdersQuery = gql`
         _id
         name
         unit
+        minimalFraction
         price
       }
       orders {

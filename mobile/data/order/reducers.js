@@ -84,13 +84,13 @@ const creatingProductsById = (state = null, action) => {
       return R.assoc(action.id, 1)(state)
     case ADD_TO_PRODUCT_QUANTITY:
       return R.evolve({
-        [action.id]: R.inc,
+        [action.id]: R.add(action.quantity),
       })(state)
     case SUBTRACT_TO_PRODUCT_QUANTITY:
       return R.evolve({
         [action.id]: R.unless(
-          R.equals(1),
-          R.dec,
+          R.equals(action.quantity),
+          R.flip(R.subtract)(action.quantity),
         ),
       })(state)
     default:

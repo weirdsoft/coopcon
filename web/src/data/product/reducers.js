@@ -50,6 +50,7 @@ const defaultNewProduct = {
   name: null,
   quantity: null,
   unit: null,
+  minimalFraction: null,
   price: null,
 }
 const newProduct = (state = null, action) => {

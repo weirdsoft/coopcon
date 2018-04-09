@@ -9,7 +9,8 @@
   "scripts": {
     "start": "env nodemon index.js",
     "start-prod": "node index.js",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "migrate": "node migrations/index.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

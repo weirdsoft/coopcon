@@ -6,17 +6,19 @@ import Card from 'components/Card'
 
 const productValidations = {
   name: validations.string,
-  quantity: validations.number,
+  quantity: validations.int,
   unit: validations.string,
-  price: validations.number,
+  minimalFraction: validations.float,
+  price: validations.float,
 }
 
 const enhancer = compose(
-  mapProps(({ name, quantity, unit, price, ...props }) => ({
+  mapProps(({ name, quantity, unit, minimalFraction, price, ...props }) => ({
     ...props,
     name: coalesce(name, ''),
     quantity: coalesce(quantity, ''),
     unit: coalesce(unit, ''),
+    minimalFraction: coalesce(minimalFraction, ''),
     price: coalesce(price, ''),
   })),
   withHandlers({
@@ -39,12 +41,13 @@ const enhancer = compose(
 )
 
 const EditableProduct = enhancer(({
-  name, quantity, unit, price, onKeyDown, onUpdate, onSubmit, onCancel,
+  name, quantity, unit, minimalFraction, price, onKeyDown, onUpdate, onSubmit, onCancel,
 }) => (
   <Card className="text-center h-100">
     <form onSubmit={onSubmit}>
       <div className="form-group">
         <input
+          required
           type="text"
           value={name}
           onKeyDown={onKeyDown}
@@ -56,7 +59,11 @@ const EditableProduct = enhancer(({
       </div>
       <div className="form-group">
         <input
+          required
           type="number"
+          min="1"
+          step="1"
+          pattern="\d+"
           value={quantity}
           onKeyDown={onKeyDown}
           onChange={(event) => onUpdate('quantity', event)}
@@ -66,6 +73,7 @@ const EditableProduct = enhancer(({
       </div>
       <div className="form-group">
         <input
+          required
           type="text"
           value={unit}
           onKeyDown={onKeyDown}
@@ -75,12 +83,28 @@ const EditableProduct = enhancer(({
         />
       </div>
       <div className="form-group">
+        <input
+          required
+          type="number"
+          min="0.1"
+          step="0.1"
+          value={minimalFraction}
+          onKeyDown={onKeyDown}
+          onChange={(event) => onUpdate('minimalFraction', event)}
+          className="form-control"
+          placeholder="Fracción Mínima"
+        />
+      </div>
+      <div className="form-group">
         <div className="input-group">
           <div className="input-group-prepend">
             <span className="input-group-text">$</span>
           </div>
           <input
-            type="text"
+            required
+            type="number"
+            min="0"
+            step="1"
             value={price}
             onKeyDown={onKeyDown}
             onChange={(event) => onUpdate('price', event)}

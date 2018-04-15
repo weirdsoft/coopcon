@@ -3,10 +3,11 @@ import * as R from 'ramda'
 import * as api from 'Coopcon/data/api'
 import { NavigationActions } from 'react-navigation'
 import { getCurrentId } from 'Coopcon/data/operation/selectors'
-import { getCreatingUser, getCreatingProductsById } from './selectors'
+import { getCreatingUser, getCreatingProductsById, getOrderProductQuantity } from './selectors'
 import {
-  ADD_PRODUCT_TO_ORDER, SAVE_NEW_ORDER_REQUEST, hideAddOrderProductDialog, receiveNewOrder,
-  failReceiveNewOrder,
+  ADD_PRODUCT_TO_ORDER, hideAddOrderProductDialog,
+  SAVE_NEW_ORDER_REQUEST,  receiveNewOrder, failReceiveNewOrder,
+  SUBTRACT_TO_PRODUCT_QUANTITY, removeProductFromOrder,
 } from './actions'
 import { createOrderMutation, addOrderProductMutation } from './mutations'
 
@@ -50,9 +51,18 @@ function* saveNewOrder() {
   }
 }
 
+function* removeProductQuantityZero({ id }) {
+  const quantity = yield select(getOrderProductQuantity, id)
+
+  if (quantity <= 0) {
+    yield put(removeProductFromOrder(id))
+  }
+}
+
 function* orderSaga() {
   yield all([
     takeLatest(ADD_PRODUCT_TO_ORDER, closeAddOrderProductDialog),
+    takeLatest(SUBTRACT_TO_PRODUCT_QUANTITY, removeProductQuantityZero),
     takeLatest(SAVE_NEW_ORDER_REQUEST, saveNewOrder),
   ])
 }

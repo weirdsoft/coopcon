@@ -5,8 +5,8 @@ import { ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 import {
   TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG, ADD_PRODUCT_TO_ORDER,
-  ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY, SHOW_SAVE_ORDER_DIALOG,
-  HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER, SAVE_NEW_ORDER_SUCCESS,
+  REMOVE_PRODUCT_FROM_ORDER, ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY,
+  SHOW_SAVE_ORDER_DIALOG, HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER, SAVE_NEW_ORDER_SUCCESS,
 } from './actions'
 
 const idsDefault = []
@@ -67,6 +67,8 @@ const creatingProductsIds = (state = null, action) => {
       }
     case ADD_PRODUCT_TO_ORDER:
       return R.append(action.id)(state)
+    case REMOVE_PRODUCT_FROM_ORDER:
+      return R.without([ action.id ])(state)
     default:
       return state
   }
@@ -82,16 +84,15 @@ const creatingProductsById = (state = null, action) => {
       }
     case ADD_PRODUCT_TO_ORDER:
       return R.assoc(action.id, action.quantity)(state)
+    case REMOVE_PRODUCT_FROM_ORDER:
+      return R.dissoc(action.id)(state)
     case ADD_TO_PRODUCT_QUANTITY:
       return R.evolve({
         [action.id]: R.add(action.quantity),
       })(state)
     case SUBTRACT_TO_PRODUCT_QUANTITY:
       return R.evolve({
-        [action.id]: R.unless(
-          R.equals(action.quantity),
-          R.flip(R.subtract)(action.quantity),
-        ),
+        [action.id]: R.flip(R.subtract)(action.quantity),
       })(state)
     default:
       return state

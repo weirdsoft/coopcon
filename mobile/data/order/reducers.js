@@ -81,7 +81,7 @@ const creatingProductsById = (state = null, action) => {
         return null
       }
     case ADD_PRODUCT_TO_ORDER:
-      return R.assoc(action.id, 1)(state)
+      return R.assoc(action.id, action.quantity)(state)
     case ADD_TO_PRODUCT_QUANTITY:
       return R.evolve({
         [action.id]: R.add(action.quantity),

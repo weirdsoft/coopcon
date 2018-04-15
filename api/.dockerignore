@@ -1,0 +1,8 @@
+*
+
+!dist
+!index.js
+!package.json
+!yarn.lock
+!entrypoint.sh
+!migrations

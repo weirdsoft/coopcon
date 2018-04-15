@@ -1,0 +1,11 @@
+@import 'variables';
+
+.operation {
+  .products-link {
+    &.active  {
+      pointer-events: none;
+      cursor: default;
+      color: $black;
+    }
+  }
+}

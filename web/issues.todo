@@ -1,0 +1,4 @@
+[ ] Rewrite stuff using ramda
+[ ] Use the "namespace/action" format for action strings
+[X] Fix directly accessing the operation's products section (needs data to be loaded first)
+[X] Change selection on operation's product to use the checkmark icon, leave the color highlight for hovering

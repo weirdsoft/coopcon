@@ -64,7 +64,7 @@ const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) 
       >
         <Divider style={styles.divider}/>
         {products.map(({ product, quantity }) => (
-          <Product key={product} id={product} quantity={quantity}/>
+          <Product key={product} id={product} orderQuantity={quantity}/>
         ))}
         <Divider style={styles.divider}/>
         <View style={styles.totalContainer}>

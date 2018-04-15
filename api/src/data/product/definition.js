@@ -4,6 +4,7 @@ const definition = `
     name: String!
     quantity: Int!
     unit: String!
+    minimalFraction: Float!
     price: Float!
     creationDate: Date!
   }
@@ -13,6 +14,7 @@ const definition = `
     name: String!
     quantity: Int!
     unit: String!
+    minimalFraction: Float!
     price: Float!
   }
 `

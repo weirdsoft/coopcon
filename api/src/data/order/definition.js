@@ -9,12 +9,17 @@ const definition = `
 
   type OrderProduct {
     product: Product!
-    quantity: Int!
+    quantity: Float!
   }
 
   input OrderInput {
     user: String!
     operation: ID!
+  }
+
+  input OrderProductInput {
+    product: ID!
+    quantity: Float!
   }
 `
 

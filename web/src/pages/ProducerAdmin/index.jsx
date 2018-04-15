@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import {
   goToOperations, goToProductGallery, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS,
-  PRODUCT_GALLERY, PRODUCT_ADD,
+  PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
 } from 'data/route/actions'
 import { getCurrentRoute } from 'data/route/selectors'
 import { getCurrentId } from 'data/producer/selectors'
@@ -19,6 +19,7 @@ const pageToComponent = {
   [OPERATION_PRODUCTS]: Operations,
   [PRODUCT_GALLERY]: ProductGallery,
   [PRODUCT_ADD]: ProductGallery,
+  [PRODUCT_EDIT]: ProductGallery,
 }
 
 const mapStateToProps = (state) => ({
@@ -56,7 +57,9 @@ const ProducerAdmin = enhancer(({ producerId, Page }) => (
             to={goToProductGallery(producerId)}
             className="nav-link"
             activeClassName='active'
-            isActive={(match, location) => [ PRODUCT_GALLERY, PRODUCT_ADD ].includes(location.type)}
+            isActive={(match, location) => [
+              PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
+            ].includes(location.type)}
           >
             Productos
           </NavLink>

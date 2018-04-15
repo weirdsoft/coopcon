@@ -1,7 +1,8 @@
 import { execute, makePromise } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
+import { BatchHttpLink } from 'apollo-link-batch-http'
+import { API_HOST } from './config'
 
-const link = new HttpLink({ uri: 'http://192.168.0.100/api' })
+const link = new BatchHttpLink({ uri: `http://${API_HOST}/api` })
 
 export const query = async(query, variables) => {
   const response = await makePromise(execute(link, { query, variables }))

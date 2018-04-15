@@ -8,9 +8,7 @@ import Action from 'components/Action'
 import styles from './styles.scss'
 
 let CardAction = ({ position, ...props }) => (
-  <div className={`level-${position}`}>
-    <Action className="level-item" {...props} />
-  </div>
+  <Action {...props} />
 )
 
 CardAction.propTypes = {
@@ -22,7 +20,7 @@ CardAction = flattenProp('action')(CardAction)
 const LeftAction = compose(
   branch(
     (props) => props.action == null,
-    renderComponent(() => <div className="level-left" />),
+    renderComponent(() => <div />),
   ),
   withProps({ position: 'left' }),
 )(CardAction)
@@ -37,7 +35,7 @@ const RightAction = compose(
 
 
 let Actions = ({ hiddenActions = true, leftAction, rightAction }) => (
-  <nav className={classNames('level', styles.actions, { [styles.isHidden]: hiddenActions })}>
+  <nav className={classNames(styles.actions, { [styles.isHidden]: hiddenActions })}>
     <LeftAction action={leftAction} />
     <RightAction action={rightAction} />
   </nav>

@@ -1,7 +1,10 @@
+import * as R from 'ramda'
 import { combineReducers } from 'redux'
-import { PRODUCT_ADD, allRoutes } from 'data/route/actions'
+import { PRODUCT_ADD, PRODUCT_EDIT, allRoutes } from 'data/route/actions'
 import { FETCH_PRODUCER_SUCCESS } from 'data/producer/actions'
-import { CHANGE_NEW_PRODUCT, ADD_NEW_PRODUCT_SUCCESS } from './actions'
+import {
+  CHANGE_NEW_PRODUCT, ADD_NEW_PRODUCT_SUCCESS, CHANGE_EDITING_PRODUCT, EDIT_PRODUCT_SUCCESS,
+} from './actions'
 
 const byId = (state = {}, action) => {
   switch(action.type) {
@@ -23,6 +26,8 @@ const byId = (state = {}, action) => {
           ...action.product,
         },
       }
+    case EDIT_PRODUCT_SUCCESS:
+      return R.assoc(action.product._id, action.product)(state)
     default:
       return state
   }
@@ -45,6 +50,7 @@ const defaultNewProduct = {
   name: null,
   quantity: null,
   unit: null,
+  minimalFraction: null,
   price: null,
 }
 const newProduct = (state = null, action) => {
@@ -65,8 +71,39 @@ const newProduct = (state = null, action) => {
   }
 }
 
+const editingId = (state = null, action) => {
+  switch(action.type) {
+    case PRODUCT_EDIT:
+      return action.payload.productId
+    default:
+      if (allRoutes.includes(action.type)) {
+        return null
+      } else {
+        return state
+      }
+  }
+}
+
+const editingChanges = (state = null, action) => {
+  switch(action.type) {
+    case PRODUCT_EDIT:
+      return {}
+    case CHANGE_EDITING_PRODUCT:
+      return R.merge(state, action.change)
+    default:
+      if (allRoutes.includes(action.type)) {
+        return null
+      } else {
+        return state
+      }
+  }
+}
+
+
 export default combineReducers({
   byId,
   isAdding,
   newProduct,
+  editingId,
+  editingChanges,
 })

@@ -1,15 +1,25 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { compose, flattenProp, setDisplayName } from 'recompose'
+import { compose, withHandlers, flattenProp, setDisplayName } from 'recompose'
+import { goToProductEdit } from 'data/route/actions'
+import { getCurrentId } from 'data/producer/selectors'
 import { getProduct } from 'data/product/selectors'
 import BaseProduct from 'components/Product'
 
-const mapStateToProps = (state, { productId }) => ({
-  product: getProduct(state, productId),
+const mapStateToProps = (state, { id }) => ({
+  producerId: getCurrentId(state),
+  product: getProduct(state, id),
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  goToProductEdit: (producerId, productId) => dispatch(goToProductEdit(producerId, productId)),
 })
 
 const enhancer = compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
+  withHandlers({
+    onEdit: ({ producerId, id, goToProductEdit }) => () => goToProductEdit(producerId, id),
+  }),
   flattenProp('product'),
   setDisplayName('Product'),
 )
@@ -17,7 +27,7 @@ const enhancer = compose(
 const Product = enhancer(BaseProduct)
 
 Product.propTypes = {
-  productId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 export default Product

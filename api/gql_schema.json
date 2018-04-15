@@ -319,6 +319,22 @@
                             "deprecationReason": null
                         },
                         {
+                            "name": "minimalFraction",
+                            "description": "",
+                            "args": [],
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
+                                    "ofType": null
+                                }
+                            },
+                            "isDeprecated": false,
+                            "deprecationReason": null
+                        },
+                        {
                             "name": "price",
                             "description": "",
                             "args": [],
@@ -673,7 +689,7 @@
                                 "name": null,
                                 "ofType": {
                                     "kind": "SCALAR",
-                                    "name": "Int",
+                                    "name": "Float",
                                     "ofType": null
                                 }
                             },
@@ -726,6 +742,51 @@
                             "name": "createProduct",
                             "description": "",
                             "args": [
+                                {
+                                    "name": "product",
+                                    "description": "",
+                                    "type": {
+                                        "kind": "NON_NULL",
+                                        "name": null,
+                                        "ofType": {
+                                            "kind": "INPUT_OBJECT",
+                                            "name": "ProductInput",
+                                            "ofType": null
+                                        }
+                                    },
+                                    "defaultValue": null
+                                }
+                            ],
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "OBJECT",
+                                    "name": "Product",
+                                    "ofType": null
+                                }
+                            },
+                            "isDeprecated": false,
+                            "deprecationReason": null
+                        },
+                        {
+                            "name": "editProduct",
+                            "description": "",
+                            "args": [
+                                {
+                                    "name": "id",
+                                    "description": "",
+                                    "type": {
+                                        "kind": "NON_NULL",
+                                        "name": null,
+                                        "ofType": {
+                                            "kind": "SCALAR",
+                                            "name": "ID",
+                                            "ofType": null
+                                        }
+                                    },
+                                    "defaultValue": null
+                                },
                                 {
                                     "name": "product",
                                     "description": "",
@@ -924,30 +985,12 @@
                                     "defaultValue": null
                                 },
                                 {
-                                    "name": "productId",
+                                    "name": "orderProduct",
                                     "description": "",
                                     "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "ID",
-                                            "ofType": null
-                                        }
-                                    },
-                                    "defaultValue": null
-                                },
-                                {
-                                    "name": "quantity",
-                                    "description": "",
-                                    "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "Int",
-                                            "ofType": null
-                                        }
+                                        "kind": "INPUT_OBJECT",
+                                        "name": "OrderProductInput",
+                                        "ofType": null
                                     },
                                     "defaultValue": null
                                 }
@@ -983,30 +1026,12 @@
                                     "defaultValue": null
                                 },
                                 {
-                                    "name": "productId",
+                                    "name": "orderProduct",
                                     "description": "",
                                     "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "ID",
-                                            "ofType": null
-                                        }
-                                    },
-                                    "defaultValue": null
-                                },
-                                {
-                                    "name": "quantity",
-                                    "description": "",
-                                    "type": {
-                                        "kind": "NON_NULL",
-                                        "name": null,
-                                        "ofType": {
-                                            "kind": "SCALAR",
-                                            "name": "Int",
-                                            "ofType": null
-                                        }
+                                        "kind": "INPUT_OBJECT",
+                                        "name": "OrderProductInput",
+                                        "ofType": null
                                     },
                                     "defaultValue": null
                                 }
@@ -1107,6 +1132,20 @@
                                 "ofType": {
                                     "kind": "SCALAR",
                                     "name": "String",
+                                    "ofType": null
+                                }
+                            },
+                            "defaultValue": null
+                        },
+                        {
+                            "name": "minimalFraction",
+                            "description": "",
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
                                     "ofType": null
                                 }
                             },
@@ -1247,6 +1286,45 @@
                                 "ofType": {
                                     "kind": "SCALAR",
                                     "name": "ID",
+                                    "ofType": null
+                                }
+                            },
+                            "defaultValue": null
+                        }
+                    ],
+                    "interfaces": null,
+                    "enumValues": null,
+                    "possibleTypes": null
+                },
+                {
+                    "kind": "INPUT_OBJECT",
+                    "name": "OrderProductInput",
+                    "description": "",
+                    "fields": null,
+                    "inputFields": [
+                        {
+                            "name": "product",
+                            "description": "",
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "ID",
+                                    "ofType": null
+                                }
+                            },
+                            "defaultValue": null
+                        },
+                        {
+                            "name": "quantity",
+                            "description": "",
+                            "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "Float",
                                     "ofType": null
                                 }
                             },

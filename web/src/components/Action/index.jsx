@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import styles from './styles.scss'
 
-let Action = ({ disabled, callback, icon, className }) => (
+let Action = ({ disabled, callback, text, icon, type='primary' }) => (
   <button
-    className={classNames('button', 'is-white', 'is-paddingless', styles.action, className)}
+    className={classNames('btn', `btn-${type}`)}
     disabled={disabled}
     onClick={callback}
   >
     <span className="icon is-small">
       <i className={classNames('fa', `fa-${icon}`)} />
+      &nbsp;{text}
     </span>
   </button>
 )
@@ -18,8 +18,9 @@ let Action = ({ disabled, callback, icon, className }) => (
 Action.propTypes = {
   disabled: PropTypes.bool,
   callback: PropTypes.func.isRequired,
-  icon: PropTypes.string.isRequired,
-  className: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  type: PropTypes.string,
 }
 
 export default Action

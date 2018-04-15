@@ -1,9 +1,11 @@
 import validateDate from './validateDate'
-import validateNumber from './validateNumber'
+import validateInt from './validateInt'
+import validateFloat from './validateFloat'
 import validateString from './validateString'
 
 export default {
   date: validateDate,
-  number: validateNumber,
+  int: validateInt,
+  float: validateFloat,
   string: validateString,
 }

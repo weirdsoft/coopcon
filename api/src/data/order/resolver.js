@@ -8,22 +8,22 @@ const resolver = {
     createOrder(_, { order }) {
       return Order.create(order)
     },
-    async addOrderProduct(_, { id, productId, quantity }) {
-      const count = await Product.find({ _id: productId }).count().exec()
+    async addOrderProduct(_, { id, orderProduct }) {
+      const count = await Product.find({ _id: orderProduct.product }).count().exec()
 
       if (count === 0) {
         throw 'The product does not exist'
       }
 
-      productId = mongoose.Types.ObjectId(productId)
+      const productId = mongoose.Types.ObjectId(orderProduct.product)
       const order = await Order.findById(id).exec()
       let product = R.find(R.propEq('product', productId), order.products)
 
       if (R.isNil(product)) {
-        order.products.push({ product: productId, quantity })
+        order.products.push({ product: productId, quantity: orderProduct.quantity })
         product = R.last(order.products)
       } else {
-        product.quantity = quantity
+        product.quantity = orderProduct.quantity
       }
 
       await order.save()
@@ -33,12 +33,12 @@ const resolver = {
       }).execPopulate()
       return product
     },
-    async removeOrderProduct(_, { id, productId, quantity }) {
+    async removeOrderProduct(_, { id, orderProduct }) {
       const order = await Order.findById(id).exec()
-      let product = R.find(R.propEq('product', productId), order.products)
+      let product = R.find(R.propEq('product', orderProduct.product), order.products)
 
-      if (product.quantity < quantity) {
-        product.quantity -= quantity
+      if (product.quantity < orderProduct.quantity) {
+        product.quantity -= orderProduct.quantity
       } else {
         product.remove()
         product = null

@@ -51,6 +51,6 @@ export default class OrderWrapper extends Component {
 }
 
 OrderWrapper.navigationOptions = {
-  title: 'Orden',
+  title: 'Pedido',
   headerRight: <SaveButton />,
 }

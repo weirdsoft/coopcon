@@ -5,6 +5,7 @@ WORKDIR /opt/app
 ADD dist ./dist
 ADD index.js package.json yarn.lock ./
 ADD entrypoint.sh ./
+ADD migrations ./migrations
 
 VOLUME /opt/app/node_modules
 

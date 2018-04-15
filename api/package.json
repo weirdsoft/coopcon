@@ -1,7 +1,7 @@
 {
   "name": "@coopcon/api",
-  "version": "0.0.1",
-  "description": "API de Cooperativa de Consumo",
+  "version": "0.1.0",
+  "description": "Cooperativa de Consumo API",
   "main": "dist/bundle.js",
   "repository": "git@github.com:weirdsoft/coopcon.git/api",
   "author": "Agustin Carrasco <asermax@gmail.com>",
@@ -9,7 +9,8 @@
   "scripts": {
     "start": "env nodemon index.js",
     "start-prod": "node index.js",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "migrate": "node migrations/index.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

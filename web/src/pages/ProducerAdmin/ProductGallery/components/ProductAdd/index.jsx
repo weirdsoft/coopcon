@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 import {
   compose, flattenProp, branch, renderComponent, withHandlers, setDisplayName,
 } from 'recompose'
@@ -10,6 +11,7 @@ import { goToProductAdd, goToProductGallery } from 'data/route/actions'
 import Link from 'redux-first-router-link'
 import Card from 'components/Card'
 import EditableProduct from 'components/EditableProduct'
+import styles from './styles.scss'
 
 const mapStateToPlaceholderProps = (state) => ({
   producerId: getCurrentId(state),
@@ -21,7 +23,7 @@ const placeholderEnhancer = compose(
 )
 
 const ProductAddPlaceholder = placeholderEnhancer(({ producerId }) => (
-  <Card className="text-center h-100">
+  <Card className={classNames('text-center', 'h-100', styles.productAdd)}>
     <Link to={goToProductAdd(producerId)}>
       <div>
         <i className="fa fa-plus-circle fa-4x" />

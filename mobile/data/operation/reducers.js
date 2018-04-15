@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
+import { SAVE_NEW_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
 import { FETCH_OPERATIONS_SUCCESS, FETCH_OPERATION_SUCCESS } from './actions'
 
 const idsDefault = []
@@ -33,6 +34,12 @@ const byId = (state = byIdDefault, action) => {
             R.pluck('_id', action.products),
           ),
         ),
+      })(state)
+    case SAVE_NEW_ORDER_SUCCESS:
+      return R.evolve({
+        [action.order.operation._id]: {
+          orders: R.append(action.order._id),
+        },
       })(state)
     default:
       return state

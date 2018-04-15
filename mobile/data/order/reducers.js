@@ -6,7 +6,7 @@ import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 import {
   TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG, ADD_PRODUCT_TO_ORDER,
   ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY, SHOW_SAVE_ORDER_DIALOG,
-  HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER,
+  HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER, SAVE_NEW_ORDER_SUCCESS,
 } from './actions'
 
 const idsDefault = []
@@ -14,10 +14,20 @@ const ids = (state = idsDefault, action) => {
   switch(action.type) {
     case FETCH_OPERATION_SUCCESS:
       return R.union(R.pluck('_id', action.orders))(state)
+    case SAVE_NEW_ORDER_SUCCESS:
+      return R.append(action.order._id)(state)
     default:
       return state
   }
 }
+
+const evolveOrderProducts = R.evolve({
+  products: R.map(
+    R.evolve({
+      product: R.prop('_id'),
+    }),
+  ),
+})
 
 const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
@@ -26,17 +36,11 @@ const byId = (state = byIdDefault, action) => {
       return R.merge(
         R.compose(
           R.indexBy(R.prop('_id')),
-          R.map(
-            R.evolve({
-              products: R.map(
-                R.evolve({
-                  product: R.prop('_id'),
-                }),
-              ),
-            }),
-          ),
+          R.map(evolveOrderProducts),
         )(action.orders),
       )(state)
+    case SAVE_NEW_ORDER_SUCCESS:
+      return R.assoc(action.order._id, evolveOrderProducts(action.order))(state)
     default:
       return state
   }
@@ -80,13 +84,13 @@ const creatingProductsById = (state = null, action) => {
       return R.assoc(action.id, 1)(state)
     case ADD_TO_PRODUCT_QUANTITY:
       return R.evolve({
-        [action.id]: R.inc,
+        [action.id]: R.add(action.quantity),
       })(state)
     case SUBTRACT_TO_PRODUCT_QUANTITY:
       return R.evolve({
         [action.id]: R.unless(
-          R.equals(1),
-          R.dec,
+          R.equals(action.quantity),
+          R.flip(R.subtract)(action.quantity),
         ),
       })(state)
     default:

@@ -18,7 +18,7 @@ const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
   switch(action.type) {
     case FETCH_OPERATION_SUCCESS:
-      return R.merge(
+      return R.mergeDeepLeft(
         R.indexBy(R.prop('_id'), action.products),
       )(state)
     default:

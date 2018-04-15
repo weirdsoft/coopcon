@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, { id }) => ({
   product: getProduct(state, id),
-  quantity: getOrderProductQuantity(state, id),
+  orderQuantity: getOrderProductQuantity(state, id),
 })
 
 const mapDispatchToProps = (dispatch, { id }) => ({
@@ -62,14 +62,14 @@ const enhancer = compose(
 )
 
 const Product = enhancer(({
-  quantity, name, unit, addToProductQuantity, subtractToProductQuantity,
+  orderQuantity, name, quantity, unit, addToProductQuantity, subtractToProductQuantity,
 }) => (
   <View>
     <View style={styles.container}>
       <Text style={styles.name}>
         {name}
         <Text style={styles.unit}>
-          &nbsp;x {unit}
+          &nbsp;x {quantity} {unit}
         </Text>
       </Text>
       <TouchableRipple
@@ -81,7 +81,7 @@ const Product = enhancer(({
       </TouchableRipple>
       <Paper style={styles.quantity}>
         <Text>
-          {quantity}
+          {orderQuantity}
         </Text>
       </Paper>
       <TouchableRipple

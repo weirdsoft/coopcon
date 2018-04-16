@@ -3,9 +3,10 @@ import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, flattenProp, mapProps, setDisplayName } from 'recompose'
 import { goToOrder } from 'Coopcon/data/navigation/actions'
-import { getCurrentOperation } from 'Coopcon/data/operation/selectors'
+import { isLoadingOperations, getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { FAB } from 'react-native-paper'
+import withLoadingIndicator from 'Coopcon/hocs/withLoadingIndicator'
 import Order from './components/Order'
 
 const styles = StyleSheet.create({
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
+  loading: isLoadingOperations(state),
   operation: getCurrentOperation(state),
 })
 
@@ -31,6 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withLoadingIndicator(),
   flattenProp('operation'),
   mapProps(R.evolve({
     orders: R.map((id) => ({ id })),

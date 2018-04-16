@@ -5,15 +5,18 @@ import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { SAVE_NEW_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
 import {
   FETCH_OPERATIONS_REQUEST, FETCH_OPERATIONS_SUCCESS, FETCH_OPERATIONS_FAILURE,
-  FETCH_OPERATION_SUCCESS,
+  FETCH_OPERATION_REQUEST, FETCH_OPERATION_SUCCESS, FETCH_OPERATION_FAILURE,
 } from './actions'
 
 const loading = (state = false, action) => {
   switch(action.type) {
     case FETCH_OPERATIONS_REQUEST:
+    case FETCH_OPERATION_REQUEST:
       return true
     case FETCH_OPERATIONS_SUCCESS:
     case FETCH_OPERATIONS_FAILURE:
+    case FETCH_OPERATION_SUCCESS:
+    case FETCH_OPERATION_FAILURE:
       return false
     default:
       return state

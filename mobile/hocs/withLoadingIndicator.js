@@ -3,7 +3,7 @@ import * as R from 'ramda'
 import { branch, renderComponent, setDisplayName, wrapDisplayName } from 'recompose'
 import LoadingIndicator from 'Coopcon/components/LoadingIndicator'
 
-const withLoadingIndicator = (loadingFlag='loading') => {
+const withLoadingIndicator = (loadingFlag = 'loading') => {
   const hoc = branch(
     R.prop(loadingFlag),
     renderComponent(LoadingIndicator),

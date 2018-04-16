@@ -1,7 +1,8 @@
 import React from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, branch, renderNothing, setDisplayName } from 'recompose'
+import { compose, branch, renderNothing, lifecycle, setDisplayName } from 'recompose'
+import { BackHandler } from 'react-native'
 import {
   Dialog, DialogTitle, DialogContent, DialogActions, TextInput, Button,
 } from 'react-native-paper'
@@ -28,6 +29,14 @@ const enhancer = compose(
     ),
     renderNothing,
   ),
+  lifecycle({
+    componentDidMount() {
+      BackHandler.addEventListener("hardwareBackPress", this.props.hideSaveOrderDialog)
+    },
+    componentWillUnmount() {
+      BackHandler.removeEventListener("hardwareBackPress", this.props.hideSaveOrderDialog)
+    },
+  }),
   setDisplayName('SaveDialog'),
 )
 

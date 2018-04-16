@@ -3,7 +3,22 @@ import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { SAVE_NEW_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
-import { FETCH_OPERATIONS_SUCCESS, FETCH_OPERATION_SUCCESS } from './actions'
+import {
+  FETCH_OPERATIONS_REQUEST, FETCH_OPERATIONS_SUCCESS, FETCH_OPERATIONS_FAILURE,
+  FETCH_OPERATION_SUCCESS,
+} from './actions'
+
+const loading = (state = false, action) => {
+  switch(action.type) {
+    case FETCH_OPERATIONS_REQUEST:
+      return true
+    case FETCH_OPERATIONS_SUCCESS:
+    case FETCH_OPERATIONS_FAILURE:
+      return false
+    default:
+      return state
+  }
+}
 
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
@@ -75,6 +90,7 @@ const current = (state = null, action) => {
 }
 
 export default combineReducers({
+  loading,
   ids,
   byId,
   current,

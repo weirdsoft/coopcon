@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, setDisplayName } from 'recompose'
-import { getOperationIds } from 'Coopcon/data/operation/selectors'
+import { isLoadingOperations, getOperationIds } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
+import withLoadingIndicator from 'Coopcon/hocs/withLoadingIndicator'
 import Operation from './components/Operation'
 
 const styles = StyleSheet.create({
@@ -13,11 +14,13 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
+  loading: isLoadingOperations(state),
   operations: R.map((id) => ({ id }), getOperationIds(state)),
 })
 
 const enhancer = compose(
   connect(mapStateToProps),
+  withLoadingIndicator(),
   setDisplayName('Home'),
 )
 

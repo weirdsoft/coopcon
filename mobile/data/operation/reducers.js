@@ -22,6 +22,18 @@ const byId = (state = byIdDefault, action) => {
       return R.merge(
         R.indexBy(R.prop('_id'), action.operations),
       )(state)
+    case NavigationActions.NAVIGATE:
+      switch(action.routeName) {
+        case OPERATION:
+          return R.evolve({
+            [action.params.id]: R.compose(
+              R.dissoc('orders'),
+              R.dissoc('products'),
+            ),
+          })(state)
+        default:
+          return state
+      }
     case FETCH_OPERATION_SUCCESS:
       return R.evolve({
         [action.id]: R.compose(

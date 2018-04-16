@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
-import { ORDER } from 'Coopcon/data/navigation/actions'
+import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 import {
   TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG, ADD_PRODUCT_TO_ORDER,
@@ -12,6 +12,13 @@ import {
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
   switch(action.type) {
+    case NavigationActions.NAVIGATE:
+      switch(action.routeName) {
+        case OPERATION:
+          return idsDefault
+        default:
+          return state
+      }
     case FETCH_OPERATION_SUCCESS:
       return R.union(R.pluck('_id', action.orders))(state)
     case SAVE_NEW_ORDER_SUCCESS:
@@ -32,6 +39,13 @@ const evolveOrderProducts = R.evolve({
 const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
   switch(action.type) {
+    case NavigationActions.NAVIGATE:
+      switch(action.routeName) {
+        case OPERATION:
+          return byIdDefault
+        default:
+          return state
+      }
     case FETCH_OPERATION_SUCCESS:
       return R.merge(
         R.compose(

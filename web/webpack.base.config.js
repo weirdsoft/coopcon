@@ -99,6 +99,7 @@ const config = {
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: resolve(__dirname, 'src', 'index.html'),
+      includeGTM: false,
     }),
   ],
 }

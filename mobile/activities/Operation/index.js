@@ -3,10 +3,10 @@ import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, flattenProp, mapProps, setDisplayName } from 'recompose'
 import { goToOrder } from 'Coopcon/data/navigation/actions'
+import { fetchOperation } from 'Coopcon/data/operation/actions'
 import { isLoadingOperations, getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { FAB } from 'react-native-paper'
-import withLoadingIndicator from 'Coopcon/hocs/withLoadingIndicator'
 import Order from './components/Order'
 
 const styles = StyleSheet.create({
@@ -28,12 +28,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  fetchOperation: () => dispatch(fetchOperation()),
   goToOrder: () => dispatch(goToOrder()),
 })
 
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withLoadingIndicator(),
   flattenProp('operation'),
   mapProps(R.evolve({
     orders: R.map((id) => ({ id })),
@@ -41,9 +41,11 @@ const enhancer = compose(
   setDisplayName('Home'),
 )
 
-const Operation = enhancer(({ orders, goToOrder }) => (
+const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
   <View style={styles.container}>
     <FlatList
+      onRefresh={fetchOperation}
+      refreshing={loading}
       data={orders}
       keyExtractor={R.prop('id')}
       renderItem={({ item: { id } }) => (<Order id={id} />)}

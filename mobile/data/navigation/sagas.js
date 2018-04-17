@@ -3,9 +3,9 @@ import { NavigationActions } from 'react-navigation'
 import { fetchOperation } from 'Coopcon/data/operation/actions'
 import { OPERATION } from './actions'
 
-function* onOrder({ routeName, params }) {
+function* onOrder({ routeName }) {
   if (routeName === OPERATION) {
-    yield put(fetchOperation(params.id))
+    yield put(fetchOperation())
   }
 }
 

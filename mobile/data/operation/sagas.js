@@ -1,9 +1,10 @@
-import { call, put, all, takeLatest } from 'redux-saga/effects'
+import { call, put, select, all, takeLatest } from 'redux-saga/effects'
 import * as api from 'Coopcon/data/api'
 import {
   FETCH_OPERATIONS_REQUEST, receiveOperations, failReceiveOperations,
   FETCH_OPERATION_REQUEST, receiveOperation, failReceiveOperation,
 } from './actions'
+import { getCurrentId } from './selectors'
 import { operationsQuery, operationOrdersQuery } from './queries'
 
 function* fetchOperations() {
@@ -15,7 +16,9 @@ function* fetchOperations() {
   }
 }
 
-function* fetchOperation({ id }) {
+function* fetchOperation() {
+  const id = yield select(getCurrentId)
+
   try {
     const { operation: { orders, products } } = yield call(api.query, operationOrdersQuery, {
       id,

@@ -6,7 +6,7 @@ import { getCurrentId } from 'Coopcon/data/operation/selectors'
 import { getCreatingUser, getCreatingProductsById, getOrderProductQuantity } from './selectors'
 import {
   ADD_PRODUCT_TO_ORDER, hideAddOrderProductDialog,
-  SAVE_NEW_ORDER_REQUEST,  receiveNewOrder, failReceiveNewOrder,
+  SAVE_NEW_ORDER_REQUEST,  receiveNewOrder, failReceiveNewOrder, hideSaveOrderDialog,
   SUBTRACT_TO_PRODUCT_QUANTITY, removeProductFromOrder,
 } from './actions'
 import { createOrderMutation, addOrderProductMutation } from './mutations'
@@ -45,6 +45,7 @@ function* saveNewOrder() {
     order.products = R.pluck('orderProduct')(products)
 
     yield put(receiveNewOrder(order))
+    yield put(hideSaveOrderDialog())
     yield put(NavigationActions.back())
   } catch(e) {
     yield put(failReceiveNewOrder(e.message))

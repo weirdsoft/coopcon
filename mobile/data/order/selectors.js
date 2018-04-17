@@ -46,4 +46,5 @@ export const hasOrderAvailableProducts = createSelector(
 )
 export const getCreatingUser = (state) => state.order.creatingUser
 export const isAddingProduct = (state) => state.order.addingProduct
-export const isSaving = (state) => state.order.saving
+export const isSavingOrder = (state) => state.order.saving
+export const isCreatingOrder = (state) => state.order.creating

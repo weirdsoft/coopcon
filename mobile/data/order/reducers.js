@@ -4,9 +4,13 @@ import { NavigationActions } from 'react-navigation'
 import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 import {
-  TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG, ADD_PRODUCT_TO_ORDER,
-  REMOVE_PRODUCT_FROM_ORDER, ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY,
-  SHOW_SAVE_ORDER_DIALOG, HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER, SAVE_NEW_ORDER_SUCCESS,
+  TOGGLE_ORDER,
+  SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG,
+  ADD_PRODUCT_TO_ORDER, REMOVE_PRODUCT_FROM_ORDER,
+  ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY,
+  SHOW_SAVE_ORDER_DIALOG, HIDE_SAVE_ORDER_DIALOG,
+  CHANGE_ORDER_USER,
+  SAVE_NEW_ORDER_REQUEST, SAVE_NEW_ORDER_SUCCESS, SAVE_NEW_ORDER_FAILURE,
 } from './actions'
 
 const idsDefault = []
@@ -153,6 +157,18 @@ const saving = (state = false, action) => {
   }
 }
 
+const creating = (state = false, action) => {
+  switch(action.type) {
+    case SAVE_NEW_ORDER_REQUEST:
+      return true
+    case SAVE_NEW_ORDER_SUCCESS:
+    case SAVE_NEW_ORDER_FAILURE:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   ids,
   byId,
@@ -162,4 +178,5 @@ export default combineReducers({
   creatingUser,
   addingProduct,
   saving,
+  creating,
 })

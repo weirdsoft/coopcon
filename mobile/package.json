@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Cooperativa de Consumo Mobile App",
   "devDependencies": {
+    "babel-plugin-ramda": "^1.6.1",
     "eslint": "^4.18.1",
     "eslint-plugin-graphql": "^1.5.0",
     "eslint-plugin-jest": "^21.12.2",

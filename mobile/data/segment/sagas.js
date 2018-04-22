@@ -7,7 +7,11 @@ import { IDENTIFY, TRACK } from './types'
 
 function* initializeSegment() {
   Expo.Segment.initialize({ androidWriteKey: 's1Fi2mhAQsTNx549PuBeNCq984fga1WI' })
-  yield call(sendSegmentEvent, { eventType: IDENTIFY, eventData: [ '1' ] })
+  yield call(sendSegmentEvent, { eventType: IDENTIFY, eventName: '1' })
+}
+
+function* sendSegmentEvent({ eventType, eventName, eventData }) {
+  yield call(Expo.Segment[eventType], eventName, eventData)
 }
 
 const matchSegmentAction = R.compose(
@@ -16,11 +20,6 @@ const matchSegmentAction = R.compose(
   R.path([ 'meta', 'analytics' ]),
 )
 
-function* sendSegmentEvent(analytics) {
-  yield call(Expo.Segment[analytics.eventType], ...analytics.eventData)
-}
-
-
 function* handleAnalyticActions({ meta: { analytics } }) {
   yield call(sendSegmentEvent, analytics)
 }
@@ -28,7 +27,7 @@ function* handleAnalyticActions({ meta: { analytics } }) {
 function* handleNavigationActions(action) {
   yield call(sendSegmentEvent, {
     eventType: TRACK,
-    eventData: [ `Navigate to ${action.routeName}` ],
+    eventName: `Navigate to ${action.routeName}`,
   })
 }
 

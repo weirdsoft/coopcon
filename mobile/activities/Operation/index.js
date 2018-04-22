@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  orderListFooter: {
+    height: 70,
+  },
   buttonContainer: {
     position: 'absolute',
     bottom: 0,
@@ -38,7 +41,7 @@ const enhancer = compose(
   mapProps(R.evolve({
     orders: R.map((id) => ({ id })),
   })),
-  setDisplayName('Home'),
+  setDisplayName('Operation'),
 )
 
 const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
@@ -49,6 +52,7 @@ const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
       data={orders}
       keyExtractor={R.prop('id')}
       renderItem={({ item: { id } }) => (<Order id={id} />)}
+      ListFooterComponent={<View style={styles.orderListFooter} />}
     />
     <View style={styles.buttonContainer}>
       <FAB

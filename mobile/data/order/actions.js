@@ -11,6 +11,9 @@ export const CHANGE_ORDER_USER = 'order/user/change'
 export const SAVE_NEW_ORDER_REQUEST = 'order/save-new/request'
 export const SAVE_NEW_ORDER_SUCCESS = 'order/save-new/success'
 export const SAVE_NEW_ORDER_FAILURE = 'order/save-new/failure'
+export const TOGGLE_PAID_ORDER_REQUEST = 'order/toggle-paid/request'
+export const TOGGLE_PAID_ORDER_SUCCESS = 'order/toggle-paid/success'
+export const TOGGLE_PAID_ORDER_FAILURE = 'order/toggle-paid/failure'
 
 export const toggleOrder = (id) => ({
   type: TOGGLE_ORDER,
@@ -69,5 +72,19 @@ export const receiveNewOrder = (order) => ({
 
 export const failReceiveNewOrder = (reason) => ({
   type: SAVE_NEW_ORDER_FAILURE,
+  reason,
+})
+
+export const togglePaidOrder = () => ({
+  type: TOGGLE_PAID_ORDER_REQUEST,
+})
+
+export const receiveTogglePaidOrder = (order) => ({
+  type: TOGGLE_PAID_ORDER_SUCCESS,
+  order,
+})
+
+export const failReceiveTogglePaidOrder = (reason) => ({
+  type: TOGGLE_PAID_ORDER_FAILURE,
   reason,
 })

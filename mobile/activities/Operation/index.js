@@ -6,7 +6,7 @@ import { goToOrder } from 'Coopcon/data/navigation/actions'
 import { fetchOperation } from 'Coopcon/data/operation/actions'
 import { isLoadingOperations, getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { FAB } from 'react-native-paper'
+import { FAB, Divider } from 'react-native-paper'
 import Order from './components/Order'
 
 const styles = StyleSheet.create({
@@ -53,6 +53,7 @@ const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
       keyExtractor={R.prop('id')}
       renderItem={({ item: { id } }) => (<Order id={id} />)}
       ListFooterComponent={<View style={styles.orderListFooter} />}
+      ItemSeparatorComponent={Divider}
     />
     <View style={styles.buttonContainer}>
       <FAB

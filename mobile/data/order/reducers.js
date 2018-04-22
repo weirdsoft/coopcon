@@ -11,6 +11,7 @@ import {
   SHOW_SAVE_ORDER_DIALOG, HIDE_SAVE_ORDER_DIALOG,
   CHANGE_ORDER_USER,
   SAVE_NEW_ORDER_REQUEST, SAVE_NEW_ORDER_SUCCESS, SAVE_NEW_ORDER_FAILURE,
+  TOGGLE_PAID_ORDER_SUCCESS,
 } from './actions'
 
 const idsDefault = []
@@ -59,6 +60,10 @@ const byId = (state = byIdDefault, action) => {
       )(state)
     case SAVE_NEW_ORDER_SUCCESS:
       return R.assoc(action.order._id, evolveOrderProducts(action.order))(state)
+    case TOGGLE_PAID_ORDER_SUCCESS:
+      return R.evolve({
+        [action.order._id]: R.flip(R.merge)(action.order),
+      })(state)
     default:
       return state
   }

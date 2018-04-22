@@ -1,17 +1,27 @@
 import React from 'react'
+import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
 import { View, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper'
-import { SimpleLineIcons } from '@expo/vector-icons'
+import { SimpleLineIcons, MaterialIcons } from '@expo/vector-icons'
 import Collapsible from 'react-native-collapsible'
-import { Card, CardContent, Divider } from 'react-native-paper'
+import { Paper, TouchableRipple, Divider } from 'react-native-paper'
 import Product from 'Coopcon/activities/Operation/components/Product'
-import { toggleOrder } from 'Coopcon/data/order/actions'
+import { toggleOrder, togglePaidOrder } from 'Coopcon/data/order/actions'
 import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FFF',
+    paddingVertical: 15,
+  },
+  containerExpanded: {
+    marginVertical: 5,
+    elevation: 4,
+  },
   header: {
+    paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -22,12 +32,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  content: {
+    paddingHorizontal: 15,
+  },
   totalContainer: {
     flexDirection: 'row',
   },
   total: {
     flex: 1,
     fontWeight: 'bold',
+  },
+  actions: {
+    paddingHorizontal: 15,
+    flexDirection: 'row',
   },
 })
 
@@ -38,6 +55,7 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToprops = (dispatch, { id }) => ({
   toggleOrder: () => dispatch(toggleOrder(id)),
+  togglePaidOrder: () => dispatch(togglePaidOrder(id)),
 })
 
 const enhancer = compose(
@@ -46,11 +64,18 @@ const enhancer = compose(
   setDisplayName('Order'),
 )
 
-const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) => (
-  <Card
+const Order = enhancer(({
+  user, products, total, isCurrentOrder, paid, toggleOrder, togglePaidOrder,
+}) => (
+  <TouchableRipple
     onPress={toggleOrder}
   >
-    <CardContent>
+    <Paper
+      style={R.when(
+        R.always(isCurrentOrder),
+        R.append(styles.containerExpanded),
+      )([ styles.container ])}
+    >
       <View style={styles.header}>
         <Text
           style={styles.name}
@@ -62,22 +87,33 @@ const Order = enhancer(({ user, products, total, isCurrentOrder, toggleOrder }) 
       <Collapsible
         collapsed={!isCurrentOrder}
       >
+        <View style={styles.content}>
+          <Divider style={styles.divider}/>
+          {products.map(({ product, quantity }) => (
+            <Product key={product} id={product} orderQuantity={quantity}/>
+          ))}
+          <Divider style={styles.divider}/>
+          <View style={styles.totalContainer}>
+            <Text style={styles.total}>
+              TOTAL
+            </Text>
+            <Text>
+              ${total}
+            </Text>
+          </View>
+        </View>
         <Divider style={styles.divider}/>
-        {products.map(({ product, quantity }) => (
-          <Product key={product} id={product} orderQuantity={quantity}/>
-        ))}
-        <Divider style={styles.divider}/>
-        <View style={styles.totalContainer}>
-          <Text style={styles.total}>
-            TOTAL
-          </Text>
-          <Text>
-            ${total}
-          </Text>
+        <View style={styles.actions}>
+          <TouchableRipple
+            borderless={true}
+            onPress={togglePaidOrder}
+          >
+            <MaterialIcons name="attach-money" size={20} color={paid ? 'green' : 'gray'}/>
+          </TouchableRipple>
         </View>
       </Collapsible>
-    </CardContent>
-  </Card>
+    </Paper>
+  </TouchableRipple>
 ))
 
 export default Order

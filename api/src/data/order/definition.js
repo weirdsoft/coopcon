@@ -5,6 +5,7 @@ const definition = `
     creationDate: Date!
     operation: Operation!
     products: [OrderProduct!]!
+    paid: Boolean!
   }
 
   type OrderProduct {

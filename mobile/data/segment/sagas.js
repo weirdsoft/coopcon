@@ -2,6 +2,7 @@ import Expo from 'expo'
 import * as R from 'ramda'
 import { call, all, takeEvery } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
+import { DEVELOPMENT_ENV } from 'Coopcon/data/config'
 import { IDENTIFY, TRACK } from './types'
 
 function* initializeSegment() {
@@ -32,11 +33,13 @@ function* handleNavigationActions(action) {
 }
 
 function* segmentSaga() {
-  yield all([
-    call(initializeSegment),
-    takeEvery(matchSegmentAction, handleAnalyticActions),
-    takeEvery(NavigationActions.NAVIGATE, handleNavigationActions),
-  ])
+  if (!DEVELOPMENT_ENV) {
+    yield all([
+      call(initializeSegment),
+      takeEvery(matchSegmentAction, handleAnalyticActions),
+      takeEvery(NavigationActions.NAVIGATE, handleNavigationActions),
+    ])
+  }
 }
 
 export default segmentSaga

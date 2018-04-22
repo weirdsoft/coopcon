@@ -1,9 +1,10 @@
 import Expo from 'expo'
 import * as R from 'ramda'
-import { call, all, takeEvery } from 'redux-saga/effects'
+import { call, select, all, takeEvery } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 import { DEVELOPMENT_ENV } from 'Coopcon/data/config'
-import { IDENTIFY, TRACK } from './types'
+import { getCurrentRoute } from 'Coopcon/data/navigation/selectors'
+import { IDENTIFY, TRACK, TRACK_WITH_PROPS } from './types'
 
 function* initializeSegment() {
   Expo.Segment.initialize({ androidWriteKey: 's1Fi2mhAQsTNx549PuBeNCq984fga1WI' })
@@ -24,11 +25,20 @@ function* handleAnalyticActions({ meta: { analytics } }) {
   yield call(sendSegmentEvent, analytics)
 }
 
-function* handleNavigationActions(action) {
-  yield call(sendSegmentEvent, {
-    eventType: TRACK,
-    eventName: `Navigate to ${action.routeName}`,
-  })
+function* handleNavigationActions() {
+  const { routeName, params } = yield select(getCurrentRoute)
+  const event = {
+    eventName: `Navigate to ${routeName}`,
+  }
+
+  if (R.isNil(params)) {
+    event.eventType = TRACK
+  } else {
+    event.eventType = TRACK_WITH_PROPS
+    event.eventData = params
+  }
+
+  yield call(sendSegmentEvent, event)
 }
 
 function* segmentSaga() {
@@ -36,7 +46,7 @@ function* segmentSaga() {
     yield all([
       call(initializeSegment),
       takeEvery(matchSegmentAction, handleAnalyticActions),
-      takeEvery(NavigationActions.NAVIGATE, handleNavigationActions),
+      takeEvery([ NavigationActions.NAVIGATE, NavigationActions.BACK ], handleNavigationActions),
     ])
   }
 }

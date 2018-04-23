@@ -4,7 +4,11 @@ export const operationsQuery = gql`
   query operationsQuery {
     operations {
       _id
-      name
+      publishDate
+
+      producer {
+        name
+      }
     }
   }
 `

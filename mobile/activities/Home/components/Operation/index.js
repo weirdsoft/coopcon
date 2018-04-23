@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
 import { StyleSheet, View } from 'react-native'
@@ -38,7 +39,7 @@ const enhancer = compose(
   setDisplayName('Operation'),
 )
 
-const Operation = enhancer(({ name, goToOperation }) => (
+const Operation = enhancer(({ producer, publishDate, goToOperation }) => (
   <View
     style={styles.wrapper}
   >
@@ -48,7 +49,9 @@ const Operation = enhancer(({ name, goToOperation }) => (
       <View
         style={styles.container}
       >
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>
+          {producer.name} ({moment(publishDate).format('MMMM YYYY')})
+        </Text>
         <SimpleLineIcons name="arrow-right" size={20}/>
       </View>
     </TouchableRipple>

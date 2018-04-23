@@ -26,6 +26,10 @@ const resolver = {
   },
   Nested: {
     Operation: {
+      async producer(operation) {
+        await operation.populate('producer').execPopulate()
+        return operation.producer
+      },
       async products(operation) {
         await operation.populate('products').execPopulate()
         return operation.products

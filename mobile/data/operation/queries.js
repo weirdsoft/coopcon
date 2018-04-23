@@ -24,6 +24,7 @@ export const operationOrdersQuery = gql`
         _id
         user
         creationDate
+        paid
         products {
           quantity
           product {

@@ -8,6 +8,9 @@ import { goToOperation } from 'Coopcon/data/navigation/actions'
 import { getOperation } from 'Coopcon/data/operation/selectors'
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: 'white',
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -15,7 +18,6 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingLeft: 15,
     paddingRight: 5,
-    backgroundColor: 'white',
   },
   name: {
     flex: 1,
@@ -37,7 +39,9 @@ const enhancer = compose(
 )
 
 const Operation = enhancer(({ name, goToOperation }) => (
-  <View>
+  <View
+    style={styles.wrapper}
+  >
     <TouchableRipple
       onPress={goToOperation}
     >

@@ -37,8 +37,13 @@ const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
   switch(action.type) {
     case FETCH_OPERATIONS_SUCCESS:
-      return R.merge(
-        R.indexBy(R.prop('_id'), action.operations),
+      return R.mergeDeepLeft(
+        R.compose(
+          R.indexBy(R.prop('_id')),
+          R.map(R.evolve({
+            producer: R.prop('_id'),
+          })),
+        )(action.operations),
       )(state)
     case NavigationActions.NAVIGATE:
       switch(action.routeName) {

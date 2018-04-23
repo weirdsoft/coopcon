@@ -7,6 +7,7 @@ export const operationsQuery = gql`
       publishDate
 
       producer {
+        _id
         name
       }
     }

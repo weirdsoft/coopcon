@@ -6,6 +6,7 @@ import { StyleSheet, View } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
 import { Text, Divider, TouchableRipple } from 'react-native-paper'
 import { goToOperation } from 'Coopcon/data/navigation/actions'
+import { getProducer } from 'Coopcon/data/producer/selectors'
 import { getOperation } from 'Coopcon/data/operation/selectors'
 
 const styles = StyleSheet.create({
@@ -25,9 +26,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, { id }) => ({
-  operation: getOperation(state, id),
-})
+const mapStateToProps = (state, { id }) => {
+  const operation = getOperation(state, id)
+  const producer = getProducer(state, operation.producer)
+
+  return {
+    producer,
+    operation,
+  }
+}
 
 const mapDispatchToProps = (dispatch, { id }) => ({
   goToOperation: () => dispatch(goToOperation(id)),
@@ -35,11 +42,12 @@ const mapDispatchToProps = (dispatch, { id }) => ({
 
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
+  flattenProp('producer'),
   flattenProp('operation'),
   setDisplayName('Operation'),
 )
 
-const Operation = enhancer(({ producer, publishDate, goToOperation }) => (
+const Operation = enhancer(({ name, publishDate, goToOperation }) => (
   <View
     style={styles.wrapper}
   >
@@ -50,7 +58,7 @@ const Operation = enhancer(({ producer, publishDate, goToOperation }) => (
         style={styles.container}
       >
         <Text style={styles.name}>
-          {producer.name} ({moment(publishDate).format('MMMM YYYY')})
+          {name} ({moment(publishDate).format('MMMM YYYY')})
         </Text>
         <SimpleLineIcons name="arrow-right" size={20}/>
       </View>

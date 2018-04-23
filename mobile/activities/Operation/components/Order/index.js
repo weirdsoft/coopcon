@@ -13,29 +13,30 @@ import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF',
-    paddingVertical: 15,
+    backgroundColor: 'white',
   },
   containerExpanded: {
     marginVertical: 5,
     elevation: 4,
   },
   header: {
-    paddingHorizontal: 15,
+    padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
   },
   name: {
     flex: 1,
   },
-  divider: {
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  content: {
+  products: {
     paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  shortDivider: {
+    marginHorizontal: 15,
   },
   totalContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     flexDirection: 'row',
   },
   total: {
@@ -43,8 +44,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   actions: {
-    paddingHorizontal: 15,
+    backgroundColor: '#f3f3f3',
+    paddingLeft: 15,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  action: {
+    padding: 15,
   },
 })
 
@@ -67,32 +73,35 @@ const enhancer = compose(
 const Order = enhancer(({
   user, products, total, isCurrentOrder, paid, toggleOrder, togglePaidOrder,
 }) => (
-  <TouchableRipple
-    onPress={toggleOrder}
+  <Paper
+    style={R.when(
+      R.always(isCurrentOrder),
+      R.append(styles.containerExpanded),
+    )([ styles.container ])}
   >
-    <Paper
-      style={R.when(
-        R.always(isCurrentOrder),
-        R.append(styles.containerExpanded),
-      )([ styles.container ])}
+    <TouchableRipple
+      onPress={toggleOrder}
+      borderless={true}
     >
-      <View style={styles.header}>
-        <Text
-          style={styles.name}
+      <View>
+        <View style={styles.header}>
+          <Text
+            style={styles.name}
+          >
+            {user}
+          </Text>
+          <SimpleLineIcons name={isCurrentOrder ? 'arrow-up' : 'arrow-down'} size={10}/>
+        </View>
+        <Collapsible
+          collapsed={!isCurrentOrder}
         >
-          {user}
-        </Text>
-        <SimpleLineIcons name={isCurrentOrder ? 'arrow-up' : 'arrow-down'} size={10}/>
-      </View>
-      <Collapsible
-        collapsed={!isCurrentOrder}
-      >
-        <View style={styles.content}>
-          <Divider style={styles.divider}/>
-          {products.map(({ product, quantity }) => (
-            <Product key={product} id={product} orderQuantity={quantity}/>
-          ))}
-          <Divider style={styles.divider}/>
+          <Divider />
+          <View style={styles.products} >
+            {products.map(({ product, quantity }) => (
+              <Product key={product} id={product} orderQuantity={quantity}/>
+            ))}
+          </View>
+          <Divider style={styles.shortDivider}/>
           <View style={styles.totalContainer}>
             <Text style={styles.total}>
               TOTAL
@@ -101,19 +110,19 @@ const Order = enhancer(({
               ${total}
             </Text>
           </View>
-        </View>
-        <Divider style={styles.divider}/>
-        <View style={styles.actions}>
-          <TouchableRipple
-            borderless={true}
-            onPress={togglePaidOrder}
-          >
-            <MaterialIcons name="attach-money" size={20} color={paid ? 'green' : 'gray'}/>
-          </TouchableRipple>
-        </View>
-      </Collapsible>
-    </Paper>
-  </TouchableRipple>
+          <View style={styles.actions}>
+            <TouchableRipple
+              borderless={true}
+              onPress={togglePaidOrder}
+              style={styles.action}
+            >
+              <MaterialIcons name="attach-money" size={20} color={paid ? 'green' : 'gray'}/>
+            </TouchableRipple>
+          </View>
+        </Collapsible>
+      </View>
+    </TouchableRipple>
+  </Paper>
 ))
 
 export default Order

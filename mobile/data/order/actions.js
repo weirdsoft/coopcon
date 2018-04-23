@@ -1,5 +1,3 @@
-import { TRACK_WITH_PROPS } from 'Coopcon/data/segment/types'
-
 export const TOGGLE_ORDER = 'order/toggle'
 export const SHOW_ADD_ORDER_PRODUCT_DIALOG = 'order/product/add-dialog/show'
 export const HIDE_ADD_ORDER_PRODUCT_DIALOG = 'order/product/add-dialog/hide'
@@ -84,15 +82,6 @@ export const togglePaidOrder = () => ({
 export const receiveTogglePaidOrder = (order) => ({
   type: TOGGLE_PAID_ORDER_SUCCESS,
   order,
-  meta: {
-    analytics: {
-      eventType: TRACK_WITH_PROPS,
-      eventName: 'Order paid',
-      eventData: {
-        orderId: order._id,
-      },
-    },
-  },
 })
 
 export const failReceiveTogglePaidOrder = (reason) => ({

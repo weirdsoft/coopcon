@@ -2,6 +2,7 @@
   "name": "Coopcon",
   "version": "0.2.0",
   "description": "Cooperativa de Consumo Mobile App",
+  "license": "MIT",
   "devDependencies": {
     "babel-plugin-ramda": "^1.6.1",
     "eslint": "^4.19.1",

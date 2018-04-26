@@ -6,7 +6,7 @@ import { BackHandler } from 'react-native'
 import { Dialog } from 'react-native-paper'
 import { hideSaveOrderDialog } from 'Coopcon/data/order/actions'
 import { isSavingOrder } from 'Coopcon/data/order/selectors'
-import SaveDialogContent from '../SaveDialogContent'
+import SaveDialogContent from './SaveDialogContent'
 
 const mapStateToProps = (state) => ({
   isSaving: isSavingOrder(state),

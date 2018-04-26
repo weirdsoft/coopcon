@@ -5,7 +5,7 @@ import { compose, branch, renderComponent, setDisplayName } from 'recompose'
 import { DialogTitle, DialogContent, DialogActions, TextInput, Button } from 'react-native-paper'
 import { hideSaveOrderDialog, changeOrderUser, saveNewOrder } from 'Coopcon/data/order/actions'
 import { getCreatingUser, isCreatingOrder } from 'Coopcon/data/order/selectors'
-import SaveDialogCreating from '../SaveDialogCreating'
+import SaveDialogCreating from './SaveDialogCreating'
 
 const mapStateToProps = (state) => ({
   creatingUser: getCreatingUser(state),

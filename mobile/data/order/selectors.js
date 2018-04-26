@@ -4,6 +4,7 @@ import { getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { getProductsById } from 'Coopcon/data/product/selectors'
 
 export const getOrderIds = (state) => state.order.ids
+export const getOrdersById = (state) => state.order.byId
 export const getOrder = (state, id) => state.order.byId[id]
 export const getOrderWithTotal = createSelector(
   [ getOrder, getProductsById ],

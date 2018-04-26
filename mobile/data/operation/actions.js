@@ -35,4 +35,3 @@ export const failReceiveOperation = (reason) => ({
   type: FETCH_OPERATION_FAILURE,
   reason,
 })
-

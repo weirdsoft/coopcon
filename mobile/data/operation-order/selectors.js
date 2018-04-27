@@ -7,7 +7,6 @@ export const getOperationOrdersFilter = (state) => state.operationOrder.filter
 export const getCurrentOperationFilteredOrders = createSelector(
   [ getCurrentOperation, getOrdersById, getOperationOrdersFilter ],
   (operation, orders, filter) =>  R.compose(
-    R.defaultTo([]),
     R.when(
       R.always(R.prop('unpaid')(filter)),
       R.compose(
@@ -16,5 +15,6 @@ export const getCurrentOperationFilteredOrders = createSelector(
         R.map(R.flip(R.prop)(orders)),
       ),
     ),
+    R.defaultTo([]),
   )(operation.orders),
 )

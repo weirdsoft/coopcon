@@ -1,6 +1,6 @@
 {
   "name": "@coopcon/api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cooperativa de Consumo API",
   "main": "dist/bundle.js",
   "repository": "git@github.com:weirdsoft/coopcon.git/api",
@@ -13,26 +13,26 @@
     "migrate": "node migrations/index.js"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "graphql": "^0.13.1",
-    "graphql-server-express": "^1.3.2",
-    "graphql-tools": "^2.23.0",
-    "mongoose": "^5.0.10",
-    "ramda": "^0.25.0",
-    "webpack-cli": "^2.0.13"
+    "graphql": "^0.13.2",
+    "graphql-server-express": "^1.3.6",
+    "graphql-tools": "^2.24.0",
+    "mongoose": "^5.0.16",
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
+    "@babel/polyfill": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/register": "^7.0.0-beta.46",
+    "babel-loader": "^8.0.0-beta",
     "babel-plugin-ramda": "^1.6.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "eslint": "^4.18.2",
-    "nodemon": "^1.17.2",
-    "webpack": "^4.1.1",
-    "webpack-node-externals": "^1.6.0"
+    "eslint": "^4.19.1",
+    "nodemon": "^1.17.3",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15",
+    "webpack-node-externals": "^1.7.2"
   }
 }

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, flattenProp, mapProps, setDisplayName } from 'recompose'
+import { compose, mapProps, setDisplayName } from 'recompose'
 import { goToOrder } from 'Coopcon/data/navigation/actions'
 import { fetchOperation } from 'Coopcon/data/operation/actions'
-import { isLoadingOperations, getCurrentOperation } from 'Coopcon/data/operation/selectors'
+import { isLoadingOperations } from 'Coopcon/data/operation/selectors'
+import { getCurrentOperationFilteredOrders } from 'Coopcon/data/operation-order/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { FAB, Divider } from 'react-native-paper'
 import Order from './components/Order'
+import Filters from './components/Filters'
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   loading: isLoadingOperations(state),
-  operation: getCurrentOperation(state),
+  orders: getCurrentOperationFilteredOrders(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,7 +39,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  flattenProp('operation'),
   mapProps(R.evolve({
     orders: R.map((id) => ({ id })),
   })),
@@ -72,4 +73,5 @@ export default class OperationWrapper extends Component {
 
 OperationWrapper.navigationOptions = {
   title: 'Pedidos',
+  headerRight: <Filters />,
 }

@@ -1,7 +1,8 @@
 import React from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, branch, renderNothing, setDisplayName } from 'recompose'
+import { compose, branch, renderNothing, lifecycle, setDisplayName } from 'recompose'
+import { BackHandler } from 'react-native'
 import { StyleSheet, FlatList } from 'react-native'
 import { Dialog, DialogTitle, DialogScrollArea } from 'react-native-paper'
 import { hideAddOrderProductDialog } from 'Coopcon/data/order/actions'
@@ -29,6 +30,14 @@ const enhancer = compose(
     ({ isAddingProduct }) => !isAddingProduct,
     renderNothing,
   ),
+  lifecycle({
+    componentDidMount() {
+      BackHandler.addEventListener("hardwareBackPress", this.props.hideAddOrderProductDialog)
+    },
+    componentWillUnmount() {
+      BackHandler.removeEventListener("hardwareBackPress", this.props.hideAddOrderProductDialog)
+    },
+  }),
   setDisplayName('ProductSelector'),
 )
 

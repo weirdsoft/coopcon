@@ -29,20 +29,20 @@ const enhancer = compose(
   setDisplayName('Product'),
   setPropTypes({
     id: PropTypes.string.isRequired,
-    quantity: PropTypes.number.isRequired,
+    orderQuantity: PropTypes.number.isRequired,
   }),
 )
 
-const Product = enhancer(({ quantity, name, unit, price }) => (
+const Product = enhancer(({ orderQuantity, name, quantity, unit, price }) => (
   <View style={styles.container}>
     <Text style={styles.name}>
       {name}
     </Text>
     <Text>
-      &nbsp;x {quantity} {unit}
+      &nbsp;x {quantity * orderQuantity} {unit}
     </Text>
     <Text style={styles.price}>
-      ${price * quantity}
+      ${price * orderQuantity}
     </Text>
   </View>
 ))

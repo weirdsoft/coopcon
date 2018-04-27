@@ -1,13 +1,13 @@
 version: '3'
 services:
   api:
-    image: node:9.8.0-alpine
+    image: node:9.11.1-alpine
     volumes:
       - ./api:/opt/app
     entrypoint: /opt/app/entrypoint.sh
     command: install
   web:
-    image: node:9.8.0-alpine
+    image: node:9.11.1-alpine
     volumes:
       - ./web:/opt/app
     entrypoint: /opt/app/entrypoint.sh

@@ -10,6 +10,7 @@ const OrderSchema = mongoose.Schema({
   creationDate: { type: Date, default: Date.now },
   operation: { type: mongoose.Schema.Types.ObjectId, ref: 'Operation' },
   products: [ OrderProductSchema ],
+  paid: { type: Boolean, default: false },
 })
 
 const Order = mongoose.model('Order', OrderSchema)

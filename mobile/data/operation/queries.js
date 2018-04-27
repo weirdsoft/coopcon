@@ -4,7 +4,12 @@ export const operationsQuery = gql`
   query operationsQuery {
     operations {
       _id
-      name
+      publishDate
+
+      producer {
+        _id
+        name
+      }
     }
   }
 `
@@ -15,6 +20,7 @@ export const operationOrdersQuery = gql`
       products {
         _id
         name
+        quantity
         unit
         minimalFraction
         price
@@ -23,6 +29,7 @@ export const operationOrdersQuery = gql`
         _id
         user
         creationDate
+        paid
         products {
           quantity
           product {

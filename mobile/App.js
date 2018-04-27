@@ -1,3 +1,4 @@
+import './patches/moment-locale-patch'
 import React from 'react'
 import { configureStore } from './data/store'
 import Bootstrap from './Bootstrap'

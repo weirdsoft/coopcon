@@ -23,3 +23,12 @@ export const addOrderProductMutation = gql`
     }
   }
 `
+
+export const toggleOrderPaidMutation = gql`
+  mutation toggleOrderPaid($id: ID!) {
+    order: toggleOrderPaid(id: $id) {
+      _id
+      paid
+    }
+  }
+`

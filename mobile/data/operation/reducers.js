@@ -3,7 +3,25 @@ import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { SAVE_NEW_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
-import { FETCH_OPERATIONS_SUCCESS, FETCH_OPERATION_SUCCESS } from './actions'
+import {
+  FETCH_OPERATIONS_REQUEST, FETCH_OPERATIONS_SUCCESS, FETCH_OPERATIONS_FAILURE,
+  FETCH_OPERATION_REQUEST, FETCH_OPERATION_SUCCESS, FETCH_OPERATION_FAILURE,
+} from './actions'
+
+const loading = (state = false, action) => {
+  switch(action.type) {
+    case FETCH_OPERATIONS_REQUEST:
+    case FETCH_OPERATION_REQUEST:
+      return true
+    case FETCH_OPERATIONS_SUCCESS:
+    case FETCH_OPERATIONS_FAILURE:
+    case FETCH_OPERATION_SUCCESS:
+    case FETCH_OPERATION_FAILURE:
+      return false
+    default:
+      return state
+  }
+}
 
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
@@ -19,9 +37,26 @@ const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
   switch(action.type) {
     case FETCH_OPERATIONS_SUCCESS:
-      return R.merge(
-        R.indexBy(R.prop('_id'), action.operations),
+      return R.mergeDeepLeft(
+        R.compose(
+          R.indexBy(R.prop('_id')),
+          R.map(R.evolve({
+            producer: R.prop('_id'),
+          })),
+        )(action.operations),
       )(state)
+    case NavigationActions.NAVIGATE:
+      switch(action.routeName) {
+        case OPERATION:
+          return R.evolve({
+            [action.params.id]: R.compose(
+              R.dissoc('orders'),
+              R.dissoc('products'),
+            ),
+          })(state)
+        default:
+          return state
+      }
     case FETCH_OPERATION_SUCCESS:
       return R.evolve({
         [action.id]: R.compose(
@@ -63,6 +98,7 @@ const current = (state = null, action) => {
 }
 
 export default combineReducers({
+  loading,
   ids,
   byId,
   current,

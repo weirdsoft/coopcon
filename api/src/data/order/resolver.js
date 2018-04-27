@@ -47,6 +47,12 @@ const resolver = {
       await order.save()
       return product
     },
+    async toggleOrderPaid(_, { id }) {
+      const order = await Order.findById(id).exec()
+      order.paid = !order.paid
+
+      return order.save()
+    },
   },
   Nested: {
     Order: {

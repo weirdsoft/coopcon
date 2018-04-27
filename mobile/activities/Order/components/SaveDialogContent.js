@@ -1,16 +1,15 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { compose, branch, renderNothing, setDisplayName } from 'recompose'
-import {
-  Dialog, DialogTitle, DialogContent, DialogActions, TextInput, Button,
-} from 'react-native-paper'
+import { compose, branch, renderComponent, setDisplayName } from 'recompose'
+import { DialogTitle, DialogContent, DialogActions, TextInput, Button } from 'react-native-paper'
 import { hideSaveOrderDialog, changeOrderUser, saveNewOrder } from 'Coopcon/data/order/actions'
-import { isSaving, getCreatingUser } from 'Coopcon/data/order/selectors'
+import { getCreatingUser, isCreatingOrder } from 'Coopcon/data/order/selectors'
+import SaveDialogCreating from './SaveDialogCreating'
 
 const mapStateToProps = (state) => ({
-  isSaving: isSaving(state),
   creatingUser: getCreatingUser(state),
+  isCreating: isCreatingOrder(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -22,22 +21,16 @@ const mapDispatchToProps = (dispatch) => ({
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
   branch(
-    R.compose(
-      R.not,
-      R.prop('isSaving'),
-    ),
-    renderNothing,
+    R.prop('isCreating'),
+    renderComponent(SaveDialogCreating),
   ),
-  setDisplayName('SaveDialog'),
+  setDisplayName('SaveDialogContent'),
 )
 
-const SaveDialog = enhancer(({
-  isSaving, creatingUser, hideSaveOrderDialog, changeOrderUser, saveNewOrder,
+const SaveDialogContent = enhancer(({
+  creatingUser, hideSaveOrderDialog, changeOrderUser, saveNewOrder,
 }) => (
-  <Dialog
-    visible={isSaving}
-    onDismiss={hideSaveOrderDialog}
-  >
+  <Fragment >
     <DialogTitle>
       ¿A nombre de quien?
     </DialogTitle>
@@ -60,7 +53,7 @@ const SaveDialog = enhancer(({
         Guardar
       </Button>
     </DialogActions>
-  </Dialog>
+  </Fragment>
 ))
 
-export default SaveDialog
+export default SaveDialogContent

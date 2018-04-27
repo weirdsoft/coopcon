@@ -87,7 +87,7 @@ const EditableProduct = enhancer(({
           required
           type="number"
           min="0.1"
-          step="0.1"
+          step="0.01"
           value={minimalFraction}
           onKeyDown={onKeyDown}
           onChange={(event) => onUpdate('minimalFraction', event)}

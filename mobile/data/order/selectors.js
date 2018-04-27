@@ -4,6 +4,7 @@ import { getCurrentOperation } from 'Coopcon/data/operation/selectors'
 import { getProductsById } from 'Coopcon/data/product/selectors'
 
 export const getOrderIds = (state) => state.order.ids
+export const getOrdersById = (state) => state.order.byId
 export const getOrder = (state, id) => state.order.byId[id]
 export const getOrderWithTotal = createSelector(
   [ getOrder, getProductsById ],
@@ -20,6 +21,7 @@ export const getOrderWithTotal = createSelector(
     )(order.products),
   )(order),
 )
+export const getCurrentOrderId = (state) => state.order.current
 export const isCurrentOrder = (state, id) => R.equals(state.order.current, id)
 export const getCreatingProductsIds = (state) => state.order.creatingProductsIds
 export const getCreatingProductsById = (state) => state.order.creatingProductsById
@@ -46,4 +48,5 @@ export const hasOrderAvailableProducts = createSelector(
 )
 export const getCreatingUser = (state) => state.order.creatingUser
 export const isAddingProduct = (state) => state.order.addingProduct
-export const isSaving = (state) => state.order.saving
+export const isSavingOrder = (state) => state.order.saving
+export const isCreatingOrder = (state) => state.order.creating

@@ -23,6 +23,7 @@ const queryDefinition = `
     createOrder(order: OrderInput!): Order!
     addOrderProduct(id: ID!, orderProduct: OrderProductInput): OrderProduct!
     removeOrderProduct(id: ID!, orderProduct: OrderProductInput): OrderProduct
+    toggleOrderPaid(id: ID!): Order!
   }
 `
 

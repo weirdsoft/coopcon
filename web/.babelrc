@@ -1,27 +1,16 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "browsers": "last 2 versions"
-      },
-      "useBuiltIns": true,
+    ["@babel/preset-env", {
+      "useBuiltIns": "entry",
       "modules": false
     }],
-    "react"
+    "@babel/react"
   ],
   "plugins": [
     "react-hot-loader/babel",
-    "transform-object-rest-spread"
-  ],
-  "env": {
-    "test": {
-      "presets": [
-        "latest",
-        "react"
-      ],
-      "plugins": [
-        "transform-object-rest-spread"
-      ],
-    }
-  }
+    "@babel/plugin-proposal-object-rest-spread",
+    ["ramda", {
+      "useEs": true
+    }]
+  ]
 }

@@ -3,12 +3,16 @@ import * as R from 'ramda'
 import * as api from 'Coopcon/data/api'
 import { NavigationActions } from 'react-navigation'
 import { getCurrentId } from 'Coopcon/data/operation/selectors'
-import { getCreatingUser, getCreatingProductsById } from './selectors'
 import {
-  ADD_PRODUCT_TO_ORDER, SAVE_NEW_ORDER_REQUEST, hideAddOrderProductDialog, receiveNewOrder,
-  failReceiveNewOrder,
+  getCreatingUser, getCreatingProductsById, getOrderProductQuantity, getCurrentOrderId,
+} from './selectors'
+import {
+  ADD_PRODUCT_TO_ORDER, hideAddOrderProductDialog,
+  SAVE_NEW_ORDER_REQUEST,  receiveNewOrder, failReceiveNewOrder, hideSaveOrderDialog,
+  SUBTRACT_TO_PRODUCT_QUANTITY, removeProductFromOrder,
+  TOGGLE_PAID_ORDER_REQUEST, receiveTogglePaidOrder, failReceiveTogglePaidOrder,
 } from './actions'
-import { createOrderMutation, addOrderProductMutation } from './mutations'
+import { createOrderMutation, addOrderProductMutation, toggleOrderPaidMutation } from './mutations'
 
 function* closeAddOrderProductDialog() {
   yield put(hideAddOrderProductDialog())
@@ -44,16 +48,41 @@ function* saveNewOrder() {
     order.products = R.pluck('orderProduct')(products)
 
     yield put(receiveNewOrder(order))
+    yield put(hideSaveOrderDialog())
     yield put(NavigationActions.back())
   } catch(e) {
     yield put(failReceiveNewOrder(e.message))
   }
 }
 
+function* removeProductQuantityZero({ id }) {
+  const quantity = yield select(getOrderProductQuantity, id)
+
+  if (quantity <= 0) {
+    yield put(removeProductFromOrder(id))
+  }
+}
+
+function* togglePaidOrder() {
+  const id = yield select(getCurrentOrderId)
+
+  try {
+    const { order } = yield call(api.mutate, toggleOrderPaidMutation, {
+      id,
+    })
+
+    yield put(receiveTogglePaidOrder(order))
+  } catch(e) {
+    yield put(failReceiveTogglePaidOrder(e.message))
+  }
+}
+
 function* orderSaga() {
   yield all([
     takeLatest(ADD_PRODUCT_TO_ORDER, closeAddOrderProductDialog),
+    takeLatest(SUBTRACT_TO_PRODUCT_QUANTITY, removeProductQuantityZero),
     takeLatest(SAVE_NEW_ORDER_REQUEST, saveNewOrder),
+    takeLatest(TOGGLE_PAID_ORDER_REQUEST, togglePaidOrder),
   ])
 }
 

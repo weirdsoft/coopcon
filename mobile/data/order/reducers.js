@@ -1,17 +1,29 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
-import { ORDER } from 'Coopcon/data/navigation/actions'
+import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
 import { FETCH_OPERATION_SUCCESS } from 'Coopcon/data/operation/actions'
 import {
-  TOGGLE_ORDER, SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG, ADD_PRODUCT_TO_ORDER,
-  ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY, SHOW_SAVE_ORDER_DIALOG,
-  HIDE_SAVE_ORDER_DIALOG, CHANGE_ORDER_USER, SAVE_NEW_ORDER_SUCCESS,
+  TOGGLE_ORDER,
+  SHOW_ADD_ORDER_PRODUCT_DIALOG, HIDE_ADD_ORDER_PRODUCT_DIALOG,
+  ADD_PRODUCT_TO_ORDER, REMOVE_PRODUCT_FROM_ORDER,
+  ADD_TO_PRODUCT_QUANTITY, SUBTRACT_TO_PRODUCT_QUANTITY,
+  SHOW_SAVE_ORDER_DIALOG, HIDE_SAVE_ORDER_DIALOG,
+  CHANGE_ORDER_USER,
+  SAVE_NEW_ORDER_REQUEST, SAVE_NEW_ORDER_SUCCESS, SAVE_NEW_ORDER_FAILURE,
+  TOGGLE_PAID_ORDER_SUCCESS,
 } from './actions'
 
 const idsDefault = []
 const ids = (state = idsDefault, action) => {
   switch(action.type) {
+    case NavigationActions.NAVIGATE:
+      switch(action.routeName) {
+        case OPERATION:
+          return idsDefault
+        default:
+          return state
+      }
     case FETCH_OPERATION_SUCCESS:
       return R.union(R.pluck('_id', action.orders))(state)
     case SAVE_NEW_ORDER_SUCCESS:
@@ -32,6 +44,13 @@ const evolveOrderProducts = R.evolve({
 const byIdDefault = {}
 const byId = (state = byIdDefault, action) => {
   switch(action.type) {
+    case NavigationActions.NAVIGATE:
+      switch(action.routeName) {
+        case OPERATION:
+          return byIdDefault
+        default:
+          return state
+      }
     case FETCH_OPERATION_SUCCESS:
       return R.merge(
         R.compose(
@@ -41,6 +60,10 @@ const byId = (state = byIdDefault, action) => {
       )(state)
     case SAVE_NEW_ORDER_SUCCESS:
       return R.assoc(action.order._id, evolveOrderProducts(action.order))(state)
+    case TOGGLE_PAID_ORDER_SUCCESS:
+      return R.evolve({
+        [action.order._id]: R.flip(R.merge)(action.order),
+      })(state)
     default:
       return state
   }
@@ -67,6 +90,8 @@ const creatingProductsIds = (state = null, action) => {
       }
     case ADD_PRODUCT_TO_ORDER:
       return R.append(action.id)(state)
+    case REMOVE_PRODUCT_FROM_ORDER:
+      return R.without([ action.id ])(state)
     default:
       return state
   }
@@ -81,17 +106,16 @@ const creatingProductsById = (state = null, action) => {
         return null
       }
     case ADD_PRODUCT_TO_ORDER:
-      return R.assoc(action.id, 1)(state)
+      return R.assoc(action.id, action.quantity)(state)
+    case REMOVE_PRODUCT_FROM_ORDER:
+      return R.dissoc(action.id)(state)
     case ADD_TO_PRODUCT_QUANTITY:
       return R.evolve({
         [action.id]: R.add(action.quantity),
       })(state)
     case SUBTRACT_TO_PRODUCT_QUANTITY:
       return R.evolve({
-        [action.id]: R.unless(
-          R.equals(action.quantity),
-          R.flip(R.subtract)(action.quantity),
-        ),
+        [action.id]: R.flip(R.subtract)(action.quantity),
       })(state)
     default:
       return state
@@ -138,6 +162,18 @@ const saving = (state = false, action) => {
   }
 }
 
+const creating = (state = false, action) => {
+  switch(action.type) {
+    case SAVE_NEW_ORDER_REQUEST:
+      return true
+    case SAVE_NEW_ORDER_SUCCESS:
+    case SAVE_NEW_ORDER_FAILURE:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   ids,
   byId,
@@ -147,4 +183,5 @@ export default combineReducers({
   creatingUser,
   addingProduct,
   saving,
+  creating,
 })

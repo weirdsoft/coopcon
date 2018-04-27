@@ -1,14 +1,17 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
-        "node": "current",
-        "uglify": true
+        "node": "current"
       },
-      "useBuiltIns": true
+      "forceAllTransforms": true,
+      "useBuiltIns": "entry"
     }]
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "@babel/plugin-proposal-object-rest-spread",
+    ["ramda", {
+      "useEs": true
+    }]
   ]
 }

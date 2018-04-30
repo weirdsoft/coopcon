@@ -12,7 +12,6 @@ import { isAddingOperation, getNewOperation } from 'data/operation/selectors'
 import DatePicker from 'react-datepicker'
 
 const operationValidations = {
-  name: validations.string,
   publishDate: validations.date,
   closeDate: validations.date,
   deliveryDate: validations.date,
@@ -37,9 +36,8 @@ const enhancer = compose(
     renderNothing,
   ),
   flattenProp('operation'),
-  mapProps(({ name, publishDate, closeDate, deliveryDate, ...props }) => ({
+  mapProps(({ publishDate, closeDate, deliveryDate, ...props }) => ({
     ...props,
-    name: coalesce(name, ''),
     publishDate: publishDate == null ? null : moment(publishDate),
     closeDate: closeDate == null ? null : moment(closeDate),
     deliveryDate: deliveryDate == null ? null : moment(deliveryDate),
@@ -65,19 +63,9 @@ const enhancer = compose(
 )
 
 const OperationAdd = enhancer(({
-  name, publishDate, closeDate, deliveryDate, onKeyDown, onUpdate, onSubmit, onCancel,
+  publishDate, closeDate, deliveryDate, onKeyDown, onUpdate, onSubmit, onCancel,
 }) => (
   <tr>
-    <td>
-      <input
-        type="text"
-        className="form-control"
-        value={name}
-        onKeyDown={onKeyDown}
-        onChange={(event) => onUpdate('name', event.target.value)}
-        autoFocus
-      />
-    </td>
     <td>
       <DatePicker
         className="form-control"

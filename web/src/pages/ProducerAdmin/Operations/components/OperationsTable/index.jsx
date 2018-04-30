@@ -20,30 +20,25 @@ const OperationsTable = enhancer(({ isCompact, operations }) => (
   <div className={isCompact ? 'col-4' : 'col-12'}>
     <table className="table table-responsive-md table-striped">
       <thead>
-          <tr>
-            <th>
-              Nombre
-            </th>
-            { isCompact ? null :
-            <th>
-              Fecha de publicación
-            </th>
-            }
-            { isCompact ? null :
+        <tr>
+          <th>
+            Fecha de publicación
+          </th>
+          { isCompact ? null :
             <th>
               Fecha de cierre
             </th>
-            }
-            { isCompact ? null :
+          }
+          { isCompact ? null :
             <th>
               Fecha de entrega
             </th>
-            }
-            <th>
-              Acciones
-            </th>
-          </tr>
-        </thead>
+          }
+          <th>
+            Acciones
+          </th>
+        </tr>
+      </thead>
       <tbody>
         <OperationAdd />
         {operations.map((id) => (

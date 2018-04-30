@@ -23,26 +23,21 @@ const enhancer = compose(
 )
 
 const Operation = enhancer(({
-  operationId, name, publishDate, closeDate, deliveryDate, producerId, isCompact,
+  operationId, publishDate, closeDate, deliveryDate, producerId, isCompact,
 }) => (
   <tr className={styles.operation}>
     <td>
-      {name}
-    </td>
-    { isCompact ? null :
-    <td>
       {moment(publishDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
     </td>
+    { isCompact ? null :
+      <td>
+        {moment(closeDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
+      </td>
     }
     { isCompact ? null :
-    <td>
-      {moment(closeDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
-    </td>
-    }
-    { isCompact ? null :
-    <td>
-      {moment(deliveryDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
-    </td>
+      <td>
+        {moment(deliveryDate).calendar(null, { sameElse: 'dddd DD [de] MMMM [a las] HH:mm' })}
+      </td>
     }
     <td>
       <NavLink

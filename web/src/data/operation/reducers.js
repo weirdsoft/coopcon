@@ -61,23 +61,6 @@ const isAdding = (state = false, action) => {
   }
 }
 
-const newOperationName = (state = null, action) => {
-  switch(action.type) {
-    case CHANGE_NEW_OPERATION:
-      if (action.change.hasOwnProperty('name')) {
-        return action.change.name
-      } else {
-        return state
-      }
-    default:
-      if (allRoutes.includes(action.type)) {
-        return null
-      } else {
-        return state
-      }
-  }
-}
-
 const newOperationPublishDate = (state = null, action) => {
   switch(action.type) {
     case CHANGE_NEW_OPERATION:
@@ -139,7 +122,6 @@ const newOperationDeliveryDate = (state = null, action) => {
 }
 
 const newOperation = combineReducers({
-  name: newOperationName,
   publishDate: newOperationPublishDate,
   closeDate: newOperationCloseDate,
   deliveryDate: newOperationDeliveryDate,

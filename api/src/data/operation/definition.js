@@ -8,6 +8,18 @@ const definition = `
     producer: Producer!,
     products: [Product!]!
     orders: [Order!]!
+    totals: [Totals!]!
+  }
+
+  type Totals {
+    name: String!
+    unit: String!
+    totals: [Total!]!
+  }
+
+  type Total {
+    quantity: Float!
+    total: Int!
   }
 
   input OperationInput {

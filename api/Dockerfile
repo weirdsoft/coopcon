@@ -1,4 +1,4 @@
-FROM node:9.8.0-alpine
+FROM node:9.11.1-alpine
 MAINTAINER Agustin Carrasco <asermax@gmail.com>
 
 WORKDIR /opt/app

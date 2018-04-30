@@ -1,7 +1,6 @@
 const definition = `
   type Operation {
     _id: ID!
-    name: String!
     creationDate: Date!
     publishDate: Date!
     closeDate: Date!
@@ -13,7 +12,6 @@ const definition = `
 
   input OperationInput {
     producer: ID!
-    name: String!
     publishDate: Date
     closeDate: Date!
     deliveryDate: Date!

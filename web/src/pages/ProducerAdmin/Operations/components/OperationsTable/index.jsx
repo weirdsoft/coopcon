@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, setDisplayName } from 'recompose'
 import { getCurrentProducerSortedOperations } from 'data/producer/selectors'
-import { isShowingOperationProducts } from 'data/operation/selectors'
+import { isShowingOperationSidepanel } from 'data/operation/selectors'
 import Operation from '../Operation'
 import OperationAdd from '../OperationAdd'
 
 const mapStateToProps = (state) => ({
-  isCompact: isShowingOperationProducts(state),
+  isCompact: isShowingOperationSidepanel(state),
   operations: getCurrentProducerSortedOperations(state),
 })
 

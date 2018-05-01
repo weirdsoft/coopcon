@@ -5,23 +5,18 @@ import { connect } from 'react-redux'
 import { compose, branch, renderNothing, mapProps, setDisplayName } from 'recompose'
 import { goToOperations } from 'data/route/actions'
 import { getCurrentProducer } from 'data/producer/selectors'
-import { isShowingOperationProducts } from 'data/operation/selectors'
 import styles from './styles.scss'
 import Link from 'redux-first-router-link'
 import OperationProduct from '../OperationProduct'
 
 const mapStateToProps = (state) => ({
   producer: getCurrentProducer(state),
-  isShowingProducts: isShowingOperationProducts(state),
 })
 
 const enhancer = compose(
   connect(mapStateToProps),
   branch(
-    R.anyPass([
-      R.propSatisfies(R.isNil, 'producer'),
-      R.propSatisfies(R.not, 'isShowingProducts'),
-    ]),
+    R.compose(R.isNil, R.prop('producer')),
     renderNothing,
   ),
   mapProps(({ producer }) => ({

@@ -2,10 +2,11 @@ import { all, call, select, put, actionChannel, take } from 'redux-saga/effects'
 import { NOT_FOUND } from 'redux-first-router'
 import { FETCH_PRODUCERS_SUCCESS, fetchProducers, fetchProducer } from 'data/producer/actions'
 import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
-import { fetchOperationProducts } from 'data/operation/actions'
+import { fetchOperationProducts, fetchOperationTotals } from 'data/operation/actions'
 import { getCurrentOperationId } from 'data/operation/selectors'
 import {
-  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
+  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, OPERATION_TOTALS, PRODUCT_GALLERY,
+  PRODUCT_ADD, PRODUCT_EDIT,
   goToIndex, goToOperations,
 } from './actions'
 import { getCurrentRoute } from './selectors'
@@ -54,12 +55,21 @@ const onOperationsProducts = sagaWithParameters(
   select(getCurrentOperationId),
 )
 
+const onOperationsTotals = sagaWithParameters(
+  function* (operationId) {
+    yield call(onProducerAdmin)
+    yield put(fetchOperationTotals(operationId))
+  },
+  select(getCurrentOperationId),
+)
+
 const mapRouteToSaga = {
   [NOT_FOUND]: onNotFound,
   [INDEX]: onIndex,
   [OPERATIONS]: onProducerAdmin,
   [OPERATION_ADD]: onProducerAdmin,
   [OPERATION_PRODUCTS]: onOperationsProducts,
+  [OPERATION_TOTALS]: onOperationsTotals,
   [PRODUCT_GALLERY]: onProducerAdmin,
   [PRODUCT_ADD]: onProducerAdmin,
   [PRODUCT_EDIT]: onProducerAdmin,

@@ -4,8 +4,8 @@ import moment from 'moment'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { compose, flattenProp, mapProps, setDisplayName } from 'recompose'
-import { goToOperationProducts } from 'data/route/actions'
-import { getCurrentOperationId, isShowingOperationProducts } from 'data/operation/selectors'
+import { goToOperationProducts, goToOperationTotals } from 'data/route/actions'
+import { getCurrentOperationId, isShowingOperationSidepanel } from 'data/operation/selectors'
 import { getCurrentId } from 'data/producer/selectors'
 import { getOperation } from 'data/operation/selectors'
 import { NavLink } from 'redux-first-router-link'
@@ -14,7 +14,7 @@ import styles from './styles.scss'
 const mapStateToProps = (state, { operationId }) => ({
   producerId: getCurrentId(state),
   operation: getOperation(state, operationId),
-  isCompact: isShowingOperationProducts(state),
+  isCompact: isShowingOperationSidepanel(state),
   currentOperationId: getCurrentOperationId(state),
 })
 
@@ -47,11 +47,18 @@ const Operation = enhancer(({
     }
     <td>
       <NavLink
-        className={styles.productsLink}
+        className={classNames('p-1', styles.sectionLink)}
+        to={goToOperationTotals(producerId, operationId)}
+        activeClassName={styles.active}
+      >
+        <i className="fa fa-shopping-cart" title="Ver Totales"></i>
+      </NavLink>
+      <NavLink
+        className={classNames('p-1', styles.sectionLink)}
         to={goToOperationProducts(producerId, operationId)}
         activeClassName={styles.active}
       >
-        <i className="fa fa-list-alt" title="Modificar Productos"></i>
+        <i className="fa fa-cog" title="Modificar Productos"></i>
       </NavLink>
     </td>
   </tr>

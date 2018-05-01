@@ -43,20 +43,28 @@ const resolver = {
         )
 
         return R.compose(
-          R.map(([ id, value ]) => {
+          R.map(([ id, quantities ]) => {
             const product = products[id]
 
             return {
               name: product.name,
               unit: product.unit,
               totals: R.compose(
+                R.reject(R.propEq('total', 0)),
+                R.reduce((result, item) => R.ifElse(
+                  R.compose(R.always, R.gt(1), R.prop('quantity'))(item),
+                  R.append(item),
+                  R.adjust(R.evolve({
+                    total: R.add(R.multiply(item.quantity, item.total)),
+                  }), 0),
+                )(result), [ { quantity: 1, total: 0 } ]),
                 R.map(([ quantity, orders ]) => ({
-                  quantity: quantity * product.quantity,
+                  quantity,
                   total: orders.length,
                 })),
                 R.toPairs,
-                R.map(R.chain(R.identity)),
-              )(value),
+                R.map(R.unnest),
+              )(quantities),
             }
           }),
           R.toPairs,

@@ -13,6 +13,7 @@
 - Add a search bar for order filtering
 - Separate operations according to their status (receiving orders, shipping and finished)
 - Make an operation report summarizing all the orders
+- Remove product's quantity (use 1 by default, include details on unit)
 - Remove operation's name
 
 ### v0.2.0 [x]

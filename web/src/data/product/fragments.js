@@ -5,7 +5,6 @@ export const productFieldsFragment = gql`
     _id
     name
     unit
-    quantity
     minimalFraction
     price
     creationDate

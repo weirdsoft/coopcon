@@ -6,17 +6,15 @@ import Card from 'components/Card'
 
 const productValidations = {
   name: validations.string,
-  quantity: validations.int,
   unit: validations.string,
   minimalFraction: validations.float,
   price: validations.float,
 }
 
 const enhancer = compose(
-  mapProps(({ name, quantity, unit, minimalFraction, price, ...props }) => ({
+  mapProps(({ name, unit, minimalFraction, price, ...props }) => ({
     ...props,
     name: coalesce(name, ''),
-    quantity: coalesce(quantity, ''),
     unit: coalesce(unit, ''),
     minimalFraction: coalesce(minimalFraction, ''),
     price: coalesce(price, ''),
@@ -41,7 +39,7 @@ const enhancer = compose(
 )
 
 const EditableProduct = enhancer(({
-  name, quantity, unit, minimalFraction, price, onKeyDown, onUpdate, onSubmit, onCancel,
+  name, unit, minimalFraction, price, onKeyDown, onUpdate, onSubmit, onCancel,
 }) => (
   <Card className="text-center h-100">
     <form onSubmit={onSubmit}>
@@ -55,20 +53,6 @@ const EditableProduct = enhancer(({
           className="form-control"
           placeholder="Nombre"
           autoFocus
-        />
-      </div>
-      <div className="form-group">
-        <input
-          required
-          type="number"
-          min="1"
-          step="1"
-          pattern="\d+"
-          value={quantity}
-          onKeyDown={onKeyDown}
-          onChange={(event) => onUpdate('quantity', event)}
-          className="form-control"
-          placeholder="Cantidad"
         />
       </div>
       <div className="form-group">
@@ -123,7 +107,6 @@ const EditableProduct = enhancer(({
 
 EditableProduct.propTypes = {
   name: PropTypes.string,
-  quantity: PropTypes.number,
   unit: PropTypes.string,
   price: PropTypes.number,
   onUpdate: PropTypes.func.isRequired,

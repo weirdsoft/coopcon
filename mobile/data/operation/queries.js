@@ -20,7 +20,6 @@ export const operationOrdersQuery = gql`
       products {
         _id
         name
-        quantity
         unit
         minimalFraction
         price

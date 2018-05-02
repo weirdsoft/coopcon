@@ -48,7 +48,6 @@ const isAdding = (state = false, action) => {
 
 const defaultNewProduct = {
   name: null,
-  quantity: null,
   unit: null,
   minimalFraction: null,
   price: null,

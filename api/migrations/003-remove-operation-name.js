@@ -6,7 +6,7 @@ module.exports = {
   up() {
     return mongoose.connection.db.collection('operations').updateMany(
       {},
-      { $unset: { name: false } },
+      { $unset: { name: true } },
     )
   },
 

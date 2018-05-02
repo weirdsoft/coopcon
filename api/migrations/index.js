@@ -4,6 +4,7 @@ const migrations = [
   require('./001-product-minimal-fraction'),
   require('./002-add-paid-field-to-order'),
   require('./003-remove-operation-name'),
+  require('./004-remove-product-quantity'),
 ]
 
 // migration schema

@@ -56,7 +56,7 @@ const OperationProducts = enhancer(({ producerId, header, body }) => (
           </span>
         </Link>
         <p className="card-text">
-          Los productos seleccionados serán incluidos en el operativo.
+          Sumario de totales por producto de la operación
         </p>
       </div>
       <table className={classNames('table', 'table-striped', styles.totals)}>

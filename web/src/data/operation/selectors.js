@@ -10,7 +10,7 @@ export const getCurrentOperation = createSelector(
   [ getOperations, getCurrentOperationId ],
   (operations, currentId) => operations[currentId],
 )
-export const isShowingOperationProducts = createSelector(
+export const isShowingOperationSidepanel = createSelector(
   [ getCurrentOperationId ],
   (currentId) => currentId != null,
 )

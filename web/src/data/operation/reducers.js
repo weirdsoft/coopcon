@@ -1,12 +1,12 @@
 import * as R from 'ramda'
 import moment from 'moment'
 import { combineReducers } from 'redux'
-import { OPERATION_ADD, OPERATION_PRODUCTS, allRoutes } from 'data/route/actions'
+import { OPERATION_ADD, OPERATION_PRODUCTS, OPERATION_TOTALS, allRoutes } from 'data/route/actions'
 import { FETCH_PRODUCER_SUCCESS } from 'data/producer/actions'
 import {
   CHANGE_NEW_OPERATION, ADD_NEW_OPERATION_SUCCESS, FETCH_OPERATION_PRODUCTS_SUCCESS,
-  TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS,
-  TOGGLE_OPERATION_PRODUCT_STATE_FAILURE,
+  FETCH_OPERATION_TOTALS_SUCCESS, TOGGLE_OPERATION_PRODUCT_STATE_REQUEST,
+  TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS, TOGGLE_OPERATION_PRODUCT_STATE_FAILURE,
 } from './actions'
 
 const byId = (state = {}, action) => {
@@ -37,6 +37,10 @@ const byId = (state = {}, action) => {
           products: action.products.map((product) => product._id),
         },
       }
+    case FETCH_OPERATION_TOTALS_SUCCESS:
+      return R.evolve({
+        [action.id]: R.assoc('totals', action.totals),
+      })(state)
     case TOGGLE_OPERATION_PRODUCT_STATE_SUCCESS:
       return R.evolve({
         [action.id]: {
@@ -55,23 +59,6 @@ const isAdding = (state = false, action) => {
     default:
       if (allRoutes.includes(action.type)) {
         return false
-      } else {
-        return state
-      }
-  }
-}
-
-const newOperationName = (state = null, action) => {
-  switch(action.type) {
-    case CHANGE_NEW_OPERATION:
-      if (action.change.hasOwnProperty('name')) {
-        return action.change.name
-      } else {
-        return state
-      }
-    default:
-      if (allRoutes.includes(action.type)) {
-        return null
       } else {
         return state
       }
@@ -139,7 +126,6 @@ const newOperationDeliveryDate = (state = null, action) => {
 }
 
 const newOperation = combineReducers({
-  name: newOperationName,
   publishDate: newOperationPublishDate,
   closeDate: newOperationCloseDate,
   deliveryDate: newOperationDeliveryDate,
@@ -148,6 +134,7 @@ const newOperation = combineReducers({
 const currentId = (state = null, action) => {
   switch(action.type) {
     case OPERATION_PRODUCTS:
+    case OPERATION_TOTALS:
       return action.payload.id
     default:
       if (allRoutes.includes(action.type)) {

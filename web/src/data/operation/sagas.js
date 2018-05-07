@@ -6,11 +6,12 @@ import { getCurrentId } from 'data/producer/selectors'
 import {
   ADD_NEW_OPERATION_REQUEST, receiveNewOperation, failReceiveNewOperation,
   FETCH_OPERATION_PRODUCTS_REQUEST, receiveOperationProducts, failReceiveOperationProducts,
+  FETCH_OPERATION_TOTALS_REQUEST, receiveOperationTotals, failReceiveOperationTotals,
   TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, succeedToggleOperationProductState,
   failToggleOperationProductState,
 } from './actions'
 import { getNewOperation, getCurrentOperation } from './selectors'
-import { operationProductsQuery } from './queries'
+import { operationProductsQuery, operationTotalsQuery } from './queries'
 import {
   createOperationMutation, addOperationProductMutation, removeOperationProductMutation,
 } from './mutations'
@@ -41,6 +42,17 @@ function* fetchOperationProducts({ id }) {
     yield put(receiveOperationProducts(id, products))
   } catch(e) {
     yield put(failReceiveOperationProducts(e.message))
+  }
+}
+
+function* fetchOperationTotals({ id }) {
+  try {
+    const { operation: { totals } } = yield call(api.query, operationTotalsQuery, {
+      id,
+    })
+    yield put(receiveOperationTotals(id, totals))
+  } catch(e) {
+    yield put(failReceiveOperationTotals(e.message))
   }
 }
 
@@ -76,6 +88,7 @@ function* operationSaga() {
   yield all([
     takeLatest(ADD_NEW_OPERATION_REQUEST, addNewOperation),
     takeLatest(FETCH_OPERATION_PRODUCTS_REQUEST, fetchOperationProducts),
+    takeLatest(FETCH_OPERATION_TOTALS_REQUEST, fetchOperationTotals),
     takeLatest(TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, toggleOperationProductState),
   ])
 }

@@ -1,7 +1,6 @@
 const definition = `
   type Operation {
     _id: ID!
-    name: String!
     creationDate: Date!
     publishDate: Date!
     closeDate: Date!
@@ -9,11 +8,22 @@ const definition = `
     producer: Producer!,
     products: [Product!]!
     orders: [Order!]!
+    totals: [Totals!]!
+  }
+
+  type Totals {
+    name: String!
+    unit: String!
+    totals: [Total!]!
+  }
+
+  type Total {
+    quantity: Float!
+    total: Int!
   }
 
   input OperationInput {
     producer: ID!
-    name: String!
     publishDate: Date
     closeDate: Date!
     deliveryDate: Date!

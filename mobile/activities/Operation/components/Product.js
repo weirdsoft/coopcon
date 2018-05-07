@@ -33,13 +33,13 @@ const enhancer = compose(
   }),
 )
 
-const Product = enhancer(({ orderQuantity, name, quantity, unit, price }) => (
+const Product = enhancer(({ orderQuantity, name, unit, price }) => (
   <View style={styles.container}>
     <Text style={styles.name}>
       {name}
     </Text>
     <Text>
-      &nbsp;x {quantity * orderQuantity} {unit}
+      &nbsp;({unit} x {orderQuantity})
     </Text>
     <Text style={styles.price}>
       ${price * orderQuantity}

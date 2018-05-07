@@ -27,7 +27,7 @@ const enhancer = compose(
   setDisplayName('OperationProduct'),
 )
 
-const OperationProduct = enhancer(({ name, price, quantity, unit, isSelected, toggleProduct }) => (
+const OperationProduct = enhancer(({ name, price, unit, isSelected, toggleProduct }) => (
   <li
     className={classNames('list-group-item', styles.operationProduct)}
     onClick={toggleProduct}
@@ -35,7 +35,7 @@ const OperationProduct = enhancer(({ name, price, quantity, unit, isSelected, to
     <div className={styles.info}>
       {name}
       <span className='text-secondary'>
-        &nbsp;-&nbsp;${price} x {quantity} {unit}
+        &nbsp;-&nbsp;${price} x {unit}
       </span>
     </div>
     <i className={classNames('fa', { 'fa-check': isSelected })} />

@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, setDisplayName } from 'recompose'
 import { getCurrentProducerSortedOperations } from 'data/producer/selectors'
-import { isShowingOperationProducts } from 'data/operation/selectors'
+import { isShowingOperationSidepanel } from 'data/operation/selectors'
 import Operation from '../Operation'
 import OperationAdd from '../OperationAdd'
 
 const mapStateToProps = (state) => ({
-  isCompact: isShowingOperationProducts(state),
+  isCompact: isShowingOperationSidepanel(state),
   operations: getCurrentProducerSortedOperations(state),
 })
 
@@ -20,30 +20,25 @@ const OperationsTable = enhancer(({ isCompact, operations }) => (
   <div className={isCompact ? 'col-4' : 'col-12'}>
     <table className="table table-responsive-md table-striped">
       <thead>
-          <tr>
-            <th>
-              Nombre
-            </th>
-            { isCompact ? null :
-            <th>
-              Fecha de publicación
-            </th>
-            }
-            { isCompact ? null :
+        <tr>
+          <th>
+            Fecha de publicación
+          </th>
+          { isCompact ? null :
             <th>
               Fecha de cierre
             </th>
-            }
-            { isCompact ? null :
+          }
+          { isCompact ? null :
             <th>
               Fecha de entrega
             </th>
-            }
-            <th>
-              Acciones
-            </th>
-          </tr>
-        </thead>
+          }
+          <th>
+            Acciones
+          </th>
+        </tr>
+      </thead>
       <tbody>
         <OperationAdd />
         {operations.map((id) => (

@@ -1,4 +1,4 @@
-FROM nginx:1.13.9-alpine
+FROM nginx:1.13.12-alpine
 MAINTAINER Agustin Carrasco <asermax@gmail.com>
 
 ADD web/dist /usr/share/nginx/html

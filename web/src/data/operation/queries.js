@@ -9,3 +9,18 @@ export const operationProductsQuery = gql`
     }
   }
 `
+
+export const operationTotalsQuery = gql`
+  query operationTotalsQuery($id: ID!) {
+    operation(id: $id) {
+      totals {
+        name
+        unit
+        totals {
+          quantity
+          total
+        }
+      }
+    }
+  }
+`

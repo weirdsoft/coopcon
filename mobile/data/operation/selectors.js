@@ -1,8 +1,38 @@
+import * as R from 'ramda'
+import moment from 'moment'
 import { createSelector } from 'reselect'
 
 export const isLoadingOperations = (state) => state.operation.loading
 export const getOperationIds = (state) => state.operation.ids
 export const getOperationsById = (state) => state.operation.byId
+
+const idWithStatus = R.curry((status, { _id }) => ({ _id, status }))
+export const getOperationIdsByStatus = createSelector(
+  [ getOperationsById ],
+  R.compose(
+    R.merge({
+      'En curso': [],
+      'Por entregar': [],
+      'Finalizado': [],
+    }),
+    R.map(R.pluck('_id')),
+    R.groupBy(R.prop('status')),
+    R.map(
+      R.cond([
+        [
+          R.compose(R.lt(moment()), moment, R.prop('closeDate')),
+          idWithStatus('En curso'),
+        ],
+        [
+          R.compose(R.lt(moment()), moment, R.prop('deliveryDate')),
+          idWithStatus('Por entregar'),
+        ],
+        [ R.T, idWithStatus('Finalizado') ],
+      ]),
+    ),
+    R.values,
+  ),
+)
 export const getOperation = (state, id) => state.operation.byId[id]
 export const getCurrentId = (state) => state.operation.current
 export const getCurrentOperation = createSelector(

@@ -5,6 +5,8 @@ export const operationsQuery = gql`
     operations {
       _id
       publishDate
+      closeDate
+      deliveryDate
 
       producer {
         _id

@@ -63,7 +63,6 @@ const Operation = enhancer(({ name, publishDate, goToOperation }) => (
         <SimpleLineIcons name="arrow-right" size={20}/>
       </View>
     </TouchableRipple>
-    <Divider/>
   </View>
 ))
 

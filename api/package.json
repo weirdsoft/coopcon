@@ -13,6 +13,7 @@
     "migrate": "node migrations/index.js"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0-beta.46",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "graphql": "^0.13.2",
@@ -24,7 +25,6 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.46",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
-    "@babel/polyfill": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
     "babel-loader": "^8.0.0-beta",

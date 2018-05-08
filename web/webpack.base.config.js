@@ -70,7 +70,7 @@ const config = {
 
   resolve: {
     modules: [
-      resolve(__dirname, 'src'),
+      'src',
       'node_modules',
     ],
     extensions: [ '.js', '.jsx', '.scss' ],

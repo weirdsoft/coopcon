@@ -4,13 +4,17 @@ services:
     restart: always
   web:
     image: asermax/coopcon-web:0.2.1
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-web
     ports:
       - 80:80
     restart: always
   api:
     image: asermax/coopcon-api:0.2.1
-    build: api/
+    build:
+      context: .
+      dockerfile: Dockerfile-api
     volumes:
       - api-deps:/opt/app/node_modules
     restart: always

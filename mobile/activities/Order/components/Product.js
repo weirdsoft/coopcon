@@ -20,9 +20,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   name: {
-    flex: 1,
+    flexShrink: 1,
   },
   unit: {
+    margin: 0,
+    flexGrow: 1,
     fontStyle: 'italic',
     color: 'gray',
   },
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4,
-    width: 30,
+    width: 45,
     height: 25,
     marginHorizontal: 10,
   },
@@ -66,11 +68,11 @@ const Product = enhancer(({
 }) => (
   <View>
     <View style={styles.container}>
-      <Text style={styles.name}>
-        {name}
-        <Text style={styles.unit}>
-          &nbsp;x {unit}
-        </Text>
+      <Text style={styles.name} numberOfLines={1}>
+        {name}&nbsp;
+      </Text>
+      <Text style={styles.unit}>
+        x {unit}
       </Text>
       <TouchableRipple
         style={styles.quantityButton}

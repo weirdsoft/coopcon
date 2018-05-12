@@ -11,10 +11,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   name: {
+    flexShrink: 1,
     fontWeight: 'bold',
   },
   price: {
-    flex: 1,
+    flexGrow: 1,
     textAlign: 'right',
   },
 })
@@ -35,11 +36,11 @@ const enhancer = compose(
 
 const Product = enhancer(({ orderQuantity, name, unit, price }) => (
   <View style={styles.container}>
-    <Text style={styles.name}>
+    <Text style={styles.name} numberOfLines={1}>
       {name}
     </Text>
     <Text>
-      &nbsp;({unit} x {orderQuantity})
+      &nbsp;({unit} x {orderQuantity})&nbsp;
     </Text>
     <Text style={styles.price}>
       ${price * orderQuantity}

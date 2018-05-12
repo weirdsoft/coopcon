@@ -45,7 +45,7 @@ const ProductButton = enhancer(({ name, addProductToOrder }) => (
       style={styles.container}
       onPress={addProductToOrder}
     >
-      <Text style={styles.name}>
+      <Text style={styles.name} numberOfLines={1}>
         {name}
       </Text>
     </TouchableRipple>

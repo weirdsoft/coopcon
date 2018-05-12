@@ -7,13 +7,18 @@ export const getOperationIds = (state) => state.operation.ids
 export const getOperationsById = (state) => state.operation.byId
 
 const idWithStatus = R.curry((status, { _id }) => ({ _id, status }))
+export const OPERATION_STATUS = {
+  STARTED: 'started',
+  IN_DELIVERY: 'delivery',
+  FINISHED: 'finished',
+}
 export const getOperationIdsByStatus = createSelector(
   [ getOperationsById ],
   R.compose(
     R.merge({
-      'En curso': [],
-      'Por entregar': [],
-      'Finalizado': [],
+      [OPERATION_STATUS.STARTED]: [],
+      [OPERATION_STATUS.IN_DELIVERY]: [],
+      [OPERATION_STATUS.FINISHED]: [],
     }),
     R.map(R.pluck('_id')),
     R.groupBy(R.prop('status')),
@@ -21,13 +26,13 @@ export const getOperationIdsByStatus = createSelector(
       R.cond([
         [
           R.compose(R.lt(moment()), moment, R.prop('closeDate')),
-          idWithStatus('En curso'),
+          idWithStatus(OPERATION_STATUS.STARTED),
         ],
         [
           R.compose(R.lt(moment()), moment, R.prop('deliveryDate')),
-          idWithStatus('Por entregar'),
+          idWithStatus(OPERATION_STATUS.IN_DELIVERY),
         ],
-        [ R.T, idWithStatus('Finalizado') ],
+        [ R.T, idWithStatus(OPERATION_STATUS.FINISHED) ],
       ]),
     ),
     R.values,

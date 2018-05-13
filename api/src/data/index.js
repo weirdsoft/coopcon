@@ -21,6 +21,7 @@ const queryDefinition = `
     addOperationProduct(id: ID!, productId: ID!): Boolean!
     removeOperationProduct(id: ID!, productId: ID!): Boolean!
     createOrder(order: OrderInput!): Order!
+    deleteOrder(id: ID!): Order!
     addOrderProduct(id: ID!, orderProduct: OrderProductInput): OrderProduct!
     removeOrderProduct(id: ID!, orderProduct: OrderProductInput): OrderProduct
     toggleOrderPaid(id: ID!): Order!

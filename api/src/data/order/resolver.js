@@ -8,6 +8,9 @@ const resolver = {
     createOrder(_, { order }) {
       return Order.create(order)
     },
+    deleteOrder(_, { id }) {
+      return Order.findByIdAndDelete(id).exec()
+    },
     async addOrderProduct(_, { id, orderProduct }) {
       const count = await Product.find({ _id: orderProduct.product }).count().exec()
 

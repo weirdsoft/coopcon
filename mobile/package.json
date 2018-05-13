@@ -37,6 +37,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
     "react-native-collapsible": "^0.11.2",
     "react-native-paper": "^1.4.1",
+    "react-native-searchbar": "^1.14.0",
     "react-navigation": "1.5.11",
     "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "^5.0.7",

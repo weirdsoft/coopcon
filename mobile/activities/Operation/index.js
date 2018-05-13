@@ -10,6 +10,7 @@ import { StyleSheet, View, FlatList } from 'react-native'
 import { FAB, Divider } from 'react-native-paper'
 import Order from './components/Order'
 import Filters from './components/Filters'
+import Search from './components/Search'
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +48,7 @@ const enhancer = compose(
 
 const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
   <View style={styles.container}>
+    <Search />
     <FlatList
       onRefresh={fetchOperation}
       refreshing={loading}

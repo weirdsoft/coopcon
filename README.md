@@ -12,7 +12,7 @@
 - Add posibility to edit orders
 - Add posibility to edit operations
 
-### v0.3.0 [ ]
+### v0.3.0 [x]
 - Add a search bar for order filtering
 - Separate operations according to their status (receiving orders, shipping and finished)
 - Make an operation report summarizing all the orders

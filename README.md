@@ -10,7 +10,9 @@
 ### v0.4.0 [ ]
 - Add posibility to delete orders
 - Add posibility to edit orders
+- Add posibility to delete operations
 - Add posibility to edit operations
+- Add posibility to delete products
 
 ### v0.3.0 [ ]
 - Add a search bar for order filtering

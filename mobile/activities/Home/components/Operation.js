@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose, flattenProp, setDisplayName } from 'recompose'
 import { StyleSheet, View } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons'
-import { Text, Divider, TouchableRipple } from 'react-native-paper'
+import { Text, TouchableRipple } from 'react-native-paper'
 import { goToOperation } from 'Coopcon/data/navigation/actions'
 import { getProducer } from 'Coopcon/data/producer/selectors'
 import { getOperation } from 'Coopcon/data/operation/selectors'
@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   name: {
-    flex: 1,
+    flexShrink: 1,
+  },
+  date: {
+    flexGrow: 1,
+    paddingRight: 5,
   },
 })
 
@@ -57,13 +61,15 @@ const Operation = enhancer(({ name, publishDate, goToOperation }) => (
       <View
         style={styles.container}
       >
-        <Text style={styles.name}>
-          {name} ({moment(publishDate).format('MMMM YYYY')})
+        <Text style={styles.name} numberOfLines={1}>
+          {name}
+        </Text>
+        <Text style={styles.date}>
+          &nbsp;({moment(publishDate).format('MMMM YYYY')})
         </Text>
         <SimpleLineIcons name="arrow-right" size={20}/>
       </View>
     </TouchableRipple>
-    <Divider/>
   </View>
 ))
 

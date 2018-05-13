@@ -2,14 +2,17 @@
 
 ## Roadmap
 
-### v0.4.0 [ ]
+### v0.5.0 [ ]
 - Identify users of the app (google auth?)
 - Add an organization property for the user, save orders referencing the creator's organization
 - Only show orders created by the user (that reference it's same organization)
-### v0.3.0 [ ]
+
+### v0.4.0 [ ]
 - Add posibility to delete orders
 - Add posibility to edit orders
 - Add posibility to edit operations
+
+### v0.3.0 [x]
 - Add a search bar for order filtering
 - Separate operations according to their status (receiving orders, shipping and finished)
 - Make an operation report summarizing all the orders

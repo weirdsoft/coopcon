@@ -87,6 +87,7 @@ const Order = enhancer(({
         <View style={styles.header}>
           <Text
             style={styles.name}
+            numberOfLines={1}
           >
             {user}
           </Text>

@@ -1,0 +1,25 @@
+# Build
+FROM node:9.11.1-alpine AS build
+
+WORKDIR /opt/app
+COPY api/package.json api/yarn.lock ./
+RUN yarn install
+
+COPY api ./
+RUN yarn build
+
+# Release
+FROM node:9.11.1-alpine
+MAINTAINER Agustin Carrasco <asermax@gmail.com>
+
+WORKDIR /opt/app
+COPY --from=build /opt/app/dist dist
+COPY api/index.js api/package.json api/yarn.lock ./
+COPY api/entrypoint.sh ./
+COPY api/migrations migrations
+
+VOLUME /opt/app/node_modules
+
+ENV NODE_ENV production
+ENTRYPOINT ["/opt/app/entrypoint.sh"]
+CMD ["start-prod"]

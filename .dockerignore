@@ -1,4 +1,4 @@
-*
-
-!nginx.prod.conf
-!web/dist
+.git
+mobile
+api/node_modules
+web/node_modules

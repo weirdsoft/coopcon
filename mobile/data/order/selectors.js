@@ -37,6 +37,7 @@ export const getOrderAvailableProducts = createSelector(
     R.reject(
       R.flip(R.contains)(orderProducts),
     ),
+    R.defaultTo([]),
   )(operation.products),
 )
 export const hasOrderAvailableProducts = createSelector(

@@ -35,6 +35,7 @@ export const getOperationIdsByStatus = createSelector(
         [ R.T, idWithStatus(OPERATION_STATUS.FINISHED) ],
       ]),
     ),
+    R.sort(R.prop('publishDate')),
     R.values,
   ),
 )

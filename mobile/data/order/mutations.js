@@ -32,3 +32,14 @@ export const toggleOrderPaidMutation = gql`
     }
   }
 `
+
+export const deleteOrderMutation = gql`
+  mutation deleteOrder($id: ID!) {
+    order: deleteOrder(id: $id) {
+      _id
+      operation {
+        _id
+      }
+    }
+  }
+`

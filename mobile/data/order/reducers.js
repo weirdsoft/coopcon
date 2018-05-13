@@ -12,6 +12,7 @@ import {
   CHANGE_ORDER_USER,
   SAVE_NEW_ORDER_REQUEST, SAVE_NEW_ORDER_SUCCESS, SAVE_NEW_ORDER_FAILURE,
   TOGGLE_PAID_ORDER_SUCCESS,
+  DELETE_ORDER_SUCCESS,
 } from './actions'
 
 const idsDefault = []
@@ -28,6 +29,8 @@ const ids = (state = idsDefault, action) => {
       return R.union(R.pluck('_id', action.orders))(state)
     case SAVE_NEW_ORDER_SUCCESS:
       return R.append(action.order._id)(state)
+    case DELETE_ORDER_SUCCESS:
+      return R.without([ action.order._id ])(state)
     default:
       return state
   }
@@ -64,6 +67,8 @@ const byId = (state = byIdDefault, action) => {
       return R.evolve({
         [action.order._id]: R.flip(R.merge)(action.order),
       })(state)
+    case DELETE_ORDER_SUCCESS:
+      return R.dissoc(action.order._id)(state)
     default:
       return state
   }
@@ -74,6 +79,7 @@ const current = (state = null, action) => {
     case TOGGLE_ORDER:
       return R.equals(action.id, state) ? null : action.id
     case NavigationActions.NAVIGATE:
+    case DELETE_ORDER_SUCCESS:
       return null
     default:
       return state

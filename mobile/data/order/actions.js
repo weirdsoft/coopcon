@@ -14,6 +14,9 @@ export const SAVE_NEW_ORDER_FAILURE = 'order/save-new/failure'
 export const TOGGLE_PAID_ORDER_REQUEST = 'order/toggle-paid/request'
 export const TOGGLE_PAID_ORDER_SUCCESS = 'order/toggle-paid/success'
 export const TOGGLE_PAID_ORDER_FAILURE = 'order/toggle-paid/failure'
+export const DELETE_ORDER_REQUEST = 'order/delete/request'
+export const DELETE_ORDER_SUCCESS = 'order/delete/success'
+export const DELETE_ORDER_FAILURE = 'order/delete/failure'
 
 export const toggleOrder = (id) => ({
   type: TOGGLE_ORDER,
@@ -88,3 +91,18 @@ export const failReceiveTogglePaidOrder = (reason) => ({
   type: TOGGLE_PAID_ORDER_FAILURE,
   reason,
 })
+
+export const deleteOrder = () => ({
+  type: DELETE_ORDER_REQUEST,
+})
+
+export const removeOrder = (order) => ({
+  type: DELETE_ORDER_SUCCESS,
+  order,
+})
+
+export const failRemoveOrder = (reason) => ({
+  type: DELETE_ORDER_FAILURE,
+  reason,
+})
+

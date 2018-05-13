@@ -11,8 +11,11 @@ import {
   SAVE_NEW_ORDER_REQUEST,  receiveNewOrder, failReceiveNewOrder, hideSaveOrderDialog,
   SUBTRACT_TO_PRODUCT_QUANTITY, removeProductFromOrder,
   TOGGLE_PAID_ORDER_REQUEST, receiveTogglePaidOrder, failReceiveTogglePaidOrder,
+  DELETE_ORDER_REQUEST, removeOrder, failRemoveOrder,
 } from './actions'
-import { createOrderMutation, addOrderProductMutation, toggleOrderPaidMutation } from './mutations'
+import {
+  createOrderMutation, addOrderProductMutation, toggleOrderPaidMutation, deleteOrderMutation,
+} from './mutations'
 
 function* closeAddOrderProductDialog() {
   yield put(hideAddOrderProductDialog())
@@ -77,12 +80,27 @@ function* togglePaidOrder() {
   }
 }
 
+function* deleteOrder() {
+  const id = yield select(getCurrentOrderId)
+
+  try {
+    const { order } = yield call(api.mutate, deleteOrderMutation, {
+      id,
+    })
+
+    yield put(removeOrder(order))
+  } catch(e) {
+    yield put(failRemoveOrder(e.message))
+  }
+}
+
 function* orderSaga() {
   yield all([
     takeLatest(ADD_PRODUCT_TO_ORDER, closeAddOrderProductDialog),
     takeLatest(SUBTRACT_TO_PRODUCT_QUANTITY, removeProductQuantityZero),
     takeLatest(SAVE_NEW_ORDER_REQUEST, saveNewOrder),
     takeLatest(TOGGLE_PAID_ORDER_REQUEST, togglePaidOrder),
+    takeLatest(DELETE_ORDER_REQUEST, deleteOrder),
   ])
 }
 

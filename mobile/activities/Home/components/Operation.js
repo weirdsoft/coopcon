@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   name: {
-    flex: 1,
+    flexShrink: 1,
+  },
+  date: {
+    flexGrow: 1,
+    paddingRight: 5,
   },
 })
 
@@ -58,7 +62,10 @@ const Operation = enhancer(({ name, publishDate, goToOperation }) => (
         style={styles.container}
       >
         <Text style={styles.name} numberOfLines={1}>
-          {name} ({moment(publishDate).format('MMMM YYYY')})
+          {name}
+        </Text>
+        <Text style={styles.date}>
+          &nbsp;({moment(publishDate).format('MMMM YYYY')})
         </Text>
         <SimpleLineIcons name="arrow-right" size={20}/>
       </View>

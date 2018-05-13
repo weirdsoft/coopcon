@@ -1,7 +1,8 @@
-import { put, select, call, all, takeLatest } from 'redux-saga/effects'
+import { put, select, call, take, all, takeLatest } from 'redux-saga/effects'
 import * as R from 'ramda'
 import * as api from 'Coopcon/data/api'
 import { NavigationActions } from 'react-navigation'
+import { DISMISS_CONFIRMATION, displayConfirmation } from 'Coopcon/data/confirmation/actions'
 import { getCurrentId } from 'Coopcon/data/operation/selectors'
 import {
   getCreatingUser, getCreatingProductsById, getOrderProductQuantity, getCurrentOrderId,
@@ -83,14 +84,23 @@ function* togglePaidOrder() {
 function* deleteOrder() {
   const id = yield select(getCurrentOrderId)
 
-  try {
-    const { order } = yield call(api.mutate, deleteOrderMutation, {
-      id,
-    })
+  // ask for confirmation before deleting
+  yield put(displayConfirmation(
+    '¿Seguro que desea eliminar la orden?',
+    'Esta acción eliminara la orden definitivamente.',
+  ))
+  const { confirmed } = yield take(DISMISS_CONFIRMATION)
 
-    yield put(removeOrder(order))
-  } catch(e) {
-    yield put(failRemoveOrder(e.message))
+  if (confirmed) {
+    try {
+      const { order } = yield call(api.mutate, deleteOrderMutation, {
+        id,
+      })
+
+      yield put(removeOrder(order))
+    } catch(e) {
+      yield put(failRemoveOrder(e.message))
+    }
   }
 }
 

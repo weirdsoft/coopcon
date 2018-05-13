@@ -2,9 +2,7 @@ import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
-import {
-  SAVE_NEW_ORDER_SUCCESS, DELETE_ORDER_REQUEST, DELETE_ORDER_SUCCESS, DELETE_ORDER_FAILURE,
-} from 'Coopcon/data/order/actions'
+import { SAVE_NEW_ORDER_SUCCESS, DELETE_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
 import {
   FETCH_OPERATIONS_REQUEST, FETCH_OPERATIONS_SUCCESS, FETCH_OPERATIONS_FAILURE,
   FETCH_OPERATION_REQUEST, FETCH_OPERATION_SUCCESS, FETCH_OPERATION_FAILURE,
@@ -14,14 +12,11 @@ const loading = (state = false, action) => {
   switch(action.type) {
     case FETCH_OPERATIONS_REQUEST:
     case FETCH_OPERATION_REQUEST:
-    case DELETE_ORDER_REQUEST:
       return true
     case FETCH_OPERATIONS_SUCCESS:
     case FETCH_OPERATIONS_FAILURE:
     case FETCH_OPERATION_SUCCESS:
     case FETCH_OPERATION_FAILURE:
-    case DELETE_ORDER_SUCCESS:
-    case DELETE_ORDER_FAILURE:
       return false
     default:
       return state

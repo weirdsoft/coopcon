@@ -26,10 +26,10 @@ const enhancer = compose(
   mapProps(R.evolve({
     products: R.map((id) => ({ id })),
   })),
-  setDisplayName('Order'),
+  setDisplayName('CreateOrder'),
 )
 
-const Order = enhancer(({ products }) => (
+const CreateOrder = enhancer(({ products }) => (
   <View style={styles.container}>
     <FlatList
       data={products}
@@ -44,13 +44,13 @@ const Order = enhancer(({ products }) => (
   </View>
 ))
 
-export default class OrderWrapper extends Component {
+export default class CreateOrderWrapper extends Component {
   render() {
-    return <Order/>
+    return <CreateOrder/>
   }
 }
 
-OrderWrapper.navigationOptions = {
-  title: 'Pedido',
+CreateOrderWrapper.navigationOptions = {
+  title: 'Nuevo Pedido',
   headerRight: <SaveButton />,
 }

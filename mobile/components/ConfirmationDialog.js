@@ -18,10 +18,14 @@ const ConfirmDialog = ({ title, text, onCancel, onConfirm }) => (
       </Paragraph>
     </DialogContent>
     <DialogActions>
-      <Button onPress={onCancel}>
+      <Button raised
+        onPress={onCancel}
+      >
         Cancelar
       </Button>
-      <Button onPress={onConfirm} primary>
+      <Button primary raised
+        onPress={onConfirm}
+      >
         Continuar
       </Button>
     </DialogActions>

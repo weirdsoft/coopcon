@@ -12,7 +12,6 @@
 - Add posibility to edit orders
 - Add posibility to delete operations
 - Add posibility to edit operations
-- Add posibility to delete products
 
 ### v0.3.0 [x]
 - Add a search bar for order filtering

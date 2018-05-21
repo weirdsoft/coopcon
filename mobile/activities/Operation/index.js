@@ -7,7 +7,8 @@ import { fetchOperation } from 'Coopcon/data/operation/actions'
 import { isLoadingOperations } from 'Coopcon/data/operation/selectors'
 import { getCurrentOperationFilteredOrders } from 'Coopcon/data/operation-order/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { FAB, Divider } from 'react-native-paper'
+import { Divider } from 'react-native-paper'
+import FloatingFAB from 'Coopcon/components/FloatingFAB'
 import Order from './components/Order'
 import Filters from './components/Filters'
 import Search from './components/Search'
@@ -58,12 +59,10 @@ const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
       ListFooterComponent={<View style={styles.orderListFooter} />}
       ItemSeparatorComponent={Divider}
     />
-    <View style={styles.buttonContainer}>
-      <FAB
-        icon="add"
-        onPress={goToOrder}
-      />
-    </View>
+    <FloatingFAB
+      icon="add"
+      action={goToOrder}
+    />
   </View>
 ))
 

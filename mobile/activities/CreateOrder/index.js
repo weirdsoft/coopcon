@@ -6,7 +6,7 @@ import { StyleSheet, View, FlatList } from 'react-native'
 import { getCreatingProductsIds } from 'Coopcon/data/order/selectors'
 import Product from './components/Product'
 import AddProductButton from './components/AddProductButton'
-import ProductSelector from './components/ProductSelector'
+import OrderProductSelector from './components/OrderProductSelector'
 import SaveDialog from './components/SaveDialog'
 import SaveButton from './components/SaveButton'
 
@@ -39,7 +39,7 @@ const CreateOrder = enhancer(({ products }) => (
       )}
     />
     <AddProductButton />
-    <ProductSelector />
+    <OrderProductSelector />
     <SaveDialog />
   </View>
 ))

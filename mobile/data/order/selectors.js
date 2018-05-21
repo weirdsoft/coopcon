@@ -33,7 +33,6 @@ export const hasCreatingProducts = createSelector(
 export const getOrderAvailableProducts = createSelector(
   [ getCurrentOperation, getCreatingProductsIds ],
   (operation, orderProducts) => R.compose(
-    R.map((id) => ({ id })),
     R.reject(
       R.flip(R.contains)(orderProducts),
     ),

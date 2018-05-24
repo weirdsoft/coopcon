@@ -5,11 +5,11 @@ import { compose, branch, renderNothing, lifecycle, setDisplayName } from 'recom
 import { BackHandler } from 'react-native'
 import { Dialog } from 'react-native-paper'
 import { hideSaveOrderDialog } from 'Coopcon/data/order/actions'
-import { isSavingOrder } from 'Coopcon/data/order/selectors'
+import { isPreSavingOrder } from 'Coopcon/data/order/selectors'
 import SaveDialogContent from './SaveDialogContent'
 
 const mapStateToProps = (state) => ({
-  isSaving: isSavingOrder(state),
+  showDialog: isPreSavingOrder(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -21,7 +21,7 @@ const enhancer = compose(
   branch(
     R.compose(
       R.not,
-      R.prop('isSaving'),
+      R.prop('showDialog'),
     ),
     renderNothing,
   ),
@@ -36,9 +36,9 @@ const enhancer = compose(
   setDisplayName('SaveDialog'),
 )
 
-const SaveDialog = enhancer(({ isSaving, hideSaveOrderDialog }) => (
+const SaveDialog = enhancer(({ showDialog, hideSaveOrderDialog }) => (
   <Dialog
-    visible={isSaving}
+    visible={showDialog}
     onDismiss={hideSaveOrderDialog}
   >
     <SaveDialogContent />

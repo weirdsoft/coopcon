@@ -3,7 +3,7 @@ import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { getCreatingProductsIds } from 'Coopcon/data/order/selectors'
+import { getEditingProductsIds } from 'Coopcon/data/order/selectors'
 import Product from './components/Product'
 import AddProductButton from './components/AddProductButton'
 import OrderProductSelector from './components/OrderProductSelector'
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  products: getCreatingProductsIds(state),
+  products: getEditingProductsIds(state),
 })
 
 const enhancer = compose(

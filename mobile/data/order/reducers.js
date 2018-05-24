@@ -86,7 +86,7 @@ const current = (state = null, action) => {
   }
 }
 
-const creatingProductsIds = (state = null, action) => {
+const editingProductsIds = (state = null, action) => {
   switch(action.type) {
     case NavigationActions.NAVIGATE:
       if (action.routeName === ORDER) {
@@ -103,7 +103,7 @@ const creatingProductsIds = (state = null, action) => {
   }
 }
 
-const creatingProductsById = (state = null, action) => {
+const editingProductsById = (state = null, action) => {
   switch(action.type) {
     case NavigationActions.NAVIGATE:
       if (action.routeName === ORDER) {
@@ -155,7 +155,7 @@ const addingProduct = (state = false, action) => {
   }
 }
 
-const saving = (state = false, action) => {
+const preSaving = (state = false, action) => {
   switch(action.type) {
     case SHOW_SAVE_ORDER_DIALOG:
       return true
@@ -168,7 +168,7 @@ const saving = (state = false, action) => {
   }
 }
 
-const creating = (state = false, action) => {
+const saving = (state = false, action) => {
   switch(action.type) {
     case SAVE_NEW_ORDER_REQUEST:
       return true
@@ -184,10 +184,10 @@ export default combineReducers({
   ids,
   byId,
   current,
-  creatingProductsIds,
-  creatingProductsById,
+  editingProductsIds,
+  editingProductsById,
   creatingUser,
   addingProduct,
+  preSaving,
   saving,
-  creating,
 })

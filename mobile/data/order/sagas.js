@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import { DISMISS_CONFIRMATION, displayConfirmation } from 'Coopcon/data/confirmation/actions'
 import { getCurrentId } from 'Coopcon/data/operation/selectors'
 import {
-  getCreatingUser, getCreatingProductsById, getOrderProductQuantity, getCurrentOrderId,
+  getCreatingUser, getEditingProductsById, getOrderProductQuantity, getCurrentOrderId,
 } from './selectors'
 import {
   ADD_PRODUCT_TO_ORDER, hideAddOrderProductDialog,
@@ -25,7 +25,7 @@ function* closeAddOrderProductDialog() {
 function* saveNewOrder() {
   const operation = yield select(getCurrentId)
   const user = yield select(getCreatingUser)
-  const orderProducts = yield select(getCreatingProductsById)
+  const orderProducts = yield select(getEditingProductsById)
 
   try {
     // create the order first

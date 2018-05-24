@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 import { compose, setDisplayName } from 'recompose'
 import { Button } from 'react-native-paper'
 import { showSaveOrderDialog } from 'Coopcon/data/order/actions'
-import { hasCreatingProducts } from 'Coopcon/data/order/selectors'
+import { hasEditingProducts } from 'Coopcon/data/order/selectors'
 
 const mapStateToProps = (state) => ({
-  hasCreatingProducts: hasCreatingProducts(state),
+  hasEditingProducts: hasEditingProducts(state),
 })
 
 const mapDispatchToprops = (dispatch) => ({
@@ -19,11 +19,11 @@ const enhancer = compose(
   setDisplayName('SaveButton'),
 )
 
-const SaveButton = enhancer(({ hasCreatingProducts, showSaveOrderDialog }) => (
+const SaveButton = enhancer(({ hasEditingProducts, showSaveOrderDialog }) => (
   <Button
     onPress={showSaveOrderDialog}
     color="#fff"
-    disabled={R.not(hasCreatingProducts)}
+    disabled={R.not(hasEditingProducts)}
   >
     Guardar
   </Button>

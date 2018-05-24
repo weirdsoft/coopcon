@@ -23,15 +23,15 @@ export const getOrderWithTotal = createSelector(
 )
 export const getCurrentOrderId = (state) => state.order.current
 export const isCurrentOrder = (state, id) => R.equals(state.order.current, id)
-export const getCreatingProductsIds = (state) => state.order.creatingProductsIds
-export const getCreatingProductsById = (state) => state.order.creatingProductsById
-export const getOrderProductQuantity = (state, id) => state.order.creatingProductsById[id]
-export const hasCreatingProducts = createSelector(
-  [ getCreatingProductsIds ],
+export const getEditingProductsIds = (state) => state.order.editingProductsIds
+export const getEditingProductsById = (state) => state.order.editingProductsById
+export const getOrderProductQuantity = (state, id) => state.order.editingProductsById[id]
+export const hasEditingProducts = createSelector(
+  [ getEditingProductsIds ],
   (products) => R.not(R.isEmpty(products)),
 )
 export const getOrderAvailableProducts = createSelector(
-  [ getCurrentOperation, getCreatingProductsIds ],
+  [ getCurrentOperation, getEditingProductsIds ],
   (operation, orderProducts) => R.compose(
     R.reject(
       R.flip(R.contains)(orderProducts),
@@ -48,5 +48,5 @@ export const hasOrderAvailableProducts = createSelector(
 )
 export const getCreatingUser = (state) => state.order.creatingUser
 export const isAddingProduct = (state) => state.order.addingProduct
+export const isPreSavingOrder = (state) => state.order.preSaving
 export const isSavingOrder = (state) => state.order.saving
-export const isCreatingOrder = (state) => state.order.creating

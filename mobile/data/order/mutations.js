@@ -24,6 +24,17 @@ export const addOrderProductMutation = gql`
   }
 `
 
+export const removeOrderProductMutation = gql`
+  mutation removeOrderProduct($id: ID!, $orderProduct: OrderProductInput!) {
+    orderProduct: removeOrderProduct(id: $id, orderProduct: $orderProduct) {
+      quantity
+      product {
+        _id
+      }
+    }
+  }
+`
+
 export const toggleOrderPaidMutation = gql`
   mutation toggleOrderPaid($id: ID!) {
     order: toggleOrderPaid(id: $id) {

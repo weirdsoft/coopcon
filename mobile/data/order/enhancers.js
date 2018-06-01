@@ -7,9 +7,12 @@ import {
   TOGGLE_ORDER, TOGGLE_PAID_ORDER_SUCCESS,
 } from './actions'
 
-const addMinimalFractionAsQuantity = (getState, action) => R.merge({
-  quantity: R.prop('minimalFraction')(getProduct(getState(), action.id)),
-})(action)
+const addMinimalFractionAsQuantity = (getState, action) => R.mergeWith(
+  R.either(R.nthArg(1), R.nthArg(0)),
+  {
+    quantity: R.prop('minimalFraction')(getProduct(getState(), action.id)),
+  },
+)(action)
 
 const addAnalyticsOnPaidOrder = (getState, action) => R.when(
   R.pathSatisfies(R.identity, [ 'order', 'paid' ]),

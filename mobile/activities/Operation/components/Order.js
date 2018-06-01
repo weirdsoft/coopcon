@@ -10,6 +10,7 @@ import { Paper, TouchableRipple, Divider } from 'react-native-paper'
 import Product from 'Coopcon/activities/Operation/components/Product'
 import { toggleOrder, togglePaidOrder, deleteOrder } from 'Coopcon/data/order/actions'
 import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
+import { goToOrder } from 'Coopcon/data/navigation/actions'
 
 const styles = StyleSheet.create({
   container: {
@@ -66,20 +67,22 @@ const mapStateToProps = (state, { id }) => ({
   isCurrentOrder: isCurrentOrder(state, id),
 })
 
-const mapDispatchToprops = (dispatch, { id }) => ({
+const mapDispatchToProps = (dispatch, { id }) => ({
   toggleOrder: () => dispatch(toggleOrder(id)),
   togglePaidOrder: () => dispatch(togglePaidOrder()),
   deleteOrder: () => dispatch(deleteOrder()),
+  goToOrder: () => dispatch(goToOrder()),
 })
 
 const enhancer = compose(
-  connect(mapStateToProps, mapDispatchToprops),
+  connect(mapStateToProps, mapDispatchToProps),
   flattenProp('order'),
   setDisplayName('Order'),
 )
 
 const Order = enhancer(({
   user, products, total, isCurrentOrder, paid, toggleOrder, togglePaidOrder, deleteOrder,
+  goToOrder,
 }) => (
   <Paper
     style={R.when(
@@ -130,6 +133,13 @@ const Order = enhancer(({
               </TouchableRipple>
             </View>
             <View style={styles.rightActions}>
+              <TouchableRipple
+                borderless={true}
+                onPress={goToOrder}
+                style={styles.action}
+              >
+                <MaterialIcons name="edit" size={20} color="gray" />
+              </TouchableRipple>
               <TouchableRipple
                 borderless={true}
                 onPress={togglePaidOrder}

@@ -11,6 +11,9 @@ export const CHANGE_ORDER_USER = 'order/user/change'
 export const SAVE_NEW_ORDER_REQUEST = 'order/save-new/request'
 export const SAVE_NEW_ORDER_SUCCESS = 'order/save-new/success'
 export const SAVE_NEW_ORDER_FAILURE = 'order/save-new/failure'
+export const SAVE_ORDER_REQUEST = 'order/save/request'
+export const SAVE_ORDER_SUCCESS = 'order/save/success'
+export const SAVE_ORDER_FAILURE = 'order/save/failure'
 export const TOGGLE_PAID_ORDER_REQUEST = 'order/toggle-paid/request'
 export const TOGGLE_PAID_ORDER_SUCCESS = 'order/toggle-paid/success'
 export const TOGGLE_PAID_ORDER_FAILURE = 'order/toggle-paid/failure'
@@ -31,9 +34,10 @@ export const hideAddOrderProductDialog = () => ({
   type: HIDE_ADD_ORDER_PRODUCT_DIALOG,
 })
 
-export const addProductToOrder = (id) => ({
+export const addProductToOrder = (id, quantity) => ({
   type: ADD_PRODUCT_TO_ORDER,
   id,
+  quantity,
 })
 
 export const removeProductFromOrder = (id) => ({
@@ -75,6 +79,20 @@ export const receiveNewOrder = (order) => ({
 
 export const failReceiveNewOrder = (reason) => ({
   type: SAVE_NEW_ORDER_FAILURE,
+  reason,
+})
+
+export const saveOrder = () => ({
+  type: SAVE_ORDER_REQUEST,
+})
+
+export const receiveOrder = (order) => ({
+  type: SAVE_ORDER_SUCCESS,
+  order,
+})
+
+export const failReceiveOrder = (reason) => ({
+  type: SAVE_ORDER_FAILURE,
   reason,
 })
 

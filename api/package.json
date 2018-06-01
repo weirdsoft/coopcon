@@ -1,6 +1,6 @@
 {
   "name": "@coopcon/api",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Cooperativa de Consumo API",
   "main": "dist/bundle.js",
   "repository": "git@github.com:weirdsoft/coopcon.git/api",

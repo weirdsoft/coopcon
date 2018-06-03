@@ -10,6 +10,15 @@ export const createOperationMutation = gql`
   ${operationFieldsFragment}
 `
 
+export const updateOperationMutation = gql`
+  mutation updateOperation($id: ID!, $operation: OperationInput!) {
+    operation: updateOperation(id: $id, operation: $operation) {
+      ...operationFields
+    }
+  }
+  ${operationFieldsFragment}
+`
+
 export const addOperationProductMutation = gql`
   mutation addOperationProduct($id: ID!, $productId: ID!) {
     result: addOperationProduct(id: $id, productId: $productId)

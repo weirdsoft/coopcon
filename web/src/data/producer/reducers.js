@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {
-  allRoutes, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, OPERATION_TOTALS, PRODUCT_GALLERY,
-  PRODUCT_ADD, PRODUCT_EDIT,
+  allRoutes, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
+  PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
 } from 'data/route/actions'
 import { ADD_NEW_OPERATION_SUCCESS } from 'data/operation/actions'
 import { ADD_NEW_PRODUCT_SUCCESS } from 'data/product/actions'
@@ -109,6 +109,7 @@ const currentId = (state = null, action) => {
   switch(action.type) {
     case OPERATIONS:
     case OPERATION_ADD:
+    case OPERATION_EDIT:
     case OPERATION_PRODUCTS:
     case OPERATION_TOTALS:
     case PRODUCT_GALLERY:

@@ -3,8 +3,8 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import {
-  goToOperations, goToProductGallery, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS,
-  OPERATION_TOTALS, PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
+  goToOperations, goToProductGallery, OPERATIONS, OPERATION_ADD, OPERATION_EDIT,
+  OPERATION_PRODUCTS, OPERATION_TOTALS, PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
 } from 'data/route/actions'
 import { getCurrentRoute } from 'data/route/selectors'
 import { getCurrentId } from 'data/producer/selectors'
@@ -16,6 +16,7 @@ import styles from './styles.scss'
 const pageToComponent = {
   [OPERATIONS]: Operations,
   [OPERATION_ADD]: Operations,
+  [OPERATION_EDIT]: Operations,
   [OPERATION_PRODUCTS]: Operations,
   [OPERATION_TOTALS]: Operations,
   [PRODUCT_GALLERY]: ProductGallery,

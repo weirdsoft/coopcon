@@ -18,6 +18,7 @@ const queryDefinition = `
     createProduct(product: ProductInput!): Product!
     editProduct(id: ID!, product: ProductInput!): Product!
     createOperation(operation: OperationInput!): Operation!
+    updateOperation(id: ID!, operation: OperationInput!): Operation!
     addOperationProduct(id: ID!, productId: ID!): Boolean!
     removeOperationProduct(id: ID!, productId: ID!): Boolean!
     createOrder(order: OrderInput!): Order!

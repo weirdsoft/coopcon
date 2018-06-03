@@ -1,21 +1,10 @@
-import React from 'react'
-import moment from 'moment'
 import { connect } from 'react-redux'
-import {
-  compose, branch, renderNothing, flattenProp, mapProps, withHandlers, setDisplayName,
-} from 'recompose'
-import { coalesce, validations } from 'utils'
+import { compose, branch, renderNothing, flattenProp, setDisplayName } from 'recompose'
 import { goToOperations } from 'data/route/actions'
 import { getCurrentId } from 'data/producer/selectors'
 import { changeNewOperation, addNewOperation } from 'data/operation/actions'
 import { isAddingOperation, getNewOperation } from 'data/operation/selectors'
-import DatePicker from 'react-datepicker'
-
-const operationValidations = {
-  publishDate: validations.date,
-  closeDate: validations.date,
-  deliveryDate: validations.date,
-}
+import EditableOperation from 'components/EditableOperation'
 
 const mapStateToProps = (state) => ({
   producerId: getCurrentId(state),
@@ -36,114 +25,9 @@ const enhancer = compose(
     renderNothing,
   ),
   flattenProp('operation'),
-  mapProps(({ publishDate, closeDate, deliveryDate, ...props }) => ({
-    ...props,
-    publishDate: publishDate == null ? null : moment(publishDate),
-    closeDate: closeDate == null ? null : moment(closeDate),
-    deliveryDate: deliveryDate == null ? null : moment(deliveryDate),
-  })),
-  withHandlers({
-    onUpdate: ({ onUpdate }) => (field, value) => {
-      onUpdate({
-        [field]: operationValidations[field](value),
-      })
-    },
-    onCancel: ({ onCancel, producerId }) => () => onCancel(producerId),
-  }),
-  withHandlers({
-    onKeyDown: ({ onSubmit, onCancel }) => (event) => {
-      if (event.key === 'Enter') {
-        onSubmit()
-      } else if (event.key === 'Escape') {
-        onCancel()
-      }
-    },
-  }),
   setDisplayName('OperationAdd'),
 )
 
-const OperationAdd = enhancer(({
-  publishDate, closeDate, deliveryDate, onKeyDown, onUpdate, onSubmit, onCancel,
-}) => (
-  <tr>
-    <td>
-      <DatePicker
-        className="form-control"
-        selected={publishDate}
-        dateFormat="DD/MM HH:mm"
-        minDate={moment().startOf('day')}
-        showTimeSelect
-        timeFormat="HH:mm"
-        popperModifiers={{
-          preventOverflow: {
-            enabled: true,
-            escapeWithReference: false,
-            boundariesElement: 'viewport',
-          },
-        }}
-        onKeyDown={onKeyDown}
-        onChange={(date) => onUpdate('publishDate', date)}
-      />
-    </td>
-    <td>
-      <DatePicker
-        className="form-control"
-        selected={closeDate}
-        minDate={publishDate}
-        dateFormat="DD/MM HH:mm"
-        showTimeSelect
-        timeFormat="HH:mm"
-        popperModifiers={{
-          preventOverflow: {
-            enabled: true,
-            escapeWithReference: false,
-            boundariesElement: 'viewport',
-          },
-        }}
-        onKeyDown={onKeyDown}
-        onChange={(date) => onUpdate('closeDate', date)}
-      />
-    </td>
-    <td>
-      <DatePicker
-        className="form-control"
-        selected={deliveryDate}
-        minDate={closeDate}
-        dateFormat="DD/MM HH:mm"
-        showTimeSelect
-        timeFormat="HH:mm"
-        popperModifiers={{
-          preventOverflow: {
-            enabled: true,
-            escapeWithReference: false,
-            boundariesElement: 'viewport',
-          },
-        }}
-        onKeyDown={onKeyDown}
-        onChange={(date) => onUpdate('deliveryDate', date)}
-      />
-    </td>
-    <td>
-      <span className="btn-group">
-        <button
-          type="button"
-          title="Crear Operativo"
-          className="btn btn-small btn-primary"
-          onClick={onSubmit}
-        >
-          <i className="fa fa-check" />
-        </button>
-        <button
-          type="button"
-          title="Cancelar"
-          className="btn btn-small btn-secondary"
-          onClick={onCancel}
-        >
-          <i className="fa fa-times" />
-        </button>
-      </span>
-    </td>
-  </tr>
-))
+const OperationAdd = enhancer(EditableOperation)
 
 export default OperationAdd

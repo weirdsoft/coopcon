@@ -6,6 +6,7 @@ import { addNavigationHelpers, NavigationActions } from 'react-navigation'
 import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import { getMainStack } from 'Coopcon/data/navigation/selectors'
 import { MainStack } from 'Coopcon/data/navigation/navigators'
+import ConfirmationDialog from './components/ConfirmationDialog'
 
 const mapStateToProps = (state) => ({
   mainStack: getMainStack(state),
@@ -39,14 +40,16 @@ const enhancer = compose(
   setDisplayName('Main'),
 )
 
-const Main = enhancer(({ mainStack, addListener, dispatch }) => (
+const Main = enhancer(({ mainStack, addListener, dispatch }) => [
   <MainStack
+    key="main"
     navigation={addNavigationHelpers({
       state: mainStack,
       dispatch,
       addListener,
     })}
-  />
-))
+  />,
+  <ConfirmationDialog key="confirmation" />,
+])
 
 export default Main

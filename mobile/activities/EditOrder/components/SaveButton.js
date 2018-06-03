@@ -3,15 +3,15 @@ import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, setDisplayName } from 'recompose'
 import { Button } from 'react-native-paper'
-import { showSaveOrderDialog } from 'Coopcon/data/order/actions'
-import { hasCreatingProducts } from 'Coopcon/data/order/selectors'
+import { hasEditingProducts } from 'Coopcon/data/order/selectors'
+import { saveOrder } from 'Coopcon/data/order/actions'
 
 const mapStateToProps = (state) => ({
-  hasCreatingProducts: hasCreatingProducts(state),
+  hasEditingProducts: hasEditingProducts(state),
 })
 
 const mapDispatchToprops = (dispatch) => ({
-  showSaveOrderDialog: () => dispatch(showSaveOrderDialog()),
+  saveOrder: () => dispatch(saveOrder()),
 })
 
 const enhancer = compose(
@@ -19,11 +19,11 @@ const enhancer = compose(
   setDisplayName('SaveButton'),
 )
 
-const SaveButton = enhancer(({ hasCreatingProducts, showSaveOrderDialog }) => (
+const SaveButton = enhancer(({ hasEditingProducts, saveOrder }) => (
   <Button
-    onPress={showSaveOrderDialog}
+    onPress={saveOrder}
     color="#fff"
-    disabled={R.not(hasCreatingProducts)}
+    disabled={R.not(hasEditingProducts)}
   >
     Guardar
   </Button>

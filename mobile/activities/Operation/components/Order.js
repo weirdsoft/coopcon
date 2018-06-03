@@ -8,8 +8,9 @@ import { SimpleLineIcons, MaterialIcons } from '@expo/vector-icons'
 import Collapsible from 'react-native-collapsible'
 import { Paper, TouchableRipple, Divider } from 'react-native-paper'
 import Product from 'Coopcon/activities/Operation/components/Product'
-import { toggleOrder, togglePaidOrder } from 'Coopcon/data/order/actions'
+import { toggleOrder, togglePaidOrder, deleteOrder } from 'Coopcon/data/order/actions'
 import { getOrderWithTotal, isCurrentOrder } from 'Coopcon/data/order/selectors'
+import { goToOrder } from 'Coopcon/data/navigation/actions'
 
 const styles = StyleSheet.create({
   container: {
@@ -44,13 +45,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   actions: {
-    backgroundColor: '#f3f3f3',
-    paddingLeft: 15,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: '#f3f3f3',
+  },
+  leftActions: {
+    flexDirection: 'row',
+  },
+  rightActions: {
+    flexDirection: 'row',
   },
   action: {
-    padding: 15,
+    padding: 10,
   },
 })
 
@@ -59,19 +67,22 @@ const mapStateToProps = (state, { id }) => ({
   isCurrentOrder: isCurrentOrder(state, id),
 })
 
-const mapDispatchToprops = (dispatch, { id }) => ({
+const mapDispatchToProps = (dispatch, { id }) => ({
   toggleOrder: () => dispatch(toggleOrder(id)),
-  togglePaidOrder: () => dispatch(togglePaidOrder(id)),
+  togglePaidOrder: () => dispatch(togglePaidOrder()),
+  deleteOrder: () => dispatch(deleteOrder()),
+  goToOrder: () => dispatch(goToOrder()),
 })
 
 const enhancer = compose(
-  connect(mapStateToProps, mapDispatchToprops),
+  connect(mapStateToProps, mapDispatchToProps),
   flattenProp('order'),
   setDisplayName('Order'),
 )
 
 const Order = enhancer(({
-  user, products, total, isCurrentOrder, paid, toggleOrder, togglePaidOrder,
+  user, products, total, isCurrentOrder, paid, toggleOrder, togglePaidOrder, deleteOrder,
+  goToOrder,
 }) => (
   <Paper
     style={R.when(
@@ -112,13 +123,31 @@ const Order = enhancer(({
             </Text>
           </View>
           <View style={styles.actions}>
-            <TouchableRipple
-              borderless={true}
-              onPress={togglePaidOrder}
-              style={styles.action}
-            >
-              <MaterialIcons name="attach-money" size={20} color={paid ? 'green' : 'gray'}/>
-            </TouchableRipple>
+            <View style={styles.leftActions}>
+              <TouchableRipple
+                borderless={true}
+                onPress={deleteOrder}
+                style={styles.action}
+              >
+                <MaterialIcons name="delete" size={20} color="gray" />
+              </TouchableRipple>
+            </View>
+            <View style={styles.rightActions}>
+              <TouchableRipple
+                borderless={true}
+                onPress={goToOrder}
+                style={styles.action}
+              >
+                <MaterialIcons name="edit" size={20} color="gray" />
+              </TouchableRipple>
+              <TouchableRipple
+                borderless={true}
+                onPress={togglePaidOrder}
+                style={styles.action}
+              >
+                <MaterialIcons name="attach-money" size={20} color={paid ? 'green' : 'gray'} />
+              </TouchableRipple>
+            </View>
           </View>
         </Collapsible>
       </View>

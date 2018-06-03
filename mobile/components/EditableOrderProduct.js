@@ -1,13 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { compose, flattenProp, setDisplayName, setPropTypes } from 'recompose'
+import { compose, setDisplayName, setPropTypes } from 'recompose'
 import { View, StyleSheet } from 'react-native'
 import { Text, Paper, TouchableRipple, Divider } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons'
-import { getProduct } from 'Coopcon/data/product/selectors'
-import { addToProductQuantity, subtractToProductQuantity } from 'Coopcon/data/order/actions'
-import { getOrderProductQuantity } from 'Coopcon/data/order/selectors'
 
 const styles = StyleSheet.create({
   container: {
@@ -44,28 +40,17 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, { id }) => ({
-  product: getProduct(state, id),
-  quantity: getOrderProductQuantity(state, id),
-})
-
-const mapDispatchToProps = (dispatch, { id }) => ({
-  addToProductQuantity: () => dispatch(addToProductQuantity(id)),
-  subtractToProductQuantity: () => dispatch(subtractToProductQuantity(id)),
-})
-
 const enhancer = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  flattenProp('product'),
-  setDisplayName('Product'),
+  setDisplayName('EditableOrderProduct'),
   setPropTypes({
-    id: PropTypes.string.isRequired,
+    quantity: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    add: PropTypes.func.isRequired,
+    subtract: PropTypes.func.isRequired,
   }),
 )
 
-const Product = enhancer(({
-  quantity, name, unit, addToProductQuantity, subtractToProductQuantity,
-}) => (
+const Product = enhancer(({ quantity, name, unit, add, subtract }) => (
   <View>
     <View style={styles.container}>
       <Text style={styles.name} numberOfLines={1}>
@@ -77,7 +62,7 @@ const Product = enhancer(({
       <TouchableRipple
         style={styles.quantityButton}
         borderless={true}
-        onPress={subtractToProductQuantity}
+        onPress={subtract}
       >
         <MaterialIcons name="remove" size={25} />
       </TouchableRipple>
@@ -89,7 +74,7 @@ const Product = enhancer(({
       <TouchableRipple
         style={styles.quantityButton}
         borderless={true}
-        onPress={addToProductQuantity}
+        onPress={add}
       >
         <MaterialIcons name="add" size={25} />
       </TouchableRipple>

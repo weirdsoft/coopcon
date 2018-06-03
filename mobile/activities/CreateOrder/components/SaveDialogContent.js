@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { compose, branch, renderComponent, setDisplayName } from 'recompose'
 import { DialogTitle, DialogContent, DialogActions, TextInput, Button } from 'react-native-paper'
 import { hideSaveOrderDialog, changeOrderUser, saveNewOrder } from 'Coopcon/data/order/actions'
-import { getCreatingUser, isCreatingOrder } from 'Coopcon/data/order/selectors'
+import { getCreatingUser, isSavingOrder } from 'Coopcon/data/order/selectors'
 import SaveDialogCreating from './SaveDialogCreating'
 
 const mapStateToProps = (state) => ({
   creatingUser: getCreatingUser(state),
-  isCreating: isCreatingOrder(state),
+  isSaving: isSavingOrder(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 const enhancer = compose(
   connect(mapStateToProps, mapDispatchToProps),
   branch(
-    R.prop('isCreating'),
+    R.prop('isSaving'),
     renderComponent(SaveDialogCreating),
   ),
   setDisplayName('SaveDialogContent'),

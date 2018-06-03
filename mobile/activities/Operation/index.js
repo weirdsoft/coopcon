@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
-import { goToOrder } from 'Coopcon/data/navigation/actions'
+import { goToNewOrder } from 'Coopcon/data/navigation/actions'
 import { fetchOperation } from 'Coopcon/data/operation/actions'
 import { isLoadingOperations } from 'Coopcon/data/operation/selectors'
 import { getCurrentOperationFilteredOrders } from 'Coopcon/data/operation-order/selectors'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { FAB, Divider } from 'react-native-paper'
+import { Divider } from 'react-native-paper'
+import FloatingFAB from 'Coopcon/components/FloatingFAB'
 import Order from './components/Order'
 import Filters from './components/Filters'
 import Search from './components/Search'
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchOperation: () => dispatch(fetchOperation()),
-  goToOrder: () => dispatch(goToOrder()),
+  goToNewOrder: () => dispatch(goToNewOrder()),
 })
 
 const enhancer = compose(
@@ -46,7 +47,7 @@ const enhancer = compose(
   setDisplayName('Operation'),
 )
 
-const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
+const Operation = enhancer(({ loading, orders, goToNewOrder, fetchOperation }) => (
   <View style={styles.container}>
     <Search />
     <FlatList
@@ -58,12 +59,10 @@ const Operation = enhancer(({ loading, orders, goToOrder, fetchOperation }) => (
       ListFooterComponent={<View style={styles.orderListFooter} />}
       ItemSeparatorComponent={Divider}
     />
-    <View style={styles.buttonContainer}>
-      <FAB
-        icon="add"
-        onPress={goToOrder}
-      />
-    </View>
+    <FloatingFAB
+      icon="add"
+      action={goToNewOrder}
+    />
   </View>
 ))
 

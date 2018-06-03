@@ -1,8 +1,8 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { NavigationActions } from 'react-navigation'
-import { OPERATION, ORDER } from 'Coopcon/data/navigation/actions'
-import { SAVE_NEW_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
+import { OPERATION, ORDER, NEW_ORDER } from 'Coopcon/data/navigation/actions'
+import { SAVE_NEW_ORDER_SUCCESS, DELETE_ORDER_SUCCESS } from 'Coopcon/data/order/actions'
 import {
   FETCH_OPERATIONS_REQUEST, FETCH_OPERATIONS_SUCCESS, FETCH_OPERATIONS_FAILURE,
   FETCH_OPERATION_REQUEST, FETCH_OPERATION_SUCCESS, FETCH_OPERATION_FAILURE,
@@ -76,6 +76,12 @@ const byId = (state = byIdDefault, action) => {
           orders: R.append(action.order._id),
         },
       })(state)
+    case DELETE_ORDER_SUCCESS:
+      return R.evolve({
+        [action.order.operation._id]: {
+          orders: R.without([ action.order._id ]),
+        },
+      })(state)
     default:
       return state
   }
@@ -88,6 +94,7 @@ const current = (state = null, action) => {
         case OPERATION:
           return action.params.id
         case ORDER:
+        case NEW_ORDER:
           return state
         default:
           return null

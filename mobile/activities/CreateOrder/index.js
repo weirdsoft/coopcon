@@ -3,10 +3,10 @@ import * as R from 'ramda'
 import { connect } from 'react-redux'
 import { compose, mapProps, setDisplayName } from 'recompose'
 import { StyleSheet, View, FlatList } from 'react-native'
-import { getCreatingProductsIds } from 'Coopcon/data/order/selectors'
+import { getEditingProductsIds } from 'Coopcon/data/order/selectors'
 import Product from './components/Product'
 import AddProductButton from './components/AddProductButton'
-import ProductSelector from './components/ProductSelector'
+import OrderProductSelector from './components/OrderProductSelector'
 import SaveDialog from './components/SaveDialog'
 import SaveButton from './components/SaveButton'
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  products: getCreatingProductsIds(state),
+  products: getEditingProductsIds(state),
 })
 
 const enhancer = compose(
@@ -26,10 +26,10 @@ const enhancer = compose(
   mapProps(R.evolve({
     products: R.map((id) => ({ id })),
   })),
-  setDisplayName('Order'),
+  setDisplayName('CreateOrder'),
 )
 
-const Order = enhancer(({ products }) => (
+const CreateOrder = enhancer(({ products }) => (
   <View style={styles.container}>
     <FlatList
       data={products}
@@ -39,18 +39,18 @@ const Order = enhancer(({ products }) => (
       )}
     />
     <AddProductButton />
-    <ProductSelector />
+    <OrderProductSelector />
     <SaveDialog />
   </View>
 ))
 
-export default class OrderWrapper extends Component {
+export default class CreateOrderWrapper extends Component {
   render() {
-    return <Order/>
+    return <CreateOrder/>
   }
 }
 
-OrderWrapper.navigationOptions = {
-  title: 'Pedido',
+CreateOrderWrapper.navigationOptions = {
+  title: 'Nuevo Pedido',
   headerRight: <SaveButton />,
 }

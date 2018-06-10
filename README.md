@@ -2,15 +2,20 @@
 
 ## Roadmap
 
+### v0.6.0 [ ]
+- Add posibility to delete operations
+- Refactor order edition to make it more straightforward
+- Rewrite stuff using ramda
+- Use the "namespace/action" format for action strings
+
 ### v0.5.0 [ ]
 - Identify users of the app (google auth?)
 - Add an organization property for the user, save orders referencing the creator's organization
 - Only show orders created by the user (that reference it's same organization)
 
-### v0.4.0 [ ]
+### v0.4.0 [x]
 - Add posibility to delete orders
 - Add posibility to edit orders
-- Add posibility to delete operations
 - Add posibility to edit operations
 
 ### v0.3.0 [x]

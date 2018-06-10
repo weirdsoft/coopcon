@@ -1,5 +1,5 @@
 # Build
-FROM node:9.11.1-alpine AS build
+FROM node:10.4.0-alpine AS build
 
 WORKDIR /opt/app
 COPY web/package.json web/yarn.lock ./
@@ -9,7 +9,7 @@ COPY web ./
 RUN yarn build
 
 # Release
-FROM nginx:1.13.12-alpine
+FROM nginx:1.15.0-alpine
 MAINTAINER Agustin Carrasco <asermax@gmail.com>
 
 COPY --from=build /opt/app/dist /usr/share/nginx/html

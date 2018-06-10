@@ -1,7 +1,7 @@
 version: '3'
 services:
   proxy:
-    image: nginx:1.13.12-alpine
+    image: nginx:1.15.0-alpine
     links:
       - api
       - web
@@ -10,13 +10,13 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
   api:
-    image: node:9.11.1-alpine
+    image: node:10.4.0-alpine
     volumes:
       - ./api:/opt/app
     entrypoint: /opt/app/entrypoint.sh
     command: start
   web:
-    image: node:9.11.1-alpine
+    image: node:10.4.0-alpine
     volumes:
       - ./web:/opt/app
     entrypoint: /opt/app/entrypoint.sh

@@ -7,7 +7,7 @@ services:
       - PORT=80
       - MONGO_URL=mongodb://db:27017/coopcon
   db:
-    image: mongo:3.6.4
+    image: mongo:3.6.5
     volumes:
       - data-volume:/data/db
 

@@ -1,12 +1,16 @@
 import { all, call, select, put, actionChannel, take } from 'redux-saga/effects'
 import { NOT_FOUND } from 'redux-first-router'
-import { FETCH_PRODUCERS_SUCCESS, fetchProducers, fetchProducer } from 'data/producer/actions'
-import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
-import { fetchOperationProducts, fetchOperationTotals } from 'data/operation/actions'
-import { getCurrentOperationId } from 'data/operation/selectors'
 import {
-  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, OPERATION_TOTALS, PRODUCT_GALLERY,
-  PRODUCT_ADD, PRODUCT_EDIT,
+  FETCH_PRODUCERS_SUCCESS, FETCH_PRODUCER_SUCCESS, fetchProducers, fetchProducer,
+} from 'data/producer/actions'
+import { getCurrentId, getSortedProducers } from 'data/producer/selectors'
+import {
+  changeEditingOperation, fetchOperationProducts, fetchOperationTotals,
+} from 'data/operation/actions'
+import { getCurrentOperationId, getCurrentOperation } from 'data/operation/selectors'
+import {
+  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
+  PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
   goToIndex, goToOperations,
 } from './actions'
 import { getCurrentRoute } from './selectors'
@@ -43,9 +47,17 @@ function* onIndex() {
 const onProducerAdmin = sagaWithParameters(
   function* (producerId) {
     yield put(fetchProducer(producerId))
+    yield take(FETCH_PRODUCER_SUCCESS)
   },
   select(getCurrentId),
 )
+
+const onOperationEdit = function* () {
+  yield call(onProducerAdmin)
+
+  const operation = yield select(getCurrentOperation)
+  yield put(changeEditingOperation(operation))
+}
 
 const onOperationsProducts = sagaWithParameters(
   function* (operationId) {
@@ -68,6 +80,7 @@ const mapRouteToSaga = {
   [INDEX]: onIndex,
   [OPERATIONS]: onProducerAdmin,
   [OPERATION_ADD]: onProducerAdmin,
+  [OPERATION_EDIT]: onOperationEdit,
   [OPERATION_PRODUCTS]: onOperationsProducts,
   [OPERATION_TOTALS]: onOperationsTotals,
   [PRODUCT_GALLERY]: onProducerAdmin,

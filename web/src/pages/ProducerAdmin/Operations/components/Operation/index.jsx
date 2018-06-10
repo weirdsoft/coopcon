@@ -1,14 +1,16 @@
+import * as R from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { compose, flattenProp, mapProps, setDisplayName } from 'recompose'
-import { goToOperationProducts, goToOperationTotals } from 'data/route/actions'
+import { compose, branch, renderComponent, flattenProp, mapProps, setDisplayName } from 'recompose'
+import { goToOperationEdit, goToOperationProducts, goToOperationTotals } from 'data/route/actions'
 import { getCurrentOperationId, isShowingOperationSidepanel } from 'data/operation/selectors'
 import { getCurrentId } from 'data/producer/selectors'
-import { getOperation } from 'data/operation/selectors'
+import { isEditingOperation, getOperation } from 'data/operation/selectors'
 import { NavLink } from 'redux-first-router-link'
+import OperationEdit from '../OperationEdit'
 import styles from './styles.scss'
 
 const mapStateToProps = (state, { operationId }) => ({
@@ -16,10 +18,22 @@ const mapStateToProps = (state, { operationId }) => ({
   operation: getOperation(state, operationId),
   isCompact: isShowingOperationSidepanel(state),
   currentOperationId: getCurrentOperationId(state),
+  isEditing: isEditingOperation(state),
 })
 
 const enhancer = compose(
   connect(mapStateToProps),
+  branch(
+    R.both(
+      R.prop('isEditing'),
+      R.compose(
+        R.apply(R.equals),
+        R.values,
+        R.pick([ 'currentOperationId', 'operationId' ]),
+      ),
+    ),
+    renderComponent(OperationEdit),
+  ),
   flattenProp('operation'),
   mapProps(({ currentOperationId, _id, ...props }) => ({
     ...props,
@@ -48,10 +62,10 @@ const Operation = enhancer(({
     <td>
       <NavLink
         className={classNames('p-1', styles.sectionLink)}
-        to={goToOperationTotals(producerId, operationId)}
+        to={goToOperationEdit(producerId, operationId)}
         activeClassName={styles.active}
       >
-        <i className="fa fa-shopping-cart" title="Ver Totales"></i>
+        <i className="fa fa-edit" title="Modificar Operación"></i>
       </NavLink>
       <NavLink
         className={classNames('p-1', styles.sectionLink)}
@@ -59,6 +73,13 @@ const Operation = enhancer(({
         activeClassName={styles.active}
       >
         <i className="fa fa-cog" title="Modificar Productos"></i>
+      </NavLink>
+      <NavLink
+        className={classNames('p-1', styles.sectionLink)}
+        to={goToOperationTotals(producerId, operationId)}
+        activeClassName={styles.active}
+      >
+        <i className="fa fa-shopping-cart" title="Ver Totales"></i>
       </NavLink>
     </td>
   </tr>

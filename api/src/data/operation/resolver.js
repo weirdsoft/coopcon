@@ -15,14 +15,17 @@ const resolver = {
     createOperation(_, { operation }) {
       return Operation.create(operation)
     },
+    updateOperation(_, { id, operation }) {
+      return Operation.findByIdAndUpdate(id, operation, { new: true }).exec()
+    },
     addOperationProduct(_, { id, productId }) {
       return Operation
-        .findByIdAndUpdate(id, { $addToSet: { products: productId } })
+        .findByIdAndUpdate(id, { $addToSet: { products: productId } }, { new: true })
         .exec()
     },
     removeOperationProduct(_, { id, productId }) {
       return Operation
-        .findByIdAndUpdate(id, { $pull: { products: productId } })
+        .findByIdAndUpdate(id, { $pull: { products: productId } }, { new: true })
         .exec()
     },
   },

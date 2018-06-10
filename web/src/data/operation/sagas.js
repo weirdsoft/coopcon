@@ -5,15 +5,19 @@ import { goToOperations } from 'data/route/actions'
 import { getCurrentId } from 'data/producer/selectors'
 import {
   ADD_NEW_OPERATION_REQUEST, receiveNewOperation, failReceiveNewOperation,
+  UPDATE_OPERATION_REQUEST, receiveUpdatedOperation, failReceiveUpdatedOperation,
   FETCH_OPERATION_PRODUCTS_REQUEST, receiveOperationProducts, failReceiveOperationProducts,
   FETCH_OPERATION_TOTALS_REQUEST, receiveOperationTotals, failReceiveOperationTotals,
   TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, succeedToggleOperationProductState,
   failToggleOperationProductState,
 } from './actions'
-import { getNewOperation, getCurrentOperation } from './selectors'
+import {
+  getNewOperation, getEditingOperation, getCurrentOperationId, getCurrentOperation,
+} from './selectors'
 import { operationProductsQuery, operationTotalsQuery } from './queries'
 import {
-  createOperationMutation, addOperationProductMutation, removeOperationProductMutation,
+  createOperationMutation, updateOperationMutation, addOperationProductMutation,
+  removeOperationProductMutation,
 } from './mutations'
 
 function* addNewOperation() {
@@ -31,6 +35,26 @@ function* addNewOperation() {
     yield put(goToOperations(producer))
   } catch(e) {
     yield put(failReceiveNewOperation(e.message))
+  }
+}
+
+function* updateOperation() {
+  const producer = yield select(getCurrentId)
+  const id = yield select(getCurrentOperationId)
+  const editingOperation = yield select(getEditingOperation)
+
+  try {
+    const { operation } = yield call(api.mutate, updateOperationMutation, {
+      id,
+      operation: {
+        producer,
+        ...editingOperation,
+      },
+    })
+    yield put(receiveUpdatedOperation(operation))
+    yield put(goToOperations(producer))
+  } catch(e) {
+    yield put(failReceiveUpdatedOperation(e.message))
   }
 }
 
@@ -87,6 +111,7 @@ function* toggleOperationProductState({ productId }) {
 function* operationSaga() {
   yield all([
     takeLatest(ADD_NEW_OPERATION_REQUEST, addNewOperation),
+    takeLatest(UPDATE_OPERATION_REQUEST, updateOperation),
     takeLatest(FETCH_OPERATION_PRODUCTS_REQUEST, fetchOperationProducts),
     takeLatest(FETCH_OPERATION_TOTALS_REQUEST, fetchOperationTotals),
     takeLatest(TOGGLE_OPERATION_PRODUCT_STATE_REQUEST, toggleOperationProductState),

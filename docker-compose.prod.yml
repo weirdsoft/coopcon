@@ -17,6 +17,8 @@ services:
       dockerfile: Dockerfile-api
     volumes:
       - api-deps:/opt/app/node_modules
+    environment:
+      - HOST=http://coopcon.tsuiseki.moe
     restart: always
 
 volumes:

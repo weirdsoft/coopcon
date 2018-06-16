@@ -13,6 +13,8 @@ services:
     image: node:10.4.0-alpine
     volumes:
       - ./api:/opt/app
+    environment:
+      - HOST=http://localhost
     entrypoint: /opt/app/entrypoint.sh
     command: start
   web:

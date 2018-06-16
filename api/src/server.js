@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import { MONGO_URL, PORT } from './config'
 import { schema } from './data'
+import { configureAuth } from './auth'
 
 // mongoose
 mongoose.Promise = Promise
@@ -21,6 +22,7 @@ connect()
 const app = express()
 const port = PORT
 
+configureAuth(app)
 app.use(bodyParser.json())
 app.use('/api/graphiql', graphiqlExpress({ endpointURL: '/api' }))
 app.use('/api', graphqlExpress({ schema }))

@@ -51,7 +51,7 @@ const enhancer = compose(
   setDisplayName('Operation'),
 )
 
-const Operation = enhancer(({ name, publishDate, goToOperation }) => (
+const Operation = enhancer(({ name, deliveryDate, goToOperation }) => (
   <View
     style={styles.wrapper}
   >
@@ -65,7 +65,7 @@ const Operation = enhancer(({ name, publishDate, goToOperation }) => (
           {name}
         </Text>
         <Text style={styles.date}>
-          &nbsp;({moment(publishDate).format('MMMM YYYY')})
+          &nbsp;({moment(deliveryDate).format('MMMM YYYY')})
         </Text>
         <SimpleLineIcons name="arrow-right" size={20}/>
       </View>

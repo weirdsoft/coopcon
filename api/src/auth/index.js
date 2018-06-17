@@ -25,14 +25,12 @@ export const configureAuth = (app) => {
         )(profile),
       },
       {
-        $setOnInsert: {
-          name: R.prop('displayName')(profile),
-          photo: R.compose(
-            R.prop('value'),
-            R.head,
-            R.prop('photos'),
-          )(profile),
-        },
+        name: R.prop('displayName')(profile),
+        photo: R.compose(
+          R.prop('value'),
+          R.head,
+          R.prop('photos'),
+        )(profile),
       },
       {
         new: true,

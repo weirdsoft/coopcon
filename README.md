@@ -2,16 +2,22 @@
 
 ## Roadmap
 
-### v0.6.0 [ ]
+### v0.7.0 [ ]
 - Add posibility to delete operations
-- Refactor order edition to make it more straightforward
+- Add posibility to delete producers
 - Rewrite stuff using ramda
 - Use the "namespace/action" format for action strings
+
+### v0.6.0 [ ]
+- Refactor order edition to make it more straightforward
+- Fix separators on mobile for high resolutions
+- On the completed section, only show operations with missing payments (with an option to load the rest)
 
 ### v0.5.0 [ ]
 - Identify users of the app (google auth?)
 - Add an organization property for the user, save orders referencing the creator's organization
 - Only show orders created by the user (that reference it's same organization)
+- Research the posibility to select contacts as the order owner
 
 ### v0.4.0 [x]
 - Add posibility to delete orders

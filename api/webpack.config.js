@@ -21,12 +21,5 @@ module.exports = function() {
         },
       ],
     },
-    resolve: {
-      modules: [
-        'src',
-        'node_modules',
-      ],
-      extensions: [ '.js' ],
-    },
   }
 }

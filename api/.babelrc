@@ -12,6 +12,9 @@
     "@babel/plugin-proposal-object-rest-spread",
     ["ramda", {
       "useEs": true
+    }],
+    ["module-resolver", {
+      "root": ["./src"]
     }]
   ]
 }

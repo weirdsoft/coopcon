@@ -1,9 +1,12 @@
+import * as R from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
+import { withAuth } from 'auth'
 import scalarResolvers from './scalars'
 import { producerDefinition, producerResolver } from './producer'
 import { productDefinition, productResolver } from './product'
 import { operationDefinition, operationResolver } from './operation'
 import { orderDefinition, orderResolver } from './order'
+import { ROLES } from './user'
 
 const queryDefinition = `
   type Query {
@@ -42,22 +45,30 @@ const typeDefs = [
   orderDefinition,
 ]
 
-const resolvers = {
-  ...scalarResolvers,
-  Query: {
-    ...producerResolver.Query,
-    ...operationResolver.Query,
+const withAdminAuth = R.partial(withAuth, [ ROLES.ADMIN ])
+const mergeWithAdminAuth = R.compose(
+  R.map(withAdminAuth),
+  R.mergeAll,
+)
+
+const resolvers = R.mergeAll([
+  scalarResolvers,
+  {
+    Query: mergeWithAdminAuth([
+      producerResolver.Query,
+      operationResolver.Query,
+    ]),
+    Mutation: mergeWithAdminAuth([
+      producerResolver.Mutation,
+      productResolver.Mutation,
+      operationResolver.Mutation,
+      orderResolver.Mutation,
+    ]),
   },
-  Mutation: {
-    ...producerResolver.Mutation,
-    ...productResolver.Mutation,
-    ...operationResolver.Mutation,
-    ...orderResolver.Mutation,
-  },
-  ...producerResolver.Nested,
-  ...operationResolver.Nested,
-  ...orderResolver.Nested,
-}
+  producerResolver.Nested,
+  operationResolver.Nested,
+  orderResolver.Nested,
+])
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 

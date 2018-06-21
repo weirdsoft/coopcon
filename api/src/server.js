@@ -30,7 +30,15 @@ app.use('/api/graphiql', graphiqlExpress({ endpointURL: '/api' }))
 app.use('/api', graphqlExpress((req) => ({
   schema,
   context: {
-    user: R.propOr({ role: ROLES.GUEST }, 'user')(req),
+    user: R.propOr(
+      {
+        name: 'Guest',
+        email: '',
+        photo: '',
+        role: ROLES.GUEST,
+      },
+      'user',
+    )(req),
   },
 })))
 

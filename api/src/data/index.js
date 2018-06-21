@@ -2,14 +2,15 @@ import * as R from 'ramda'
 import { makeExecutableSchema } from 'graphql-tools'
 import { withAuth } from 'auth'
 import scalarResolvers from './scalars'
+import { ROLES, userDefinition, userResolver } from './user'
 import { producerDefinition, producerResolver } from './producer'
 import { productDefinition, productResolver } from './product'
 import { operationDefinition, operationResolver } from './operation'
 import { orderDefinition, orderResolver } from './order'
-import { ROLES } from './user'
 
 const queryDefinition = `
   type Query {
+    me: User!
     producers: [Producer]!
     producer(id: ID!): Producer
     operations: [Operation]!
@@ -39,6 +40,7 @@ const scalarDefinitions = `
 const typeDefs = [
   scalarDefinitions,
   queryDefinition,
+  userDefinition,
   producerDefinition,
   productDefinition,
   operationDefinition,
@@ -51,8 +53,9 @@ const mergeWithAdminAuth = R.compose(
   R.mergeAll,
 )
 
-const resolvers = R.mergeAll([
+const resolvers = R.reduce(R.mergeDeepRight, {}, [
   scalarResolvers,
+  userResolver,
   {
     Query: mergeWithAdminAuth([
       producerResolver.Query,

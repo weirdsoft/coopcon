@@ -8,10 +8,12 @@ import {
   changeEditingOperation, fetchOperationProducts, fetchOperationTotals,
 } from 'data/operation/actions'
 import { getCurrentOperationId, getCurrentOperation } from 'data/operation/selectors'
+import { AUTHORIZE_USER_SUCCESS, authorizeUser } from 'data/auth/actions'
+import { getUser } from 'data/auth/selectors'
 import {
   INDEX, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
   PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
-  goToIndex, goToOperations,
+  goToLogin, goToIndex, goToOperations,
 } from './actions'
 import { getCurrentRoute } from './selectors'
 
@@ -46,6 +48,7 @@ function* onIndex() {
 
 const onProducerAdmin = sagaWithParameters(
   function* (producerId) {
+    // next fetch the specific producer for url
     yield put(fetchProducer(producerId))
     yield take(FETCH_PRODUCER_SUCCESS)
   },
@@ -89,9 +92,25 @@ const mapRouteToSaga = {
 }
 
 function* routeSaga() {
-  // fetch producers on init
+  let user = null
+
+  while(true) {
+    yield put(authorizeUser())
+    yield take (AUTHORIZE_USER_SUCCESS)
+    user = yield select(getUser)
+
+    if (user.role !== 'admin') {
+      yield put(goToLogin())
+      yield take('*')
+    } else {
+      break
+    }
+  }
+
+  // fetch the producers
   yield put(fetchProducers())
   yield take(FETCH_PRODUCERS_SUCCESS)
+
   const channel = yield actionChannel(Object.keys(mapRouteToSaga))
 
   do {

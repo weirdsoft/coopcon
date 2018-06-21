@@ -9,6 +9,7 @@ import {
 import { getCurrentRoute } from 'data/route/selectors'
 import { getCurrentId } from 'data/producer/selectors'
 import { NavLink } from 'redux-first-router-link'
+import Menu from './components/Menu'
 import ProductGallery from './ProductGallery'
 import Operations from './Operations'
 import styles from './styles.scss'
@@ -39,38 +40,45 @@ const enhancer = compose(
 )
 
 const ProducerAdmin = enhancer(({ producerId, Page }) => (
-  <div className={classNames('card', styles.producerAdmin)}>
-    <div className="card-header">
-      <ul className="nav nav-tabs card-header-tabs">
-        <li className="nav-item">
-          <NavLink
-            to={goToOperations(producerId)}
-            className="nav-link"
-            activeClassName='active'
-            isActive={(match, location) => (
-              [
-                OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, OPERATION_TOTALS,
-              ].includes(location.type)
-            )}
-          >
-            Operativos
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to={goToProductGallery(producerId)}
-            className="nav-link"
-            activeClassName='active'
-            isActive={(match, location) => [
-              PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
-            ].includes(location.type)}
-          >
-            Productos
-          </NavLink>
-        </li>
-      </ul>
-    </div>
-    <Page />
+  <div className="row">
+    <aside className="col-3 bg-light">
+      <Menu />
+    </aside>
+    <main className="col-9 d-flex align-items-stretch pb-3">
+      <div className={classNames('card', styles.producerAdmin)}>
+        <div className="card-header">
+          <ul className="nav nav-tabs card-header-tabs">
+            <li className="nav-item">
+              <NavLink
+                to={goToOperations(producerId)}
+                className="nav-link"
+                activeClassName='active'
+                isActive={(match, location) => (
+                  [
+                    OPERATIONS, OPERATION_ADD, OPERATION_PRODUCTS, OPERATION_TOTALS,
+                  ].includes(location.type)
+                )}
+              >
+                Operativos
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to={goToProductGallery(producerId)}
+                className="nav-link"
+                activeClassName='active'
+                isActive={(match, location) => [
+                  PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
+                ].includes(location.type)}
+              >
+                Productos
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+        <Page />
+      </div>
+    </main>
   </div>
 ))
 

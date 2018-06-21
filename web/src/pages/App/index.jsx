@@ -8,7 +8,6 @@ import {
   PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
 } from 'data/route/actions'
 import styles from './styles.scss'
-import Menu from './components/Menu'
 import NavBar from './components/NavBar'
 import ProducerAdmin from 'pages/ProducerAdmin'
 
@@ -41,14 +40,7 @@ const App = enhancer(({ Page }) => (
       <NavBar />
     </header>
     <div className={classNames('container-fluid', styles.content)}>
-      <div className="row">
-        <aside className="col-3 bg-light">
-          <Menu />
-        </aside>
-        <main className="col-9 d-flex align-items-stretch pb-3">
-          <Page />
-        </main>
-      </div>
+      <Page />
     </div>
   </div>
 ))

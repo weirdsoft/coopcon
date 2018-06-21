@@ -1,10 +1,11 @@
 import {
-  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
+  INDEX, LOGIN, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
   PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
 } from './route/actions'
 
 export default {
   [INDEX]: '/',
+  [LOGIN]: '/login',
   [OPERATIONS]: '/:producerId/operations',
   [OPERATION_ADD]: '/:producerId/operations/add',
   [OPERATION_EDIT]: '/:producerId/operations/:id/edit',

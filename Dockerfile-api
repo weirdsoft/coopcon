@@ -13,8 +13,8 @@ FROM node:10.4.0-alpine
 MAINTAINER Agustin Carrasco <asermax@gmail.com>
 
 WORKDIR /opt/app
-COPY --from=build /opt/app/dist dist
-COPY api/index.js api/package.json api/yarn.lock ./
+COPY --from=build /opt/app/dist ./
+COPY api/package.json api/yarn.lock ./
 COPY api/entrypoint.sh ./
 COPY api/migrations migrations
 

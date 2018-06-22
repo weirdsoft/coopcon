@@ -1,19 +1,20 @@
 /* eslint-env node */
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const { resolve } = require('path')
 const config = require('./webpack.base.config')
 
-config.mode = 'development'
-config.devtool = 'eval-source-map'
-config.devServer = {
-  hotOnly: true,
-  contentBase: resolve(__dirname, 'src'),
-  historyApiFallback: true,
-  host: '0.0.0.0',
-  disableHostCheck: true,
-  port: '80',
-  publicPath: '/',
-}
-config.plugins.push(new webpack.HotModuleReplacementPlugin())
-
-module.exports = config
+module.exports = merge.smart(config, {
+  mode: 'development',
+  devtool: 'eval-source-map',
+  devServer: {
+    hotOnly: true,
+    contentBase: resolve(__dirname, 'src'),
+    historyApiFallback: true,
+    host: '0.0.0.0',
+    disableHostCheck: true,
+    port: '80',
+    publicPath: '/',
+  },
+  plugins: [ new webpack.HotModuleReplacementPlugin() ],
+})

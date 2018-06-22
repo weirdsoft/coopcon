@@ -101,6 +101,7 @@ const config = {
       template: resolve(__dirname, 'src', 'index.html'),
       includeGTM: false,
     }),
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /es/),
   ],
 }
 

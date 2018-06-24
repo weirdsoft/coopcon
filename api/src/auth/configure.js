@@ -1,5 +1,7 @@
 import * as R from 'ramda'
+import mongoose from 'mongoose'
 import expressSession from 'express-session'
+import connectMongo from 'connect-mongo'
 import passport from 'passport'
 import { OAuth2Strategy } from 'passport-google-oauth'
 import { HOST } from 'config'
@@ -47,7 +49,11 @@ export default (app) => {
   passport.deserializeUser((id, done) => User.findById(id, (err, user) => done(err, user)))
 
   // configure the app to use passport and session
-  app.use(expressSession({ secret: 'atila' }))
+  const MongoStore = connectMongo(expressSession)
+  app.use(expressSession({
+    secret: 'OSI1I+17kTVkvRy9fzoYJwxV1mOgSM1ukmAkw9tTrmE=',
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  }))
   app.use(passport.initialize())
   app.use(passport.session())
 

@@ -23,7 +23,9 @@
     "graphql-tools": "^3.0.2",
     "mongoose": "^5.1.4",
     "passport": "^0.4.0",
+    "passport-google-id-token": "^0.4.5",
     "passport-google-oauth": "^1.0.0",
+    "passport-jwt": "^4.0.0",
     "ramda": "^0.25.0"
   },
   "devDependencies": {

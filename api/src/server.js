@@ -24,8 +24,8 @@ connect()
 const app = express()
 const port = PORT
 
-configureAuth(app)
 app.use(bodyParser.json())
+configureAuth(app)
 app.use('/api/graphiql', graphiqlExpress({ endpointURL: '/api' }))
 app.use('/api', graphqlExpress((req) => ({
   schema,

@@ -8,7 +8,7 @@ import {
   changeEditingOperation, fetchOperationProducts, fetchOperationTotals,
 } from 'data/operation/actions'
 import { getCurrentOperationId, getCurrentOperation } from 'data/operation/selectors'
-import { AUTHORIZE_USER_SUCCESS, authorizeUser } from 'data/auth/actions'
+import { FETCH_USER_SUCCESS, AUTHORIZE_USER_SUCCESS, fetchUser } from 'data/auth/actions'
 import { getUser } from 'data/auth/selectors'
 import {
   INDEX, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
@@ -95,13 +95,13 @@ function* routeSaga() {
   let user = null
 
   while(true) {
-    yield put(authorizeUser())
-    yield take (AUTHORIZE_USER_SUCCESS)
+    yield put(fetchUser())
+    yield take(FETCH_USER_SUCCESS)
     user = yield select(getUser)
 
     if (user.role !== 'admin') {
       yield put(goToLogin())
-      yield take('*')
+      yield take(AUTHORIZE_USER_SUCCESS)
     } else {
       break
     }

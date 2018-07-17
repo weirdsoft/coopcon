@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
-import { AUTHORIZE_USER_SUCCESS } from './actions'
+import { FETCH_USER_SUCCESS } from './actions'
 
 const defaultUser = {
   name: 'Anónimo',
@@ -10,7 +10,7 @@ const defaultUser = {
 }
 const user = (state = defaultUser, action) => {
   switch(action.type) {
-    case AUTHORIZE_USER_SUCCESS:
+    case FETCH_USER_SUCCESS:
       return R.clone(action.user)
     default:
       return state

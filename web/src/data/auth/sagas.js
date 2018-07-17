@@ -1,21 +1,34 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects'
 import * as api from 'data/api'
 import {
-  AUTHORIZE_USER_REQUEST, receiveAuthorizedUserSuccess, receiveAuthorizedUserFailure,
+  FETCH_USER_REQUEST, receiveUserSuccess, receiveUserFailure,
+  AUTHORIZE_USER_REQUEST, authorizeUserSuccess, authorizeUserFailure,
 } from './actions'
 import { userQuery } from './queries'
 
-function* authorizeUser() {
+function* fetchUser() {
   try {
     const { me } = yield call(api.query, userQuery)
-    yield put(receiveAuthorizedUserSuccess(me))
+    yield put(receiveUserSuccess(me))
   } catch (e) {
-    yield put(receiveAuthorizedUserFailure(e.message))
+    yield put(receiveUserFailure(e.message))
+  }
+}
+
+function* authorizeUser({ tokenId }) {
+  try {
+    const { authToken } = yield call(api.auth, tokenId)
+
+    // TODO: SOMETHING WITH THE TOKEN
+    yield put(authorizeUserSuccess())
+  } catch (e) {
+    yield put(authorizeUserFailure(e.message))
   }
 }
 
 function* authSaga() {
   yield all([
+    takeLatest(FETCH_USER_REQUEST, fetchUser),
     takeLatest(AUTHORIZE_USER_REQUEST, authorizeUser),
   ])
 }

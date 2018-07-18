@@ -3,7 +3,7 @@ import * as R from 'ramda'
 import mongoose from 'mongoose'
 import express from 'express'
 import bodyParser from 'body-parser'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import { graphqlExpress } from 'apollo-server-express'
 import { MONGO_URL, PORT } from 'config'
 import { schema } from 'data'
 import { ROLES } from 'data/user'
@@ -24,22 +24,26 @@ connect()
 const app = express()
 const port = PORT
 
+// configure app
 app.use(bodyParser.json())
-configureAuth(app)
-app.use('/api/graphiql', graphiqlExpress({ endpointURL: '/api' }))
-app.use('/api', graphqlExpress((req) => ({
-  schema,
-  context: {
-    user: R.propOr(
-      {
-        name: 'Guest',
-        email: '',
-        photo: '',
-        role: ROLES.GUEST,
-      },
-      'user',
-    )(req),
-  },
-})))
 
+// setup auth protected api routes
+configureAuth(app, {
+  '/api': graphqlExpress((req) => ({
+    schema,
+    context: {
+      user: R.propOr(
+        {
+          name: 'Guest',
+          email: '',
+          photo: '',
+          role: ROLES.GUEST,
+        },
+        'user',
+      )(req),
+    },
+  })),
+})
+
+// start listening
 app.listen(port)

@@ -19,7 +19,7 @@ function* authorizeUser({ tokenId }) {
   try {
     const { authToken } = yield call(api.auth, tokenId)
 
-    // TODO: SOMETHING WITH THE TOKEN
+    window.localStorage.setItem(api.AUTH_TOKEN_KEY, authToken)
     yield put(authorizeUserSuccess())
   } catch (e) {
     yield put(authorizeUserFailure(e.message))

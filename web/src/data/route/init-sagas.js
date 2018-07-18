@@ -8,10 +8,12 @@ import {
   changeEditingOperation, fetchOperationProducts, fetchOperationTotals,
 } from 'data/operation/actions'
 import { getCurrentOperationId, getCurrentOperation } from 'data/operation/selectors'
-import { FETCH_USER_SUCCESS, AUTHORIZE_USER_SUCCESS, fetchUser } from 'data/auth/actions'
+import {
+  FETCH_USER_SUCCESS, FETCH_USER_FAILURE, AUTHORIZE_USER_SUCCESS, fetchUser,
+} from 'data/auth/actions'
 import { getUser } from 'data/auth/selectors'
 import {
-  INDEX, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
+  INDEX, LOGIN, OPERATIONS, OPERATION_ADD, OPERATION_EDIT, OPERATION_PRODUCTS, OPERATION_TOTALS,
   PRODUCT_GALLERY, PRODUCT_ADD, PRODUCT_EDIT,
   goToLogin, goToIndex, goToOperations,
 } from './actions'
@@ -80,6 +82,7 @@ const onOperationsTotals = sagaWithParameters(
 
 const mapRouteToSaga = {
   [NOT_FOUND]: onNotFound,
+  [LOGIN]: onNotFound,
   [INDEX]: onIndex,
   [OPERATIONS]: onProducerAdmin,
   [OPERATION_ADD]: onProducerAdmin,
@@ -95,11 +98,15 @@ function* routeSaga() {
   let user = null
 
   while(true) {
+    // try fetch the user
     yield put(fetchUser())
-    yield take(FETCH_USER_SUCCESS)
+    yield take([ FETCH_USER_SUCCESS, FETCH_USER_FAILURE ])
     user = yield select(getUser)
 
-    if (user.role !== 'admin') {
+    if (user != null && user.role !== 'admin') {
+      // if the user is not logged in or it's not an admin
+      // go to the login and wait for an authorization success
+      // and try to access the index page
       yield put(goToLogin())
       yield take(AUTHORIZE_USER_SUCCESS)
     } else {

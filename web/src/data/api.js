@@ -3,10 +3,22 @@ import * as R from 'ramda'
 import { execute, makePromise } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 
-const link = new HttpLink({ uri: '/api' })
+export const AUTH_TOKEN_KEY = 'AUTH_TOKEN_KEY'
+
+const link = new HttpLink({
+  uri: '/api',
+})
 
 export const query = async(query, variables) => {
-  const response = await makePromise(execute(link, { query, variables }))
+  const response = await makePromise(execute(link, {
+    context: {
+      headers: {
+        authorization: `Bearer ${window.localStorage.getItem(AUTH_TOKEN_KEY)}`,
+      },
+    },
+    query,
+    variables,
+  }))
 
   return response.data
 }
@@ -16,13 +28,12 @@ export const mutate = query
 export const auth = R.compose(
   RA.thenP(R.ifElse(
     R.prop('ok'),
-    R.compose(
-      R.prop('authToken'),
-      R.invoker(0, 'json'),
-    ),
+    R.invoker(0, 'json'),
     R.compose(
       RA.rejectP,
-      R.prop('statusText'),
+      R.head,
+      R.dropWhile(R.isNil),
+      R.props([ 'body', 'statusText' ]),
     ),
   )),
   (token) => fetch('/api/auth/web', {
